@@ -47,7 +47,7 @@ function parse(file, callback) {
                 // console.log(arr,"=============");
                 console.log(arr[1],"---------------");
                 if(arr[1]) {
-                    let article = {title: arr[1], time: arr[7], publisher: arr[6], source: arr[4], tags: arr[8], url: 'http://localhost:3002/files/'+arr[1]+'.pdf', content: ''};
+                    let article = {title: arr[1], time: arr[7], publisher: arr[6], source: arr[4], tags: arr[8], url: '/files/'+arr[1]+'.pdf', content: ''};
                     saveNews(article).then(function (article) {
                         console.log(article,"=====================article");
                     },function (err) {
