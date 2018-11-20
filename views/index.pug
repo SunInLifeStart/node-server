@@ -89,11 +89,11 @@ block content
                       dt
                         h5
                           img(src="/images/leader1.png", style="vertical-align: middle;margin-right: 2%;")
-                          a(href="/details?type=领导讲话&id=" + JSON.parse(ls).articleId) #{JSON.parse(ls).title}
+                          a(href="/eportal/details?type=领导讲话&id=" + JSON.parse(ls).articleId) #{JSON.parse(ls).title}
                         time(style="float: right") #{JSON.parse(ls).time}
                       dd(style="border-bottom: 1px solid #dbdbdb;") #{JSON.parse(ls).publisher}
 
-                  a.btn.btn-default(href="/leadershipSpeechs?page=1", style="padding: 5px 18px; margin-top: 12px;") 更多
+                  a.btn.btn-default(href="/eportal/leadershipSpeechs?page=1", style="padding: 5px 18px; margin-top: 12px;") 更多
 
                 article.article.article--big(style="width: 36%;padding: 2%; line-height: 36px; float: right; border-left: 1px solid #dbdbdb; height: 460px;")
                   div(style="font-size: 14px; padding: 1%; border-bottom: 1px solid #dbdbdb; height: 36px;")
@@ -108,8 +108,8 @@ block content
                         time(style="float: right") #{JSON.parse(nb).time}
                       dd(style="border-bottom: 1px solid #dbdbdb;")
                         p(style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;")
-                          a(href="/details?type=通知公告&id=" + JSON.parse(nb).articleId) #{JSON.parse(nb).title}
-                  a.btn.btn-default(href="/noticeBulletin?page=1", style="padding: 5px 18px; margin-top: 12px;") 更多
+                          a(href="/eportal/details?type=通知公告&id=" + JSON.parse(nb).articleId) #{JSON.parse(nb).title}
+                  a.btn.btn-default(href="/eportal/noticeBulletin?page=1", style="padding: 5px 18px; margin-top: 12px;") 更多
 
           .clear
 
@@ -131,9 +131,9 @@ block content
                           | #{JSON.parse(r).publisher}
                         time(style="float: right") #{JSON.parse(r).time}
                       dd(style="border-bottom: 1px solid #dbdbdb;")
-                          a(href="/details?type=规章制度&id=" + JSON.parse(r).articleId) #{JSON.parse(r).title}
+                          a(href="/eportal/details?type=规章制度&id=" + JSON.parse(r).articleId) #{JSON.parse(r).title}
 
-                  a.btn.btn-default(href="/rulesRegulations?page=1", style="padding: 5px 18px; margin-top: 12px;") 更多
+                  a.btn.btn-default(href="/eportal/rulesRegulations?page=1", style="padding: 5px 18px; margin-top: 12px;") 更多
                 article.article.article--big(style="width: 55%;padding: 2%; line-height: 36px; float: right; height: 460px; border-left: 1px solid #dbdbdb;")
                   div(style="font-size: 14px; padding: 1%; border-bottom: 1px solid #dbdbdb; height: 36px;")
                     div
@@ -146,9 +146,9 @@ block content
                           | &nbsp; #{JSON.parse(w).publisher}
                         time(style="float: right") #{JSON.parse(w).time}
                       dd(style="border-bottom: 1px solid #dbdbdb;")
-                          a(href="/details?type=集团发文&id=" + JSON.parse(w).articleId) #{JSON.parse(w).title}
+                          a(href="/eportal/details?type=集团发文&id=" + JSON.parse(w).articleId) #{JSON.parse(w).title}
 
-                  a.btn.btn-default(href="/writings?page=1", style="padding: 5px 18px; margin-top: 12px;") 更多
+                  a.btn.btn-default(href="/eportal/writings?page=1", style="padding: 5px 18px; margin-top: 12px;") 更多
           .clear
       .mlist.news.module.ff_noSlider(style="background-position: initial;background-size: cover;background-repeat: no-repeat;")
         .bgmask
@@ -157,7 +157,8 @@ block content
             .content_wrapper
               .content_list.clearfix
                 div(style="width: 20%;float: left;")
-                  img(src="/images/partybuilding.png", style="position: relative;top: -7px;left: -7px; border-radius: 30px;", alt="党建")
+                  a(href="/eportal/partyBuilding")
+                    img(src="/images/partybuilding.png", style="position: relative;top: -7px;left: -7px; border-radius: 30px;", alt="党建")
                   article.article.article--big(style="padding: 2%; line-height: 36px;  height: 492px; width: 90%")
                     div(style="font-size: 14px; padding: 8% 6% 1% 7%; border-bottom: 1px solid #dbdbdb; height: 36px;")
                       div
@@ -194,7 +195,7 @@ block content
                       span(style="float: left; font-size: 12px; width: 30px;margin-left: 8px;")=doc.uname   
                       span(style="float: left; font-size: 12px; width: 115px; margin-left: 8px;")=doc.created
                   div(style="clear:both")
-                    a.btn.btn-default(href="/latestDocuments?page=1", style="padding: 5px 18px; margin-top: 12px;") 更多
+                    a.btn.btn-default(href="/eportal/latestDocuments?page=1", style="padding: 5px 18px; margin-top: 12px;") 更多
                 div(style="width: 26%;float: left;")
                   article.article.article--big(style="padding: 2%; line-height: 36px; margin-left: 5%; width: 90%")
                     div(style="font-size: 14px; padding: 8% 6% 1% 7%; border-bottom: 1px solid #dbdbdb; height: 36px;")
@@ -204,7 +205,7 @@ block content
                       dl(style="padding: 3% 8%;")
                         dt
                           h5
-                            a(href="/details?type=集团会表&id=" + JSON.parse(mt).articleId)
+                            a(href="/eportal/details?type=集团会表&id=" + JSON.parse(mt).articleId)
                               img(src="/images/new.png", style="vertical-align: middle;margin-right: 2%;")
                               | #{JSON.parse(mt).title}
                           time(style="float: right") #{JSON.parse(mt).time}
@@ -218,13 +219,13 @@ block content
                         dt
                           h5
                             img(src="/images/briefing.png", style="vertical-align: middle;margin-right: 2%;")
-                            a(href="/details?type=工作简报&id=" + JSON.parse(wb).articleId)
+                            a(href="/eportal/details?type=工作简报&id=" + JSON.parse(wb).articleId)
                                span(title="" + JSON.parse(wb).title) #{JSON.parse(wb).title}
                           time(style="float: right") #{JSON.parse(wb).time}
                         dd(style="border-bottom: 1px solid #dbdbdb;")
-                            a(href="/details?type=工作简报&id=" + JSON.parse(wb).articleId) #{JSON.parse(wb).publisher}
+                            a(href="/eportal/details?type=工作简报&id=" + JSON.parse(wb).articleId) #{JSON.parse(wb).publisher}
 
-                    a.btn.btn-default(href="/workBulletin?page=1", style="padding: 5px 18px; margin: 6px 18px;") 更多
+                    a.btn.btn-default(href="/eportal/workBulletin?page=1", style="padding: 5px 18px; margin: 6px 18px;") 更多
                 article.article.article--big(style="width: 20%;padding: 2%; line-height: 48px; float: left; margin-left: 1%; height: 600px;")
                   div(style="font-size: 14px; padding: 1%; border-bottom: 1px solid #dbdbdb; height: 36px;")
                     div
@@ -266,7 +267,7 @@ block content
                       img(src="/images/phone.png", style="vertical-align: middle;margin-right: 2%;")
                       |                                         邵顺昌
                       phone(style="margin-left: 10%") 13311151098
-                  a.btn.btn-default(href="/details?type=通讯录&id=37" style="padding: 5px 18px; margin: 6px 12px;") 更多
+                  a.btn.btn-default(href="/eportal/details?type=通讯录&id=37" style="padding: 5px 18px; margin: 6px 12px;") 更多
             .clear
 
 

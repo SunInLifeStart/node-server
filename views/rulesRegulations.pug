@@ -20,18 +20,18 @@ block content
             td(style="padding: 1%; border-bottom: 1px solid #dbdbdb;")
               time(style="margin-left: 10%;") #{JSON.parse(obj).time}
             td(style="padding: 1%; border-bottom: 1px solid #dbdbdb;")
-              a.btn.btn-default(href="/details?type=工作简报&id=" + JSON.parse(obj).articleId, style="padding: 5px 12px; margin-top: 12px;") 详情
+              a.btn.btn-default(href="/eportal/details?type=工作简报&id=" + JSON.parse(obj).articleId, style="padding: 5px 12px; margin-top: 12px;") 详情
 
       .pagination
-        a(href="/rulesRegulations?page=1" title="首页") 首页
-        a(href="/rulesRegulations?page=" + ((page - 1) > 0 ? (page - 1) : 1) title="上一页") 上一页
+        a(href="/eportal/rulesRegulations?page=1" title="首页") 首页
+        a(href="/eportal/rulesRegulations?page=" + ((page - 1) > 0 ? (page - 1) : 1) title="上一页") 上一页
         - for(var i = 1; i <= count; i++)
             if(i==page)
-              a(href="/rulesRegulations?page="+i).current=i
+              a(href="/eportal/rulesRegulations?page="+i).current=i
             else
-              a(href="/rulesRegulations?page="+i)=i
-        a(href="/rulesRegulations?page="+((page+1) <= count?(page+1):count)) 下一页
-        a(href="/rulesRegulations?page="+count) 尾页
+              a(href="/eportal/rulesRegulations?page="+i)=i
+        a(href="/eportal/rulesRegulations?page="+((page+1) <= count?(page+1):count)) 下一页
+        a(href="/eportal/rulesRegulations?page="+count) 尾页
 
 
 

@@ -25,12 +25,8 @@ router.get('/latestDocuments', function(req, res) {
     })
 });
 
-router.get('/addressList', function(req, res) {
-    res.render('addressList');
-});
-
-router.get('/meetingTable', function(req, res) {
-    res.render('meetingTable');
+router.get('/partyBuilding', function(req, res) {
+    res.render('partyBuilding');
 });
 
 router.get('/news', function(req, res) {
