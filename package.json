@@ -13,11 +13,13 @@
     "http-errors": "~1.6.2",
     "mammoth": "^1.4.7",
     "morgan": "~1.9.0",
+    "node-xlrd": "^0.2.4",
     "node-xlsx": "^0.12.1",
     "office-to-pdf": "^4.0.0",
     "officegen": "^0.4.7",
     "pug": "2.0.0-beta11",
     "redis": "^2.8.0",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "xlsx": "^0.14.1"
   }
 }
