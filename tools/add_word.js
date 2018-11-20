@@ -12,6 +12,8 @@ const options = {
     includeDefaultStyleMap :false
 };
 
+let url = 'E:/Table/excel/';
+
 async function saveNews(news) {
     try {
         let id = await redis.set(1, "article", news);
@@ -29,7 +31,7 @@ async function saveNews(news) {
     }
 }
 
-fs.readdir('E:/Table/excel', function (err, files) {
+fs.readdir(url, function (err, files) {
     async.eachSeries(files, parse, function () {
         console.log('OK!!!');
     });
@@ -37,7 +39,7 @@ fs.readdir('E:/Table/excel', function (err, files) {
 
 function parse(file, callback) {
     console.log(file,"---------------");
-    let list = xlsx.parse('E:/Table/excel/'+file);
+    let list = xlsx.parse(url+file);
     for(let obj of list) {
         if(obj.data.length) {
             for(let i = 1; i < obj.data.length; i++) {

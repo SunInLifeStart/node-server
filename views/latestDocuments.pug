@@ -19,15 +19,15 @@ block content
                   .title(data-v-b3e18cde="")=doc.name
 
       .pagination
-        a(href="/eportal/latestDocuments?page=1" title="首页") 首页
-        a(href="/eportal/latestDocuments?page=" + ((docs.page - 1) > 0 ? (docs.page - 1) : 1) title="上一页") 上一页
+        a(href="/latestDocuments?page=1" title="首页") 首页
+        a(href="/latestDocuments?page=" + ((docs.page - 1) > 0 ? (docs.page - 1) : 1) title="上一页") 上一页
         - for(var i = 1; i <= docs.pageCount; i++)
             if(i==docs.page)
-              a(href="/eportal/latestDocuments?page="+i).current=i
+              a(href="/latestDocuments?page="+i).current=i
             else
-              a(href="/eportal/latestDocuments?page="+i)=i
-        a(href="/eportal/latestDocuments?page="+((docs.page+1) <= docs.pageCount?(docs.page+1):docs.pageCount)) 下一页
-        a(href="/eportal/latestDocuments?page="+docs.pageCount) 尾页
+              a(href="/latestDocuments?page="+i)=i
+        a(href="/latestDocuments?page="+((docs.page+1) <= docs.pageCount?(docs.page+1):docs.pageCount)) 下一页
+        a(href="/latestDocuments?page="+docs.pageCount) 尾页
 
 
 
