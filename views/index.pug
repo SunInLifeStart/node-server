@@ -1,0 +1,273 @@
+extends layout
+
+block content
+  include head
+  script(type="text/javascript", src="/javascripts/org.1494058893.js", data-main="indexMain")
+  script(type="text/javascript", src="/javascripts/3585.js")
+  .marquee-outer-wrapper
+    .marquee-inner-wrapper
+      span.first-marquee(style="font-size: 16px;")
+        img(style=" vertical-align: text-bottom; width: 8%;", src="/images/birthday.png", alt="生日快乐")
+        | 点燃生日的烛光, 点燃幸福的希望; 品尝生日的蛋糕,品尝快乐的味道; 请张碧婷、杨铮、张春贵、史名胜、接受集团生日的祝福,接受祝愿的美好,祝生日快乐,幸福围绕!
+      span.second-marquee(style="font-size: 16px;")
+  #sitecontent.ff_sitecontent
+    #indexPage.ff_indexPage(data-scroll-ease="Expo.easeInOut", data-scroll-speed="1", data-control="0", data-control-wheel="0", data-singlescreen="0")
+      #topSlider.ff_topSlider.mslider.module
+        .content_wrapper
+          .content_list.owl-carousel.owl-theme(data-slider-height="298", data-slider-auto="4", data-slider-mode="0", data-slider-pause="10", data-slider-ease="ease-out", data-slider-speed="4", style="height:298px")
+            .item_block
+              .item_bg.image(data-thumb="/images/banner1.png", style="background-image:url(/images/banner1.png); background-size:cover; ")
+                a(href="javascript:;", style="width: 100%; height: 100%;")
+                  .description(style="vertical-align:middle; text-align:center; display: none;")
+                    p.title.ellipsis 中关村论坛
+            .item_block
+              .item_bg.image(data-thumb="/images/banner2.png", style="background-image:url(/images/banner2.png); background-size:cover;")
+                a(href="javascript:;", style="width: 100%; height: 100%;")
+                  .description(style="vertical-align:middle; text-align:center; display: none;")
+                    p.title.ellipsis 中关村---变革
+            .item_block
+              .item_bg.image(data-thumb="/images/banner3.png", style="background-image:url(/images/banner3.png); background-size:cover;")
+              a(href="javascript:;", style="width: 100%; height: 100%;")
+                .description(style="vertical-align:middle; text-align:center; display: none;")
+                  p.title.ellipsis 2018全球创新大奖
+          .sliderArrow
+            div
+          .clear
+      .mcounter.module(style="background-position: initial;background-size: cover;background-repeat: no-repeat;")
+        .bgmask
+        #counterBgdx(style="position:absolute; width:100%; height:100%")
+        .module_container
+          .container_content
+            ul.content_list
+              li
+                div
+                  p.number
+                    span.counterDX(data-counter-value="558") 558
+                    span.unit 个
+
+                  p.title 智创产业群企业
+
+              li
+                div
+                  p.number
+                    span.counterDX(data-counter-value="30") 30
+                    span.unit 亿
+
+                  p.title 创投基金规模
+
+              li
+                div
+                  p.number
+                    span.counterDX(data-counter-value="389") 389
+                    span.unit 个
+
+                  p.title 平台科创项目
+
+              li
+                div
+                  p.number
+                    span.counterDX(data-counter-value="20") 20
+                    span.unit 年
+
+                  p.title 团队产业深耕
+
+            .clear
+
+      .mlist.news.module.ff_noSlider(style="background-position: initial;background-size: cover;background-repeat: no-repeat;")
+        .bgmask
+
+        .module_container
+          .container_content
+            .content_wrapper(style="padding-top: 11px")
+              .content_list.clearfix
+                article.article.article--big(style="width: 55%;padding: 2%; line-height: 36px; float: left; height: 460px;")
+                  div(style="font-size: 14px; padding: 1%; border-bottom: 1px solid #dbdbdb; height: 36px;")
+                    div
+                      span(style="line-height: 36px;font-size: 16px;font-weight: 700;") 领导讲话
+                  each ls in leadershipSpeech
+                    dl
+                      dt
+                        h5
+                          img(src="/images/leader1.png", style="vertical-align: middle;margin-right: 2%;")
+                          a(href="/details?type=领导讲话&id=" + JSON.parse(ls).articleId) #{JSON.parse(ls).title}
+                        time(style="float: right") #{JSON.parse(ls).time}
+                      dd(style="border-bottom: 1px solid #dbdbdb;") #{JSON.parse(ls).publisher}
+
+                  a.btn.btn-default(href="/leadershipSpeechs?page=1", style="padding: 5px 18px; margin-top: 12px;") 更多
+
+                article.article.article--big(style="width: 36%;padding: 2%; line-height: 36px; float: right; border-left: 1px solid #dbdbdb; height: 460px;")
+                  div(style="font-size: 14px; padding: 1%; border-bottom: 1px solid #dbdbdb; height: 36px;")
+                    div
+                      span(style="line-height: 36px;font-size: 16px;font-weight: 700;") 通知公告
+                  each nb in noticeBulletin
+                    dl
+                      dt
+                        h5
+                          span(style="color: #3488ea; font-size: 2em; vertical-align: middle;")  •
+                          |  &nbsp;#{JSON.parse(nb).publisher}
+                        time(style="float: right") #{JSON.parse(nb).time}
+                      dd(style="border-bottom: 1px solid #dbdbdb;")
+                        p(style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;")
+                          a(href="/details?type=通知公告&id=" + JSON.parse(nb).articleId) #{JSON.parse(nb).title}
+                  a.btn.btn-default(href="/noticeBulletin?page=1", style="padding: 5px 18px; margin-top: 12px;") 更多
+
+          .clear
+
+      .mlist.news.module.ff_noSlider(style="background-position: initial;background-size: cover;background-repeat: no-repeat;")
+        .bgmask
+        .module_container
+          .container_content
+            .content_wrapper
+              .content_list.clearfix
+                article.article.article--big(style="width: 36%;padding: 2%; line-height: 36px; height: 460px; float: left")
+                  div(style="font-size: 14px; padding: 1%; border-bottom: 1px solid #dbdbdb; height: 36px;")
+                    div
+                      span(style="line-height: 36px;font-size: 16px;font-weight: 700;") 规章制度
+                  each r in rules
+                    dl
+                      dt
+                        h5
+                          img(src="/images/arrow.png", style="vertical-align: middle;margin-right: 2%;")
+                          | #{JSON.parse(r).publisher}
+                        time(style="float: right") #{JSON.parse(r).time}
+                      dd(style="border-bottom: 1px solid #dbdbdb;")
+                          a(href="/details?type=规章制度&id=" + JSON.parse(r).articleId) #{JSON.parse(r).title}
+
+                  a.btn.btn-default(href="/rulesRegulations?page=1", style="padding: 5px 18px; margin-top: 12px;") 更多
+                article.article.article--big(style="width: 55%;padding: 2%; line-height: 36px; float: right; height: 460px; border-left: 1px solid #dbdbdb;")
+                  div(style="font-size: 14px; padding: 1%; border-bottom: 1px solid #dbdbdb; height: 36px;")
+                    div
+                      span(style="line-height: 36px;font-size: 16px;font-weight: 700;") 集团发文
+                  each w in writing
+                    dl
+                      dt
+                        h5
+                          span(style="color: #3488ea; font-size: 2em; vertical-align: middle;") •
+                          | &nbsp; #{JSON.parse(w).publisher}
+                        time(style="float: right") #{JSON.parse(w).time}
+                      dd(style="border-bottom: 1px solid #dbdbdb;")
+                          a(href="/details?type=集团发文&id=" + JSON.parse(w).articleId) #{JSON.parse(w).title}
+
+                  a.btn.btn-default(href="/writings?page=1", style="padding: 5px 18px; margin-top: 12px;") 更多
+          .clear
+      .mlist.news.module.ff_noSlider(style="background-position: initial;background-size: cover;background-repeat: no-repeat;")
+        .bgmask
+        .module_container
+          .container_content
+            .content_wrapper
+              .content_list.clearfix
+                div(style="width: 20%;float: left;")
+                  img(src="/images/partybuilding.png", style="position: relative;top: -7px;left: -7px; border-radius: 30px;", alt="党建")
+                  article.article.article--big(style="padding: 2%; line-height: 36px;  height: 492px; width: 90%")
+                    div(style="font-size: 14px; padding: 8% 6% 1% 7%; border-bottom: 1px solid #dbdbdb; height: 36px;")
+                      div
+                        span(style="line-height: 36px;font-size: 16px;font-weight: 700;") 聚焦舆情
+                    div(style="padding: 8%;")
+                      p
+                        a(href="#") #中国股市上演“空城计”
+                      p
+                        a(href="#") #中国股市这次动真格了
+                      p
+                        a(href="#") #乐视网大变局:怼甘薇!
+                      p
+                        a(href="#") #股市经典口诀
+                      p
+                        a(href="#") #王健林浴火重生！
+                      p
+                        a(href="#") #收购戴姆勒还不够！
+                      p
+                        a(href="#") #顾雲君：5G疯狂连板80亿
+                      p
+                        a(href="#") #轻仓的，勿操作
+                      p
+                        a(href="#") #股权投资项目
+                article.article.article--big.doc(style="width: 25%;padding: 2%; line-height: 36px; float: left; height: 600px;")
+                  div(style="font-size: 14px; padding: 1%; border-bottom: 1px solid #dbdbdb; height: 36px;")
+                    div
+                      span(style="line-height: 36px;font-size: 16px;font-weight: 700;") 最新文档
+                  each doc in docs
+                    div(style="line-height: 25px; padding: 16px 5px;clear:both")
+                      a(href="http://59.110.172.228:8012/onlinePreview?url=http://59.110.172.228"+doc.url)
+                        img(src="http://59.110.172.228"+doc.iconUrl, style="width: 74px; height: 94px; vertical-align: middle;float: left; border: 1px solid #dcdada;")
+                      a(href="http://59.110.172.228:8012/onlinePreview?url=http://59.110.172.228"+doc.url)
+                        span(style="float: left; font-size: 14px; font-weight: 600; width: 60%;margin-left: 8px; ")=doc.name
+                      span(style="float: left; font-size: 12px; width: 30px;margin-left: 8px;")=doc.uname   
+                      span(style="float: left; font-size: 12px; width: 115px; margin-left: 8px;")=doc.created
+                  div(style="clear:both")
+                    a.btn.btn-default(href="/latestDocuments?page=1", style="padding: 5px 18px; margin-top: 12px;") 更多
+                div(style="width: 26%;float: left;")
+                  article.article.article--big(style="padding: 2%; line-height: 36px; margin-left: 5%; width: 90%")
+                    div(style="font-size: 14px; padding: 8% 6% 1% 7%; border-bottom: 1px solid #dbdbdb; height: 36px;")
+                      div
+                        span(style="line-height: 36px;font-size: 16px;font-weight: 700;") 集团会表
+                    each mt in meetingTable
+                      dl(style="padding: 3% 8%;")
+                        dt
+                          h5
+                            a(href="/details?type=集团会表&id=" + JSON.parse(mt).articleId)
+                              img(src="/images/new.png", style="vertical-align: middle;margin-right: 2%;")
+                              | #{JSON.parse(mt).title}
+                          time(style="float: right") #{JSON.parse(mt).time}
+                        dd #{JSON.parse(mt).publisher}
+                  article.article.article--big(style="padding: 2%; line-height: 36px; margin-left: 5%; height: 461px; width: 90%")
+                    div(style="font-size: 14px; padding: 8% 6% 1% 7%; border-bottom: 1px solid #dbdbdb; height: 36px;")
+                      div
+                        span(style="line-height: 36px;font-size: 16px;font-weight: 700;") 工作简报
+                    each wb in workBulletin
+                      dl(style="padding: 3% 8%;")
+                        dt
+                          h5
+                            img(src="/images/briefing.png", style="vertical-align: middle;margin-right: 2%;")
+                            a(href="/details?type=工作简报&id=" + JSON.parse(wb).articleId)
+                               span(title="" + JSON.parse(wb).title) #{JSON.parse(wb).title}
+                          time(style="float: right") #{JSON.parse(wb).time}
+                        dd(style="border-bottom: 1px solid #dbdbdb;")
+                            a(href="/details?type=工作简报&id=" + JSON.parse(wb).articleId) #{JSON.parse(wb).publisher}
+
+                    a.btn.btn-default(href="/workBulletin?page=1", style="padding: 5px 18px; margin: 6px 18px;") 更多
+                article.article.article--big(style="width: 20%;padding: 2%; line-height: 48px; float: left; margin-left: 1%; height: 600px;")
+                  div(style="font-size: 14px; padding: 1%; border-bottom: 1px solid #dbdbdb; height: 36px;")
+                    div
+                      span(style="line-height: 36px;font-size: 16px;font-weight: 700;") 通讯录
+                  ul
+                    li
+                      img(src="/images/phone.png", style="vertical-align: middle;margin-right: 2%;")
+                      |                                         赵长山
+                      phone(style="margin-left: 10%") 13801381002
+                    li
+                      img(src="/images/phone.png", style="vertical-align: middle;margin-right: 2%;")
+                      |                                         宣鸿
+                      phone(style="margin-left: 10%") 13901150891
+                    li
+                      img(src="/images/phone.png", style="vertical-align: middle;margin-right: 2%;")
+                      |                                         王明兰
+                      phone(style="margin-left: 10%") 13601224838
+                    li
+                      img(src="/images/phone.png", style="vertical-align: middle;margin-right: 2%;")
+                      |                                         李妍
+                      phone(style="margin-left: 10%") 18811062986
+                    li
+                      img(src="/images/phone.png", style="vertical-align: middle;margin-right: 2%;")
+                      |                                         姚胜利
+                      phone(style="margin-left: 10%") 13901200821
+                    li
+                      img(src="/images/phone.png", style="vertical-align: middle;margin-right: 2%;")
+                      |                                         韩柏
+                      phone(style="margin-left: 10%") 13910768852
+                    li
+                      img(src="/images/phone.png", style="vertical-align: middle;margin-right: 2%;")
+                      |                                         周武光
+                      phone(style="margin-left: 10%") 13910074978
+                    li
+                      img(src="/images/phone.png", style="vertical-align: middle;margin-right: 2%;")
+                      |                                         杨彦茹
+                      phone(style="margin-left: 10%") 13121297187
+                    li
+                      img(src="/images/phone.png", style="vertical-align: middle;margin-right: 2%;")
+                      |                                         邵顺昌
+                      phone(style="margin-left: 10%") 13311151098
+                  a.btn.btn-default(href="/details?type=通讯录&id=37" style="padding: 5px 18px; margin: 6px 12px;") 更多
+            .clear
+
+
+  include foot

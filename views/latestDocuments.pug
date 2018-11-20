@@ -1,0 +1,34 @@
+extends layout
+
+block content
+  include head
+  div(class="content")
+    div(style="text-align: center; margin: 7% 0 3% 0px;")
+      h1 最新 文档
+      img(src="/images/list_.png")
+    article.article.article--big(style="padding: 3% 0px;")
+      .el-row(data-v-b3e18cde="")
+        each doc in docs.forms
+          .doc.el-col.el-col-4(data-v-b3e18cde="")
+            .doc-inner(data-v-b3e18cde="")
+              span(data-v-b3e18cde="")
+                .el-popover__reference(data-v-b3e18cde="", aria-describedby="el-popover-8181", tabindex="0")
+                  .imgsqu(data-v-b3e18cde="")
+                    a(href="http://59.110.172.228:8012/onlinePreview?url=http://59.110.172.228"+doc.url target="_blank" rel="nofollow")
+                      img.view(data-v-b3e18cde="", src="http://59.110.172.228"+doc.iconUrl, width="100", alt="")
+                  .title(data-v-b3e18cde="")=doc.name
+
+      .pagination
+        a(href="/latestDocuments?page=1" title="首页") 首页
+        a(href="/latestDocuments?page=" + ((docs.page - 1) > 0 ? (docs.page - 1) : 1) title="上一页") 上一页
+        - for(var i = 1; i <= docs.pageCount; i++)
+            if(i==docs.page)
+              a(href="/latestDocuments?page="+i).current=i
+            else
+              a(href="/latestDocuments?page="+i)=i
+        a(href="/latestDocuments?page="+((docs.page+1) <= docs.pageCount?(docs.page+1):docs.pageCount)) 下一页
+        a(href="/latestDocuments?page="+docs.pageCount) 尾页
+
+
+
+  include foot

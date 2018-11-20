@@ -1,0 +1,66 @@
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    meta(name="keywords", content="中关村发展")
+    meta(name="description", content="中关村发展")
+    meta(name="author", content="YY-MO")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0")
+    meta(content="yes", name="apple-mobile-web-app-capable")
+    meta(content="black", name="apple-mobile-web-app-status-bar-style")
+    meta(name="format-detection", content="telephone=no")
+    meta(name="renderer", content="webkit")
+    title 中关村发展
+    link(rel="stylesheet", type="text/css", href="/stylesheets/lib2.css")
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(type="text/javascript", src="/javascripts/jquery-3.2.1.min.js")
+    script(type="text/javascript", src="/javascripts/laydate/laydate.js")
+    script.
+        $(function () {
+            $(".more").click(function () {
+                if ($(".more-content").css("display") == "none") {
+                    $(".more").css("background-color", "#fff");
+                    $(".more-img").attr("src", "/images/head/more1.png");
+                    $(".more-content").slideDown("slow");
+                } else {
+                    $(".more").css("background-color", "#005A9E");
+                    $(".more-img").attr("src", "/images/head/more.png");
+                    $(".more-content").slideUp("slow");
+                }
+            })
+            $(".personalCenter").click(function () {
+                if ($(".login").css("display") == "none") {
+                    $(".login").slideDown("slow");
+                } else {
+                    $(".login").slideUp("slow");
+                }
+            })
+
+            //标注重要日子
+            var ins1 = laydate.render({
+                elem: '#time'
+                , mark: {
+                    '0-10-14': '生日'
+                    , '0-12-31': '生日' //每年12月31日
+                    , '0-0-10': '生日' //每个月10号
+                    , '2017-8-15': '生日' //具体日期
+                    , '2017-8-20': '生日' //如果为空字符，则默认显示数字+徽章
+                    , '2017-8-21': '生日'
+                } , done: function (value, date) {
+                    if (date.year === 2017 && date.month === 8 && date.date === 15) { //点击2017年8月15日，弹出提示语
+                        ins1.hint('中国人民抗日战争胜利72周年');
+                    }
+                }
+            })
+
+            $("#QR-code").click(function () {
+                $(".login1").hide();
+                $(".login2").show();
+            })
+            $("#QR-code1").click(function () {
+                $(".login2").hide();
+                $(".login1").show();
+            })
+        })
+  body
+    block content

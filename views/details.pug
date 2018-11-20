@@ -1,0 +1,41 @@
+extends layout
+
+block content
+  include head
+  div(class="content")
+    div(style="text-align: center; margin: 7% 0 3% 0px;")
+      //h1 #{type}
+      //img(src="/images/list_.png")
+    input(type="hidden" id="url" value=""+ JSON.parse(data).url)
+    article.article.article--big
+        div(style="text-align: center;")
+            .paging
+                //a#first 首页
+                a#prev(title="上一页") <
+                //i#list
+                a#next(title="下一页") >
+                //a#last 尾页
+            canvas#the-canvas
+            //div(style="position: relative;top: -54px;left: -380px;font-size: 16px;")
+            //    span
+            //        span#page_num
+            //        | /
+            //        span#page_count
+
+
+            script(src="/javascripts/pdf.js")
+            script(src="/javascripts/pdf.worker.js")
+            script(src="/javascripts/fdf_paging.js")
+            script.
+                pdfjsLib.getDocument($("#url").val()).then(function (pdfDoc_) {
+                    pdfDoc = pdfDoc_;
+                    // 初始/第一页渲染
+                    renderPage(pageNum);
+                    // document.getElementById('page_count').textContent = pdfDoc.numPages;
+                    // var html = "";
+                    // for (let i = 1; i <= pdfDoc.numPages; i++) {
+                    //     html += "<a href='javascript: queueRenderPage(" + i + ");'>" + i + "</a> ";
+                    // }
+                    // $("#list").html(html);
+                });
+    include foot
