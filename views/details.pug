@@ -22,20 +22,15 @@ block content
             //        | /
             //        span#page_count
 
-
             script(src="/javascripts/pdf.js")
             script(src="/javascripts/pdf.worker.js")
             script(src="/javascripts/fdf_paging.js")
             script.
-                pdfjsLib.getDocument($("#url").val()).then(function (pdfDoc_) {
-                    pdfDoc = pdfDoc_;
-                    // 初始/第一页渲染
-                    renderPage(pageNum);
-                    // document.getElementById('page_count').textContent = pdfDoc.numPages;
-                    // var html = "";
-                    // for (let i = 1; i <= pdfDoc.numPages; i++) {
-                    //     html += "<a href='javascript: queueRenderPage(" + i + ");'>" + i + "</a> ";
-                    // }
-                    // $("#list").html(html);
+                $(function () {
+                    pdfjsLib.getDocument("#{JSON.parse(data).url}").then(function (pdfDoc_) {
+                        pdfDoc = pdfDoc_;
+                        // 初始/第一页渲染
+                        renderPage(pageNum);
+                    });
                 });
     include foot
