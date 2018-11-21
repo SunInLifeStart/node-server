@@ -3923,17 +3923,45 @@ dl dt h5 {
   text-overflow: ellipsis;
 }
 .paging {
-  font-size: 25px; cursor: pointer;width:1200px;
+  font-size: 40px; cursor: pointer;width:1200px;
 }
 .paging #prev{
-  position: fixed;top: 50%; left: 120px; color: #959595;
+  position: fixed;top: 50%; left: 200px; color: #959595;
 }
 .paging #next{
-  position: fixed;top: 50%; right: 120px;color: #959595;
+  position: fixed;top: 50%; right: 200px;color: #959595;
 }
 .paging #prev:hover{
-  font-size: 40px; color: #333;
+  font-size: 50px; color: #666;
 }
 .paging #next:hover{
-  font-size: 40px; color: #333;
+  font-size: 50px; color: #666;
 }
+/* 详细页面的代码 */
+.details { padding: 0px; overflow: hidden;width: 80%; margin: 0 auto;}
+.details > h2 { text-align: center; font-size: 24px; color: #000; padding: 10px 40px 20px; }
+.details > h3 { text-align: center; color: #9A9A9A; padding: 10px 0px 13px; margin-bottom: 30px; border-bottom: 1px solid #E3E3E3; font-weight: normal; }
+.details > h3 span { padding: 0px 10px 0px 20px; display: inline-block; }
+.details > h3 span.time { padding-left: 22px; }
+.details > h3 span.come { }
+.details > h3 span.click { padding-left: 18px; }
+.details > h3 span.print { }
+.details > h3 span.print a { cursor: pointer; cursor: hand; color: #9A9A9A; }
+.details > h3 span.autor { }
+.details > h3 span.font_size { padding-left: 5px; }
+.details > h3 span.font_size a { padding: 0px 5px; cursor: pointer; cursor: hand; }
+.details > h3 span.font_size a#big { font-size: 12px; }
+.details > h3 span.font_size a#small { font-size: 12px; }
+.details > h3 span.font_size a#medium { font-size: 12px; }
+.details > h3 span.font_size a.on { color: #0049a9; font-weight: bold; }
+.conts { line-height: 24px; }
+.conts p { padding: 0px; }
+.share { display: block; margin-bottom: 30px; border-bottom: 1px solid #dadada; padding: 20px 0 30px; }
+#passit_def_div .font_weir { font-family: "微软雅黑"; float: left; }
+a.close { width: 79px; height: 27px; display: inline-block; background-color: #0049a9; color: #fff; line-height: 27px; text-align: center; font-weight: bold; cursor: pointer }
+.fp_wrapper { overflow: hidden; }
+.fp { margin-bottom: 20px; position: relative; float: left; max-width: 870px; overflow: hidden; }
+.fp span { display: block; padding: 2px 0px; }
+.fp span a { color: #333; }
+.fp span a:hover { color: #000; text-decoration: underline; }
+.fp_wrapper .close { float: right; }

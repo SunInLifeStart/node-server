@@ -30,7 +30,7 @@ function renderPage(num) {
         });
     });
     // 更新页面计数器
-    // document.getElementById('page_num').textContent = num;
+    document.getElementById('page_num').textContent = num;
 }
 
 /**

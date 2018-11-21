@@ -3,32 +3,52 @@ extends layout
 block content
   include head
   div(class="content")
-    div(style="text-align: center; margin: 7% 0 3% 0px;")
+    div(style="margin: 7% 0 3% 0px; padding-left: 50px;")
+      p
+        a(href="/index") 首页 &nbsp;
+        a(href="/" + classify) &nbsp;> &nbsp;#{type}
+    div
       //h1 #{type}
       //img(src="/images/list_.png")
-    input(type="hidden" id="url" value=""+ JSON.parse(data).url)
     article.article.article--big
-        div(style="text-align: center;")
+        #article(style="padding: 40px;")
+            .details
+                h2 #{JSON.parse(data).title}
+                h3
+                    span.time 发布时间：#{JSON.parse(data).time}
+                    span#hitid.click 发布人：#{JSON.parse(data).publisher}
+                    span.come 来源：#{JSON.parse(data).source}
+                .conts
+                    | !{JSON.parse(data).content}
+
+        #pdf(style="text-align: center;")
+            input(type="hidden" id="url" value="" + JSON.parse(data).url)
             .paging
                 //a#first 首页
                 a#prev(title="上一页") <
                 //i#list
                 a#next(title="下一页") >
                 //a#last 尾页
+            div(style="position: relative;top: 50px; font-size: 16px;")
+                span
+                    span#page_num
+                    | /
+                    span#page_count
             canvas#the-canvas
-            //div(style="position: relative;top: -54px;left: -380px;font-size: 16px;")
-            //    span
-            //        span#page_num
-            //        | /
-            //        span#page_count
-
-            script(src="/javascripts/pdf.js")
-            script(src="/javascripts/pdf.worker.js")
-            script(src="/javascripts/fdf_paging.js")
-            script.
+        script(src="/javascripts/pdf.js")
+        script(src="/javascripts/pdf.worker.js")
+        script(src="/javascripts/fdf_paging.js")
+        script.
+            if ("#{JSON.parse(data).url}") {
                 pdfjsLib.getDocument("#{JSON.parse(data).url}").then(function (pdfDoc_) {
                     pdfDoc = pdfDoc_;
                     // 初始/第一页渲染
                     renderPage(pageNum);
+                    document.getElementById('page_count').textContent = pdfDoc.numPages;
                 });
+            } else {
+                $("#pdf").hide();
+            }
+
+
     include foot

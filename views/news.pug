@@ -3,108 +3,34 @@ extends layout
 block content
   include head
   div(class="content")
+
     div(style="text-align: center; margin: 7% 0 3% 0px;")
-      h1 集团 新闻
+      h1 #{title}
       img(src="/images/list_.png")
 
     div
-      article.article.article--big(style='width: 30%;float: left;margin-left: 3%;height: 360px;')
-        .aticle__image
-          img(style='border-radius: 3px 3px 0 0;max-width: 360px;max-height: 240px;', src='/images/ldjh/ldjh01.jpg')
-        .aticle__content
-          p(style='font-size: 1.2em;font-weight: 700;    overflow: hidden;\
-          white-space: nowrap;\
-          text-overflow: ellipsis;') 集团党委书记、董事长赵长山在集团风险管理与审计工作会上的讲话
-          p 回顾总结2017年工作，研究部署集团2018年风险管理与审计工作
-      article.article.article--big(style='width: 30%;float: left;margin-left: 1%;height: 360px;')
-        .aticle__image
-          img(style='border-radius: 3px 3px 0 0;max-width: 360px;max-height: 240px;', src='/images/ldjh/ldjh02.jpg')
-        .aticle__content
-          p(style='font-size: 1.2em;font-weight: 700;    overflow: hidden;\
-          white-space: nowrap;\
-          text-overflow: ellipsis;') 集团党委书记董事长赵长山在集团党风廉政工作会议上的讲话
-          p 传达十九届中央纪委二次全会和十二届市纪委三次全会精神
-      article.article.article--big(style='width: 30%;float: left;margin-left: 1%;height: 360px;')
-        .aticle__image
-          img(style='border-radius: 3px 3px 0 0;max-width: 360px;max-height: 240px;', src='/images/ldjh/ldjh03.jpg')
-        .aticle__content
-          p(style='font-size: 1.2em;font-weight: 700;    overflow: hidden;\
-          white-space: nowrap;\
-          text-overflow: ellipsis;') 把握新形势、激发新活力、打造新引擎为服务科技创新中心建设而努力奋斗
-          p 主动作为、勇于承担，经营工作取得良好成绩
-    div
-      article.article.article--big(style='width: 30%;float: left;margin-left: 3%;height: 360px;')
-        .aticle__image
-          img(style='border-radius: 3px 3px 0 0;max-width: 360px;max-height: 240px;', src='/images/ldjh/ldjh04.jpg')
-        .aticle__content
-          p(style='font-size: 1.2em;font-weight: 700;    overflow: hidden;\
-          white-space: nowrap;\
-          text-overflow: ellipsis;') 迈入新时代 开启新征程 奋力谱写服务全国科创中心建设新篇章
-          p 研究落实市纪委第十二届四次全会、市“两会”相关工作部署的重要会议
-      article.article.article--big(style='width: 30%;float: left;margin-left: 1%;height: 360px;')
-        .aticle__image
-          img(style='border-radius: 3px 3px 0 0;max-width: 360px;max-height: 240px;', src='/images/ldjh/ldjh05.jpg')
-        .aticle__content
-          p(style='font-size: 1.2em;font-weight: 700;    overflow: hidden;\
-          white-space: nowrap;\
-          text-overflow: ellipsis;') 在中关村发展集团2018年工作会议上的讲话
-          p 过去一年，是中关村发展集团取得卓有成效成绩的一年
-      article.article.article--big(style='width: 30%;float: left;margin-left: 1%;height: 360px;')
-        .aticle__image
-          img(style='border-radius: 3px 3px 0 0;max-width: 360px;max-height: 240px;', src='/images/ldjh/ldjh06.jpg')
-        .aticle__content
-          p(style='font-size: 1.2em;font-weight: 700;    overflow: hidden;\
-          white-space: nowrap;\
-          text-overflow: ellipsis;') 集团党委书记、董事长赵长山在中关村发展集团领导干部会议上的讲话
-          p 要深刻认识学习宣传贯彻党的十九大精神的重大意义
-    div
-      article.article.article--big(style='width: 30%;float: left;margin-left: 3%;height: 360px;')
-        .aticle__image
-          img(style='border-radius: 3px 3px 0 0;max-width: 360px;max-height: 240px;', src='/images/ldjh/ldjh07.jpg')
-        .aticle__content
-          p(style='font-size: 1.2em;font-weight: 700;    overflow: hidden;\
-          white-space: nowrap;\
-          text-overflow: ellipsis;') 集团党委书记、董事长赵长山在中关村发展集团2017年创新汇上的致辞
-          p 秋风送爽，金桂飘香。今天的领创空间高朋满座、胜友如云
-      article.article.article--big(style='width: 30%;float: left;margin-left: 1%;height: 360px;')
-        .aticle__image
-          img(style='border-radius: 3px 3px 0 0;max-width: 360px;max-height: 240px;', src='/images/ldjh/ldjh08.jpg')
-        .aticle__content
-          p(style='font-size: 1.2em;font-weight: 700;    overflow: hidden;\
-          white-space: nowrap;\
-          text-overflow: ellipsis;') 中关村管委会副主任王汝芳在集团2017年工作会上的讲话
-          p 围绕全国科技创新中心的使命和定位，大力推进”三城一区“建设
-      article.article.article--big(style='width: 30%;float: left;margin-left: 1%;height: 360px;')
-        .aticle__image
-          img(style='border-radius: 3px 3px 0 0;max-width: 360px;max-height: 240px;', src='/images/ldjh/ldjh09.jpg')
-        .aticle__content
-          p(style='font-size: 1.2em;font-weight: 700;    overflow: hidden;\
-          white-space: nowrap;\
-          text-overflow: ellipsis;') 集团党委副书记、总经理宣鸿在集团2017年工作会上的讲话
-          p 把握高精尖经济结构的方向，推动前沿科技成果转化及服务落地取得明显成效
+      each obj in news
+        article.article.article--big(style='width: 32%;float: left;margin-left: 1%;height: 380px;')
+          .aticle__image
+            a(href="/"+key+"/details?type="+title+"&id=" + JSON.parse(obj).articleId)
+              img(style='border-radius: 3px 3px 0 0; height: 256px; width: 100%;', src=''+JSON.parse(obj).img)
+          .aticle__content
+            a(href="/"+key+"/details?type="+title+"&id=" + JSON.parse(obj).articleId)
+              p(style='font-size: 1.2em;font-weight: 700;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;') #{JSON.parse(obj).title}
+              p(style='overflow: hidden;height: 47px;text-overflow: ellipsis;' title=""+JSON.parse(obj).about) #{JSON.parse(obj).about}
+
     div(style='clear:both;')
-      .pagination
-        span.disabled(title='首页') 首页
-        span.disabled(title='上一页') 上一页
-        span.current 1
-        span 2
-        span 3
-        span 4
-        span 5
-        span 6
-        span 7
-        span 下一页
-        span 尾页
-      //.pagination
-      //  a(href="/leadershipSpeechs?page=1" title="首页") 首页
-      //  a(href="/leadershipSpeechs?page=" + ((page - 1) > 0 ? (page - 1) : 1) title="上一页") 上一页
-      //  - for(var i = 1; i <= count; i++)
-      //      if(i==page)
-      //        a(href="/leadershipSpeechs?page="+i).current=i
-      //      else
-      //        a(href="/leadershipSpeechs?page="+i)=i
-      //  a(href="/leadershipSpeechs?page="+((page+1) <= count?(page+1):count)) 下一页
-      //  a(href="/leadershipSpeechs?page="+count) 尾页
+    .pagination
+      a(href="/"+key+"/list?page=1" title="首页") 首页
+      a(href="/"+key+"/list?page=" + ((page - 1) > 0 ? (page - 1) : 1) title="上一页") 上一页
+      - for(var i = 1; i <= count; i++)
+          if(i == page)
+            a(href="/"+key+"/list?page=" + i).current=i
+          else
+            a(href="/"+key+"/list?page=" + i)=i
+      a(href="/"+key+"/list?page=" + ((parseInt(page) + 1) <= count ? (parseInt(page) + 1) : count)) 下一页
+      a(href="/"+key+"/list?page=" + count) 尾页
+
 
 
 

@@ -1,10 +1,13 @@
 const express = require('express');
 const request = require("request");
 const redis = require("../redis/redis");
+const config = require('../config');
 const router = express.Router();
 
+const personalPortal = config.url.host;  // 外网地址
+
 /* GET home page. */
-router.get('/', function(req, res) {
+router.get('/index', function(req, res) {
     getLatestDocuments(2, 4, function (data) {
         (async () => {
             let leadershipSpeech = await redis.zrevrange(1, "领导讲话", [0, 4]);
@@ -13,29 +16,52 @@ router.get('/', function(req, res) {
             let rules = await redis.zrevrange(1, "规章制度", [0, 4]);
             let noticeBulletin = await redis.zrevrange(1, "通知公告", [0, 4]);
             let meetingTable = await redis.zrevrange(1, "集团会表", [0, 1]);
-            console.log(meetingTable,"==========");
-            res.render('index', { docs: data.forms, leadershipSpeech, writing, workBulletin, rules, noticeBulletin, meetingTable});
+            res.render('index', { docs: data.forms, leadershipSpeech, writing, workBulletin, rules, noticeBulletin, meetingTable, personalPortal: personalPortal});
         })()
     });
 });
 
 router.get('/latestDocuments', function(req, res) {
     getLatestDocuments(req.query.page, 24, function (data) {
-        res.render('latestDocuments', { docs: data});
+        res.render('latestDocuments', { docs: data, personalPortal: personalPortal});
     })
 });
 
 router.get('/partyBuilding', function(req, res) {
-    res.render('partyBuilding');
+    (async () => {
+        let partyBuilding = await redis.zrevrange(1, "partyBuilding", [0, 2]);
+        let tradeUnion = await redis.zrevrange(1, "工会活动", [0, 2]);
+        res.render('partyBuilding', {tradeUnion, partyBuilding, personalPortal: personalPortal});
+    })()
 });
 
-router.get('/news', function(req, res) {
-    res.render('news');
+router.get('/:news/list', function(req, res) {
+    (async () => {
+        let key = '', title = '';
+        if(req.params.news == 'news') {
+            key = '新闻中心';
+        }
+        if(req.params.news == 'partyBuildingAll') {   // 集团党建
+            key = 'partyBuilding';
+        }
+        if(req.params.news == 'tradeUnion') {
+            key = '工会活动';
+        }
+        let size = 9;
+        let page = ((req.query.page || 1) - 1) * size;
+        let pageSize = page + size - 1;
+        let count = await redis.zcard(1, key);
+        let news = await redis.zrevrange(1, key, [page, pageSize]);
+        if(key == 'partyBuilding') {
+            key = '集团党建';
+        }
+        res.render('news', {news, page: (req.query.page || 1), count: Math.ceil(count / size), key: req.params.news, title: key, personalPortal: personalPortal});
+    })()
 });
 
-router.get('/details', function(req, res) {
+router.get('/:classify/details', function(req, res) {
     redis.get(1, "article:" + req.query.id).then(function (data) {
-        res.render('details', {data: data, type: req.query.type});
+        res.render('details', {data: data, type: req.query.type, classify: req.params.classify, personalPortal: personalPortal});
     });
 });
 
@@ -46,7 +72,7 @@ router.get('/leadershipSpeechs', function(req, res) {
         let pageSize = page + size - 1;
         let count = await redis.zcard(1, '领导讲话');
         let leadershipSpeechs = await redis.zrevrange(1, "领导讲话", [page, pageSize]);
-        res.render('leadershipSpeechs', {leadershipSpeechs, page: req.query.page, count: Math.ceil(count / size)});
+        res.render('leadershipSpeechs', {leadershipSpeechs, page: req.query.page, count: Math.ceil(count / size), personalPortal: personalPortal});
     })()
 });
 
@@ -57,7 +83,7 @@ router.get('/rulesRegulations', function(req, res) {
         let pageSize = page + size - 1;
         let count = await redis.zcard(1, '规章制度');
         let rulesRegulations = await redis.zrevrange(1, "规章制度", [page, pageSize]);
-        res.render('rulesRegulations', {rulesRegulations, page: req.query.page, count: Math.ceil(count / size)});
+        res.render('rulesRegulations', {rulesRegulations, page: req.query.page, count: Math.ceil(count / size), personalPortal: personalPortal});
     })()
 });
 
@@ -68,7 +94,7 @@ router.get('/writings', function(req, res) {
         let pageSize = page + size - 1;
         let count = await redis.zcard(1, '集团发文');
         let writings = await redis.zrevrange(1, "集团发文", [page, pageSize]);
-        res.render('writings', {writings, page: req.query.page, count: Math.ceil(count / size)});
+        res.render('writings', {writings, page: req.query.page, count: Math.ceil(count / size), personalPortal: personalPortal});
     })()
 });
 
@@ -79,7 +105,7 @@ router.get('/workBulletin', function(req, res) {
         let pageSize = page + size - 1;
         let count = await redis.zcard(1, '工作简报');
         let workBulletin = await redis.zrevrange(1, "工作简报", [page, pageSize]);
-        res.render('workBulletin', {workBulletin, page: req.query.page, count: Math.ceil(count / size)});
+        res.render('workBulletin', {workBulletin, page: req.query.page, count: Math.ceil(count / size), personalPortal: personalPortal});
     })()
 });
 
@@ -90,13 +116,13 @@ router.get('/noticeBulletin', function(req, res) {
         let pageSize = page + size - 1;
         let count = await redis.zcard(1, '通知公告');
         let noticeBulletin = await redis.zrevrange(1, "通知公告", [page, pageSize]);
-        res.render('noticeBulletin', {noticeBulletin, page: req.query.page, count: Math.ceil(count / size)});
+        res.render('noticeBulletin', {noticeBulletin, page: req.query.page, count: Math.ceil(count / size), personalPortal: personalPortal});
     })()
 });
 
 function getLatestDocuments(page, pageSize, cb) {
     const options = {
-        url: "http://59.110.172.228/api/v1/share/list",
+        url: config.url.host + config.url.document,
         method: "POST",
         json: true,
         headers: {

@@ -2,8 +2,8 @@
 var redis = require('redis');
 const config = require('../config');
 var client = redis.createClient(config.options.RDS_PORT, config.options.RDS_HOST);
-// client.auth("123456");
 
+// client.auth("123456");
 client.on('end',function(err){
     console.log('end');
 });
@@ -14,36 +14,12 @@ client.on("err", function(err) {
 });
 
 /**
- * 有序集合添加 Set
+ * 添加有序集合
  * @param db
  * @param key
  * @param val
- * @param callback
-
-exports.save = function(db, key, id, val, callback) {
-    client.select(db, function(err) {
-        if (err) {
-            callback(err);
-        } else {
-            if(id) {
-                client.zadd(key, id, JSON.stringify(val), callback);
-            }else{   // 添加自增集合set
-                client.zrange(key, 0, -1, "WITHSCORES", function (err, data) {
-                    console.log(data,"=======================",val);
-                    if (JSON.stringify(data).indexOf(val) < 0) {
-                        client.incr("score", function (err, score) {
-                            val.id = score;
-                            client.zadd(key, score, JSON.stringify(val), callback);
-                        });
-                    }else{
-                        callback("数据已存在");
-                    }
-                });
-            }
-        }
-    });
-};*/
-
+ * @returns {Promise<any>}
+ */
 exports.zadd = function(db, key, val) {
     return new Promise(function (resolve, reject) {
         client.select(db, function(err) {
@@ -61,6 +37,13 @@ exports.zadd = function(db, key, val) {
     })
 };
 
+/**
+ * 添加字符串
+ * @param db
+ * @param key
+ * @param val
+ * @returns {Promise<any>}
+ */
 exports.set = function(db, key, val) {
     return new Promise(function (resolve, reject) {
         client.select(db, function(err) {
@@ -146,7 +129,7 @@ exports.lpush = function(db, key, obj) {
 };
 
 /**
- * 有序集合列表
+ * 有序集合列表（asc）
  * @param db
  * @param key
  * @param option
@@ -167,7 +150,7 @@ exports.zrange = function(db, key, option) {
     });
 };
 /**
- * 有序集合列表(排序)
+ * 有序集合列表(desc)
  * @param db
  * @param key
  * @param option
@@ -205,6 +188,14 @@ exports.zcard = function(db, key) {
         });
     })
 };
+
+/**
+ * 获取List数据
+ * @param db
+ * @param key
+ * @param option
+ * @returns {Promise<any>}
+ */
 exports.lrange = function(db, key, option) {
     return new Promise(function (resolve, reject) {
         client.select(db, function(err) {
@@ -219,6 +210,13 @@ exports.lrange = function(db, key, option) {
         });
     });
 };
+
+/**
+ * 获取字符串数据
+ * @param db
+ * @param key
+ * @returns {Promise<any>}
+ */
 exports.get = function(db, key) {
     return new Promise(function (resolve, reject) {
         client.select(db, function(err) {
@@ -234,5 +232,23 @@ exports.get = function(db, key) {
     });
 };
 
-
+/**
+ * 删除一个库所有key
+ * @param db
+ * @returns {Promise<any>}
+ */
+exports.flushdb = function(db) {
+    return new Promise(function (resolve, reject) {
+        client.select(db, function(err) {
+            if (err) {
+                reject(err);
+            } else {
+                client.flushdb(function (err, res) {
+                    resolve(res);
+                    reject(err);
+                });
+            }
+        });
+    });
+};
 
