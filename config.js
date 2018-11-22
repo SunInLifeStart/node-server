@@ -8,9 +8,11 @@ const options = {
     RDS_OPTS : {}                     // 设置项
 };
 const url = {
-    host : 'http://172.16.3.18',
-    users : '/api/v1/users',// 用户列表接口
-    document : '/api/v1/share/list'
+    host : 'http://work.zgcgroup.vpn',
+    IP : 'http://172.16.3.18',
+    users : '/api/v1/users',                // 用户列表接口
+    document : '/api/v1/share/list',        // 文档接口
+    thumb : 'http://thumb1.zgcgroup.vpn:8012/onlinePreview?url=',     // 预览
 };
 
 module.exports = {

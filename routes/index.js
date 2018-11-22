@@ -8,7 +8,7 @@ const personalPortal = config.url.host;  // 外网地址
 
 /* GET home page. */
 router.get('/index', function(req, res) {
-    getLatestDocuments(2, 4, function (data) {
+    getLatestDocuments(1, 4, function (data) {
         (async () => {
             let leadershipSpeech = await redis.zrevrange(1, "领导讲话", [0, 4]);
             let writing = await redis.zrevrange(1, "集团发文", [0, 4]);
@@ -16,7 +16,8 @@ router.get('/index', function(req, res) {
             let rules = await redis.zrevrange(1, "规章制度", [0, 4]);
             let noticeBulletin = await redis.zrevrange(1, "通知公告", [0, 4]);
             let meetingTable = await redis.zrevrange(1, "集团会表", [0, 1]);
-            res.render('index', { docs: data.forms, leadershipSpeech, writing, workBulletin, rules, noticeBulletin, meetingTable, personalPortal: personalPortal});
+            let comm = await redis.zrevrange(1, "通讯录", [0, 1]);
+            res.render('index', { docs: data.forms, leadershipSpeech, writing, workBulletin, rules, noticeBulletin, meetingTable, personalPortal: personalPortal, comm, thumb: config.url.thumb});
         })()
     });
 });
@@ -122,7 +123,7 @@ router.get('/noticeBulletin', function(req, res) {
 
 function getLatestDocuments(page, pageSize, cb) {
     const options = {
-        url: config.url.host + config.url.document,
+        url: config.url.IP + config.url.document,
         method: "POST",
         json: true,
         headers: {
