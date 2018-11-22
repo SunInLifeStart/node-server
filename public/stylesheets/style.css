@@ -3965,3 +3965,17 @@ a.close { width: 79px; height: 27px; display: inline-block; background-color: #0
 .fp span a { color: #333; }
 .fp span a:hover { color: #000; text-decoration: underline; }
 .fp_wrapper .close { float: right; }
+
+.more-content ul {
+  padding: 20px 0px;
+}
+.more-content ul li {
+  width: 65px;
+  text-align: center;
+  float: left;
+  background: #f0f0f0;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  height: 95px;
+  padding: 1px 10px;
+}
