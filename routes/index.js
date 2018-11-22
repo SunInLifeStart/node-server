@@ -17,6 +17,21 @@ router.get('/index', function(req, res) {
             let noticeBulletin = await redis.zrevrange(1, "通知公告", [0, 4]);
             let meetingTable = await redis.zrevrange(1, "集团会表", [0, 1]);
             let comm = await redis.zrevrange(1, "通讯录", [0, 1]);
+            leadershipSpeech.sort(function (a, b) {
+                return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
+            });
+            writing.sort(function (a, b) {
+                return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
+            });
+            workBulletin.sort(function (a, b) {
+                return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
+            });
+            rules.sort(function (a, b) {
+                return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
+            });
+            noticeBulletin.sort(function (a, b) {
+                return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
+            });
             res.render('index', { docs: data.forms, leadershipSpeech, writing, workBulletin, rules, noticeBulletin, meetingTable, personalPortal: personalPortal, comm, thumb: config.url.thumb});
         })()
     });
@@ -56,6 +71,9 @@ router.get('/:news/list', function(req, res) {
         if(key == 'partyBuilding') {
             key = '集团党建';
         }
+        news.sort(function (a, b) {
+            return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
+        });
         res.render('news', {news, page: (req.query.page || 1), count: Math.ceil(count / size), key: req.params.news, title: key, personalPortal: personalPortal});
     })()
 });
@@ -73,6 +91,9 @@ router.get('/leadershipSpeechs', function(req, res) {
         let pageSize = page + size - 1;
         let count = await redis.zcard(1, '领导讲话');
         let leadershipSpeechs = await redis.zrevrange(1, "领导讲话", [page, pageSize]);
+        leadershipSpeechs.sort(function (a, b) {
+            return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
+        });
         res.render('leadershipSpeechs', {leadershipSpeechs, page: req.query.page, count: Math.ceil(count / size), personalPortal: personalPortal});
     })()
 });
@@ -84,6 +105,9 @@ router.get('/rulesRegulations', function(req, res) {
         let pageSize = page + size - 1;
         let count = await redis.zcard(1, '规章制度');
         let rulesRegulations = await redis.zrevrange(1, "规章制度", [page, pageSize]);
+        rulesRegulations.sort(function (a, b) {
+            return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
+        });
         res.render('rulesRegulations', {rulesRegulations, page: req.query.page, count: Math.ceil(count / size), personalPortal: personalPortal});
     })()
 });
@@ -95,6 +119,9 @@ router.get('/writings', function(req, res) {
         let pageSize = page + size - 1;
         let count = await redis.zcard(1, '集团发文');
         let writings = await redis.zrevrange(1, "集团发文", [page, pageSize]);
+        writings.sort(function (a, b) {
+            return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
+        });
         res.render('writings', {writings, page: req.query.page, count: Math.ceil(count / size), personalPortal: personalPortal});
     })()
 });
@@ -106,6 +133,9 @@ router.get('/workBulletin', function(req, res) {
         let pageSize = page + size - 1;
         let count = await redis.zcard(1, '工作简报');
         let workBulletin = await redis.zrevrange(1, "工作简报", [page, pageSize]);
+        workBulletin.sort(function (a, b) {
+            return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
+        });
         res.render('workBulletin', {workBulletin, page: req.query.page, count: Math.ceil(count / size), personalPortal: personalPortal});
     })()
 });
@@ -117,6 +147,9 @@ router.get('/noticeBulletin', function(req, res) {
         let pageSize = page + size - 1;
         let count = await redis.zcard(1, '通知公告');
         let noticeBulletin = await redis.zrevrange(1, "通知公告", [page, pageSize]);
+        noticeBulletin.sort(function (a, b) {
+            return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
+        });
         res.render('noticeBulletin', {noticeBulletin, page: req.query.page, count: Math.ceil(count / size), personalPortal: personalPortal});
     })()
 });
