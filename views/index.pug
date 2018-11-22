@@ -8,7 +8,7 @@ block content
     .marquee-inner-wrapper
       span.first-marquee(style="font-size: 16px;")
         img(style=" vertical-align: text-bottom; width: 8%;", src="/images/birthday.png", alt="生日快乐")
-        | 点燃生日的烛光, 点燃幸福的希望; 品尝生日的蛋糕,品尝快乐的味道; 请张碧婷、杨铮、张春贵、史名胜、接受集团生日的祝福,接受祝愿的美好,祝生日快乐,幸福围绕!
+        | 点燃生日的烛光, 点燃幸福的希望; 品尝生日的蛋糕,品尝快乐的味道; 请张澍宁、孙旺利、杨静、接受集团生日的祝福,接受祝愿的美好,祝生日快乐,幸福围绕!
       span.second-marquee(style="font-size: 16px;")
   #sitecontent.ff_sitecontent
     #indexPage.ff_indexPage(data-scroll-ease="Expo.easeInOut", data-scroll-speed="1", data-control="0", data-control-wheel="0", data-singlescreen="0")
@@ -80,35 +80,36 @@ block content
           .container_content
             .content_wrapper(style="padding-top: 11px")
               .content_list.clearfix
-                article.article.article--big(style="width: 55%;padding: 2%; line-height: 36px; float: left; height: 460px;")
+                article.article.article--big(style="width: 55%;padding: 2%; line-height: 36px; float: left; height: 340px;")
                   div(style="font-size: 14px; padding: 1%; border-bottom: 1px solid #dbdbdb; height: 36px;")
                     div
                       span(style="line-height: 36px;font-size: 16px;font-weight: 700;") 领导讲话
-                  each ls in leadershipSpeech
-                    dl
-                      dt
-                        h5
+                  table.table(style="width: 100%; height: 245px;")
+                    each ls in leadershipSpeech
+                      tr
+                        td
                           img(src="/images/leader1.png", style="vertical-align: middle;margin-right: 2%;")
-                          a(href="/leadershipSpeechs/details?type=领导讲话&id=" + JSON.parse(ls).articleId) #{JSON.parse(ls).title}
-                        time(style="float: right") #{JSON.parse(ls).time}
-                      dd(style="border-bottom: 1px solid #dbdbdb;") #{JSON.parse(ls).publisher}
+                          a(style="font-size: 14px;" href="/leadershipSpeechs/details?type=领导讲话&id=" + JSON.parse(ls).articleId) #{JSON.parse(ls).title}
+
+                        td(style="text-align: right;")
+                          time #{JSON.parse(ls).time}
 
                   a.btn.btn-default(href="/leadershipSpeechs?page=1", style="padding: 5px 18px; margin-top: 12px;") 更多
 
-                article.article.article--big(style="width: 36%;padding: 2%; line-height: 36px; float: right; border-left: 1px solid #dbdbdb; height: 460px;")
-                  div(style="font-size: 14px; padding: 1%; border-bottom: 1px solid #dbdbdb; height: 36px;")
+                article.article.article--big(style="width: 36%;padding: 2%; line-height: 36px; float: right; border-left: 1px solid #dbdbdb; height: 340px;")
+                  div(style="font-size: 14px; padding: 7px 1%; border-bottom: 1px solid #dbdbdb; height: 36px;")
                     div
                       span(style="line-height: 36px;font-size: 16px;font-weight: 700;") 通知公告
-                  each nb in noticeBulletin
-                    dl
-                      dt
-                        h5
-                          span(style="color: #3488ea; font-size: 2em; vertical-align: middle;")  •
-                          |  &nbsp;#{JSON.parse(nb).publisher}
-                        time(style="float: right") #{JSON.parse(nb).time}
-                      dd(style="border-bottom: 1px solid #dbdbdb;")
-                        p(style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;")
-                          a(href="/noticeBulletin/details?type=通知公告&id=" + JSON.parse(nb).articleId) #{JSON.parse(nb).title}
+                  table.table(style="width: 100%; height: 245px;")
+                    each nb in noticeBulletin
+                      tr
+                        td
+                          p(style="width: 300px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;")
+                            span(style="color: #3488ea; font-size: 2em; vertical-align: middle;")  •&nbsp;
+                            a(style="font-size: 14px;" href="/noticeBulletin/details?type=通知公告&id=" + JSON.parse(nb).articleId)
+                              | #{JSON.parse(nb).title}
+                        td(style="text-align: right;")
+                          time #{JSON.parse(nb).time}
                   a.btn.btn-default(href="/noticeBulletin?page=1", style="padding: 5px 18px; margin-top: 12px;") 更多
           .clear
       .mlist.news.module.ff_noSlider(style="background-position: initial;background-size: cover;background-repeat: no-repeat;")
@@ -117,35 +118,33 @@ block content
           .container_content
             .content_wrapper
               .content_list.clearfix
-                article.article.article--big(style="width: 36%;padding: 2%; line-height: 36px; height: 460px; float: left")
+                article.article.article--big(style="width: 36%;padding: 2%; line-height: 36px; height: 340px; float: left")
                   div(style="font-size: 14px; padding: 1%; border-bottom: 1px solid #dbdbdb; height: 36px;")
                     div
                       span(style="line-height: 36px;font-size: 16px;font-weight: 700;") 规章制度
-                  each r in rules
-                    dl
-                      dt
-                        h5
-                          img(src="/images/arrow.png", style="vertical-align: middle;margin-right: 2%;")
-                          | #{JSON.parse(r).publisher}
-                        time(style="float: right") #{JSON.parse(r).time}
-                      dd(style="border-bottom: 1px solid #dbdbdb;")
-                          a(href="/rulesRegulations/details?type=规章制度&id=" + JSON.parse(r).articleId) #{JSON.parse(r).title}
-
+                  table.table(style="width: 100%; height: 245px;")
+                    each r in rules
+                      tr
+                        td
+                          p(style="width: 300px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;")
+                            img(src="/images/arrow.png", style="vertical-align: middle;margin-right: 2%;")
+                            a(style="font-size: 14px;" href="/rulesRegulations/details?type=规章制度&id=" + JSON.parse(r).articleId) #{JSON.parse(r).title}
+                        td(style="text-align: right;")
+                          time #{JSON.parse(r).time}
                   a.btn.btn-default(href="/rulesRegulations?page=1", style="padding: 5px 18px; margin-top: 12px;") 更多
-                article.article.article--big(style="width: 55%;padding: 2%; line-height: 36px; float: right; height: 460px; border-left: 1px solid #dbdbdb;")
+                article.article.article--big(style="width: 55%;padding: 2%; line-height: 36px; float: right; height: 340px; border-left: 1px solid #dbdbdb;")
                   div(style="font-size: 14px; padding: 1%; border-bottom: 1px solid #dbdbdb; height: 36px;")
                     div
                       span(style="line-height: 36px;font-size: 16px;font-weight: 700;") 集团发文
-                  each w in writing
-                    dl
-                      dt
-                        h5
-                          span(style="color: #3488ea; font-size: 2em; vertical-align: middle;") •
-                          | &nbsp; #{JSON.parse(w).publisher}
-                        time(style="float: right") #{JSON.parse(w).time}
-                      dd(style="border-bottom: 1px solid #dbdbdb;")
-                          a(href="/writings/details?type=集团发文&id=" + JSON.parse(w).articleId) #{JSON.parse(w).title}
-
+                  table.table(style="width: 100%; height: 245px;")
+                    each w in writing
+                      tr
+                        td
+                          p(style="width: 500px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;")
+                            span(style="color: #3488ea; font-size: 2em; vertical-align: middle;") •&nbsp;
+                            a(style="font-size: 14px;" href="/writings/details?type=集团发文&id=" + JSON.parse(w).articleId) #{JSON.parse(w).title}
+                        td(style="text-align: right;")
+                          time #{JSON.parse(w).time}
                   a.btn.btn-default(href="/writings?page=1", style="padding: 5px 18px; margin-top: 12px;") 更多
           .clear
       .mlist.news.module.ff_noSlider(style="background-position: initial;background-size: cover;background-repeat: no-repeat;")
@@ -157,30 +156,30 @@ block content
                 div(style="width: 20%;float: left;")
                   a(href="/partyBuilding")
                     img(src="/images/partybuilding.png", style="position: relative;top: -7px;left: -7px; border-radius: 30px;", alt="党建")
-                  article.article.article--big(style="padding: 2%; line-height: 36px;  height: 492px; width: 90%")
+                  article.article.article--big(style="padding: 2%; line-height: 36px;  height: 410px; width: 90%")
                     div(style="font-size: 14px; padding: 8% 6% 1% 7%; border-bottom: 1px solid #dbdbdb; height: 36px;")
                       div
                         span(style="line-height: 36px;font-size: 16px;font-weight: 700;") 聚焦舆情
                     div(style="padding: 8%;")
                       p
-                        a(href="#") #中国股市上演“空城计”
+                        a(href="https://36kr.com/tags/taodangpu") # 淘宝当铺
                       p
-                        a(href="#") #中国股市这次动真格了
+                        a(href="https://36kr.com/tags/bitebi") # 比特币
                       p
-                        a(href="#") #乐视网大变局:怼甘薇!
+                        a(href="https://36kr.com/p/5055657.html") # Uber新APP
                       p
-                        a(href="#") #股市经典口诀
+                        a(href="https://36kr.com/p/5055625.html") # 网约车新政第一天
                       p
-                        a(href="#") #王健林浴火重生！
+                        a(href="https://36kr.com/tags/feifanwang") # 飞凡网
                       p
-                        a(href="#") #收购戴姆勒还不够！
+                        a(href="https://36kr.com/tags/qufenqi") # 趣分期
                       p
-                        a(href="#") #顾雲君：5G疯狂连板80亿
+                        a(href="https://36kr.com/tags/licai") # 理财相关
                       p
-                        a(href="#") #轻仓的，勿操作
+                        a(href="https://36kr.com/tags/wangyinqianbao") # 网银钱包
                       p
-                        a(href="#") #股权投资项目
-                article.article.article--big.doc(style="width: 25%;padding: 2%; line-height: 36px; float: left; height: 600px;")
+                        a(href="https://36kr.com/p/5055707.html") # 苹果iPhone8
+                article.article.article--big.doc(style="width: 25%;padding: 2%; line-height: 36px; float: left; height: 518px;")
                   div(style="font-size: 14px; padding: 1%; border-bottom: 1px solid #dbdbdb; height: 36px;")
                     div
                       span(style="line-height: 36px;font-size: 16px;font-weight: 700;") 最新文档
@@ -199,31 +198,24 @@ block content
                       div
                         span(style="line-height: 36px;font-size: 16px;font-weight: 700;") 集团会表
                     each mt in meetingTable
-                      dl(style="padding: 3% 8%;")
-                        dt
-                          h5
-                            a(href="/index/details?type=集团会表&id=" + JSON.parse(mt).articleId)
-                              img(src="/images/new.png", style="vertical-align: middle;margin-right: 2%;")
-                              | #{JSON.parse(mt).title}
-                          time(style="float: right") #{JSON.parse(mt).time}
-                        dd #{JSON.parse(mt).publisher}
-                  article.article.article--big(style="padding: 2%; line-height: 36px; margin-left: 5%; height: 461px; width: 90%")
+                      p(style="width: 240px; padding: 3% 6%; overflow: hidden;white-space: nowrap;text-overflow: ellipsis;")
+                        a(href="/index/details?type=集团会表&id=" + JSON.parse(mt).articleId)
+                          img(src="/images/new.png", style="vertical-align: middle;margin-right: 2%;")
+                          | #{JSON.parse(mt).title}
+
+                  article.article.article--big(style="padding: 2%; margin-left: 5%; height: 415px; width: 90% ")
                     div(style="font-size: 14px; padding: 8% 6% 1% 7%; border-bottom: 1px solid #dbdbdb; height: 36px;")
                       div
                         span(style="line-height: 36px;font-size: 16px;font-weight: 700;") 工作简报
                     each wb in workBulletin
-                      dl(style="padding: 3% 8%;")
-                        dt
-                          h5
-                            img(src="/images/briefing.png", style="vertical-align: middle;margin-right: 2%;")
-                            a(href="/workBulletin/details?type=工作简报&id=" + JSON.parse(wb).articleId)
-                               span(title="" + JSON.parse(wb).title) #{JSON.parse(wb).title}
-                          time(style="float: right") #{JSON.parse(wb).time}
-                        dd(style="border-bottom: 1px solid #dbdbdb;")
-                            a(href="/workBulletin/details?type=工作简报&id=" + JSON.parse(wb).articleId) #{JSON.parse(wb).publisher}
-
+                      p(style="margin-top: 10px;width: 240px; padding: 3% 6%; overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-size: 14px;")
+                        img(src="/images/briefing.png", style="vertical-align: text-top;margin-right: 2%;")
+                        a(href="/workBulletin/details?type=工作简报&id=" + JSON.parse(wb).articleId)
+                          span(title="" + JSON.parse(wb).title) #{JSON.parse(wb).title}
+                      time(style="position: relative; top: -6px; left: 48px;") #{JSON.parse(wb).time}
+                    .clear
                     a.btn.btn-default(href="/workBulletin?page=1", style="padding: 5px 18px; margin: 6px 18px;") 更多
-                article.article.article--big(style="width: 20%;padding: 2%; line-height: 48px; float: left; margin-left: 1%; height: 600px;")
+                article.article.article--big(style="width: 20%;padding: 2%; line-height: 45px; float: left; margin-left: 1%; height: 518px;")
                   div(style="font-size: 14px; padding: 1%; border-bottom: 1px solid #dbdbdb; height: 36px;")
                     div
                       span(style="line-height: 36px;font-size: 16px;font-weight: 700;") 通讯录
