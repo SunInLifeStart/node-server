@@ -18,7 +18,7 @@
                                 img(style="margin-top: 15px;", src="/images/head/图片1.png", alt="投资管理系统")
                                 p(style="margin-top: 10px;") 投资管理系统
                         li
-                            a(href="http://172.16.3.38:9797/netrep/index.jsp" target="_blank")
+                            a(href="http://172.16.3.38:9797/netrep/single/login.jsp?loginid=test" target="_blank")
                                 img(style="margin-top: 15px;", src="/images/head/图片2.png", alt="财务报表系统")
                                 p(style="margin-top: 10px;") 财务报表系统
                         li
@@ -43,7 +43,7 @@
                                 img(style="margin-top: 15px;width: 28px;height: 28px;", src="/images/head/投资.png", alt="产业投资")
                                 p(style="margin-top: 10px;") 产业投资
 
-                a#logo(href="")
+                a#logo(href="/index")
                     img(src="/images/head/logo.png", height="30")
 
                 #navWrapper(style="margin-left: 15%")
@@ -111,17 +111,12 @@
                             .searchBox
                                 .searchFormGroup
                                     img#time(style="float: left; vertical-align: text-bottom; margin: 1px 8px;", src="/images/head/time2.png", alt="")
-
-                                    input(type="text", aria-label="搜索", placeholder="搜索", autocorrect="off", autocapitalize="off", autocomplete="off", spellcheck="false")
-
+                                    input(type="text", id="searchTxt", aria-label="搜索", placeholder="搜索", autocorrect="off", autocapitalize="off", autocomplete="off", spellcheck="false")
                                     .searchSub
                                         span(style="position: relative;top: 10px;")
                                             img(src="/images/head/search.png", alt="搜索")
-
                                         i.fa.fa-search(aria-hidden="true")
-
                                     img.personalCenter(style="float: left; margin: 1px 8px 0px 30px; position: relative;top: 20%; cursor: pointer;", src="/images/head/personalCenter.png", alt="")
-
                                     span(style="display: none")
                                         span(style="float: left; color: #fff; position: relative;top: 20%;")
 

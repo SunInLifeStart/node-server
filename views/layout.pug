@@ -61,6 +61,23 @@ html
                 $(".login2").hide();
                 $(".login1").show();
             })
+
+            $('.searchSub').click(function () {
+                var searchTxt = $("#searchTxt").val();
+                if(searchTxt) {
+                    $("#searchTxt").val('');
+                    window.open('http://work.zgcgroup.vpn/#/search/'+searchTxt);
+                }
+            });
+
+            $('#searchTxt').bind('keyup', function (event) {
+                if (event.keyCode == "13") {
+                    //回车执行查询
+                    $('.searchSub').click();
+                }
+            });
         })
+
+
   body
     block content
