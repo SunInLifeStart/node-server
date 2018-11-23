@@ -12,7 +12,7 @@ router.get('/index', function(req, res) {
         (async () => {
             let leadershipSpeech = await redis.zrevrange(1, "领导讲话", [0, 4]);
             let writing = await redis.zrevrange(1, "集团发文", [0, 4]);
-            let workBulletin = await redis.zrevrange(1, "工作简报", [0, 3]);
+            let workBulletin = await redis.zrevrange(1, "工作简报", [0, 5]);
             let rules = await redis.zrevrange(1, "规章制度", [0, 4]);
             let noticeBulletin = await redis.zrevrange(1, "通知公告", [0, 4]);
             let meetingTable = await redis.zrevrange(1, "集团会表", [0, 1]);
