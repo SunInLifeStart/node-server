@@ -1,11 +1,12 @@
-let express = require('express');
+const express = require('express');
 const redis = require("../redis/redis");
-let router = express.Router();
+// const FileUploadUtil = require('../tools/FileUploadUtil');
+const router = express.Router();
 
-/*Ìí¼ÓĞÂÎÅ½Ó¿Ú*/
+/*æ·»åŠ æ–°é—»æ¥å£*/
 router.post('/v1/portal/article', function(req, res) {
     if(!req.body.obj) {
-        res.send({error: 1, msg: '²ÎÊı²»ÍêÕû'});
+        res.send({error: 1, msg: 'å‚æ•°ä¸å®Œæ•´'});
         return;
     }
     saveNews(JSON.parse(req.body.obj)).then(function (result) {
@@ -18,18 +19,28 @@ async function saveNews(news) {
         let id = await redis.set(1, "article", news);
         let tags = news.tags.split(",");
         for(var i in tags) {
-            let obj = {title: news.title,time: news.time, img: news.img || '', about: news.about || '', publisher: news.publisher, articleId: id};
-            if(tags[i].indexOf('µ³') > -1) {
-                tags[i] = 'partyBuilding';
-            }
+            let obj = {title: news.title,time: news.time, img: news.img, about: news.about, publisher: news.publisher, articleId: id};
             await redis.zadd(1, tags[i], obj);
-            await redis.zadd(1, "±êÇ©", tags[i]);
+            await redis.zadd(1, "æ ‡ç­¾", tags[i]);
         }
-        return "Ìí¼Ó³É¹¦";
+        return "æ·»åŠ æˆåŠŸ";
     } catch (e) {
         console.error(e.toString(),"=======================error");
         return e.toString();
     }
 }
+
+/**
+ * pluploadå›¾ç‰‡ä¸Šä¼ 
+
+router.post("/v1/portal/attachment", function (req, res) {
+    FileUploadUtil.uploadImage(req, "files/", function (err, parames, images) {
+        if(err || !images.length) {
+            res.send({error: 1, msg: "ä¸Šä¼ å¤±è´¥"});
+            return;
+        }
+        res.send({error: 0, msg: "ä¸Šä¼ æˆåŠŸ", result: images[0]});
+    });
+});*/
 
 module.exports = router;
