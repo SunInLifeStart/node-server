@@ -180,6 +180,4 @@ function getLatestDocuments(page, pageSize, cb) {
     });
 }
 
-
-
 module.exports = router;
