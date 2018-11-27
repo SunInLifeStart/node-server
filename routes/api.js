@@ -23,10 +23,10 @@ async function saveNews(news) {
             await redis.zadd(1, tags[i], obj);
             await redis.zadd(1, "标签", tags[i]);
         }
-        return "添加成功";
+        return {error: 0, msg: "操作成功"};
     } catch (e) {
         console.error(e.toString(),"=======================error");
-        return e.toString();
+        return {error: 1, msg: e.toString()};
     }
 }
 
