@@ -5,11 +5,11 @@ const router = express.Router();
 
 /*添加新闻接口*/
 router.post('/v1/portal/article', function(req, res) {
-    if(!req.body.obj) {
+    if(!req.body.title || !req.body.content || !req.body.id) {
         res.send({error: 1, msg: '参数不完整'});
         return;
     }
-    saveNews(JSON.parse(req.body.obj)).then(function (result) {
+    saveNews(JSON.parse(req.body)).then(function (result) {
         res.send(result);
     });
 });
@@ -19,7 +19,7 @@ async function saveNews(news) {
         let id = await redis.set(1, "article", news);
         let tags = news.tags.split(",");
         for(var i in tags) {
-            let obj = {title: news.title,time: news.time, img: news.img, about: news.about, publisher: news.publisher, articleId: id};
+            let obj = {title: news.title,time: news.time, img: news.img || '', about: news.about || '', publisher: news.publisher, articleId: id};
             await redis.zadd(1, tags[i], obj);
             await redis.zadd(1, "标签", tags[i]);
         }
