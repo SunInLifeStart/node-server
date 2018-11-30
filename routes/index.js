@@ -6,6 +6,10 @@ const router = express.Router();
 
 const personalPortal = config.url.host;  // 外网地址
 
+router.get('/', function(req, res) {
+    res.redirect("/index");
+});
+
 /* GET home page. */
 router.get('/index', function(req, res) {
     getLatestDocuments(1, 4, function (data) {
