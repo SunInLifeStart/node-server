@@ -18,6 +18,7 @@ block content
                     span.time 发布时间：#{JSON.parse(data).time}
                     span#hitid.click 发布人：#{JSON.parse(data).publisher}
                     span.come 来源：#{JSON.parse(data).source}
+                    a(style="color: #9A9A9A; padding-left: 15px;" href=""+JSON.parse(data).url target="_blank") 下载 | 打印
                 .conts
                     | !{JSON.parse(data).content}
 
