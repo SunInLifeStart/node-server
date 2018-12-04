@@ -52,23 +52,25 @@
                             li.navitem
                                 a.active(href="/index", target="_self")
                                     span(data-title="首页") 首页
-
-                            li.navitem
-                                a(href=""+personalPortal, target="_self")
-                                    span(data-title="个人门户") 个人门户
-
                             li.navitem
                                 a(href="/news/list", target="_self")
                                     span(data-title="新闻中心")
                                     | 新闻中心
+                            li.navitem
+                                a(href=""+personalPortal, target="_self")
+                                    span(data-title="个人门户") 个人门户
+                            li.navitem
+                                // a(href="http://oa.zgcgroup.com.cn/webzfz/index.jsp?usercode=yangjing", target="_self") 我的邮箱
+                                a(href="http://mail.263.net", target="_self") 我的邮箱
 
                             li.navitem
                                 a(href="javascript:;", target="")
                                     span(data-title="常用链接") 常用链接
-
                                     i.fa.fa-angle-down
 
                                 ul.subnav
+                                    li
+                                        a(href="" + personalPortal, target="_self") 交流园地
                                     li
                                         a(href="http://www.zgcgroup.com.cn", target="_self") 集团网站
 
@@ -77,9 +79,6 @@
 
                                     li
                                         a(href="http://172.30.30.2:8088/ESAIS/flex/index.jsp?nodecode=Z32701", target="_self") 档案查询
-
-                                    li
-                                        a(href="http://oa.zgcgroup.com.cn/webzfz/index.jsp?usercode=yangjing", target="_self") 我的邮箱
 
                                     li
                                         a(href="http://nc.zgcgroup.com.cn/login.jsp?nodecode=E32709", target="_self") NC门户
@@ -102,15 +101,15 @@
                                     li
                                         a(href="http://zgcgw.beijing.gov.cn/zgc/tpxw64/179253/index.html", target="_self") 中关村管委会
 
-                            li.navitem
-                                a(href=""+personalPortal, target="_self")
-                                    span(data-title="交流园地") 交流园地
 
                     #search-header.searchGroup
                         .search_wrap
                             .searchBox
                                 .searchFormGroup
                                     img#time(style="float: left; vertical-align: text-bottom; margin: 1px 8px;", src="/images/head/time2.png", alt="")
+                                    -var timeText = new Date().getDate();;
+
+                                    span(style="position: relative; top: 16px; left: -320px; color: #fff;") #{timeText}
                                     input(type="text", id="searchTxt", aria-label="搜索", placeholder="搜索", autocorrect="off", autocapitalize="off", autocomplete="off", spellcheck="false")
                                     .searchSub
                                         span(style="position: relative;top: 10px;")
@@ -119,7 +118,6 @@
                                     img.personalCenter(style="float: left; margin: 1px 8px 0px 30px; position: relative;top: 20%; cursor: pointer;", src="/images/head/personalCenter.png", alt="")
                                     span(style="display: none")
                                         span(style="float: left; color: #fff; position: relative;top: 20%;")
-
                                         img(style="float: left; margin: 1px 8px; position: relative;top: 20%; cursor: pointer;", src="/images/head/signOut.png", alt="")
 
                                 .searchClose

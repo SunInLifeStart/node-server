@@ -1,7 +1,7 @@
 //创建
 function createPdfContainer(id,className) {
 
-    var pdfContainer = document.getElementById('pdf-container');
+    var pdfContainer = document.getElementById('the-canvas');
     var canvasNew =document.createElement('canvas');
     canvasNew.id = id;
     canvasNew.className = className;
@@ -11,7 +11,7 @@ function createPdfContainer(id,className) {
 //建议给定pdf宽度
 function renderPDF(pdf,i,id) {
     pdf.getPage(i).then(function(page) {
-        var scale = 1.5;
+        var scale = 1.25;
         var viewport = page.getViewport(scale);
         //  准备用于渲染的 canvas 元素
         var canvas = document.getElementById(id);
@@ -23,6 +23,7 @@ function renderPDF(pdf,i,id) {
             canvasContext: context,
             viewport: viewport
         };
+        console.log(context);
         page.render(renderContext);
     });
 };
@@ -50,4 +51,4 @@ function loadPDF(fileURL) {
         }
     });
 }
-loadPDF('1109.pdf');
+// loadPDF('1109.pdf');

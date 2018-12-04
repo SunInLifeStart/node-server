@@ -85,10 +85,11 @@ block content
                     div
                       span(style="line-height: 36px;font-size: 16px;font-weight: 700;") 领导讲话
                   table.table(style="width: 100%; height: 245px;")
-                    each ls in leadershipSpeech
+                    each ls, index in leadershipSpeech
                       tr
                         td
-                          img(src="/images/leader1.png", style="vertical-align: middle;margin-right: 2%;")
+                          - let img = index == 0? 'leader3.png': 'leader1.png';
+                          img(src="/images/"+img, style="vertical-align: middle;margin-right: 2%;")
                           a(style="font-size: 14px;" href="/leadershipSpeechs/details?type="+encodeURI('领导讲话')+"&id=" + JSON.parse(ls).articleId) #{JSON.parse(ls).title}
 
                         td(style="text-align: right;")
@@ -101,11 +102,12 @@ block content
                     div
                       span(style="line-height: 36px;font-size: 16px;font-weight: 700;") 通知公告
                   table.table(style="width: 100%; height: 245px;")
-                    each nb in noticeBulletin
+                    each nb, index in noticeBulletin
                       tr
                         td
                           p(style="width: 300px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;")
-                            span(style="color: #3488ea; font-size: 2em; vertical-align: middle;")  •&nbsp;
+                            - let color = index == 0? 'ea3476': '3488ea';
+                            span(style="color: #"+color+"; font-size: 2em; vertical-align: middle;")  •&nbsp;
                             a(style="font-size: 14px;" href="/noticeBulletin/details?type="+encodeURI('通知公告')+"&id=" + JSON.parse(nb).articleId)
                               | #{JSON.parse(nb).title}
                         td(style="text-align: right;")
@@ -123,11 +125,12 @@ block content
                     div
                       span(style="line-height: 36px;font-size: 16px;font-weight: 700;") 规章制度
                   table.table(style="width: 100%; height: 245px;")
-                    each r in rules
+                    each r, index in rules
                       tr
                         td
                           p(style="width: 300px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;")
-                            img(src="/images/arrow.png", style="vertical-align: middle;margin-right: 2%;")
+                            - let img = index == 0? 'arrow.png': 'arrow2.png';
+                            img(src="/images/"+img, style="vertical-align: middle;margin-right: 2%;")
                             a(style="font-size: 14px;" href="/rulesRegulations/details?type="+encodeURI('规章制度')+"&id=" + JSON.parse(r).articleId) #{JSON.parse(r).title}
                         td(style="text-align: right;")
                           time #{JSON.parse(r).time}
@@ -137,11 +140,12 @@ block content
                     div
                       span(style="line-height: 36px;font-size: 16px;font-weight: 700;") 集团发文
                   table.table(style="width: 100%; height: 245px;")
-                    each w in writing
+                    each w, index in writing
                       tr
                         td
                           p(style="width: 500px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;")
-                            span(style="color: #3488ea; font-size: 2em; vertical-align: middle;") •&nbsp;
+                            - let color = index == 0? 'ea3476': '3488ea';
+                            span(style="color: #"+color+"; font-size: 2em; vertical-align: middle;") •&nbsp;
                             a(style="font-size: 14px;" href="/writings/details?type="+encodeURI('集团发文')+"&id=" + JSON.parse(w).articleId) #{JSON.parse(w).title}
                         td(style="text-align: right;")
                           time #{JSON.parse(w).time}
@@ -207,68 +211,28 @@ block content
                     div(style="font-size: 14px; padding: 8% 6% 1% 7%; border-bottom: 1px solid #dbdbdb; height: 36px;")
                       div
                         span(style="line-height: 36px;font-size: 16px;font-weight: 700;") 工作简报
-                    each wb in workBulletin
+                    each wb, index in workBulletin
                       p(style="margin-top: 10px;width: 240px; padding: 3% 6%; overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-size: 14px;")
-                        img(src="/images/briefing.png", style="vertical-align: text-top;margin-right: 2%;")
+                        - let img = index == 0? 'briefing2.png': 'briefing.png';
+                        img(src="/images/"+img, style="vertical-align: text-top;margin-right: 2%;")
                         a(href="/workBulletin/details?type="+encodeURI('工作简报')+"&id=" + JSON.parse(wb).articleId)
                           span(title="" + JSON.parse(wb).title) #{JSON.parse(wb).title}
                       time(style="position: relative; top: -6px; left: 48px;") #{JSON.parse(wb).time}
                     .clear
                     a.btn.btn-default(href="/workBulletin?page=1", style="padding: 5px 18px; margin: 6px 18px;") 更多
-                article.article.article--big(style="width: 20%;padding: 2%; line-height: 45px; float: left; margin-left: 1%; height: 618px;")
+                article.article.article--big(style="width: 20%;padding: 2%; line-height: 24px; float: left; margin-left: 1%; height: 618px;")
                   div(style="font-size: 14px; padding: 1%; border-bottom: 1px solid #dbdbdb; height: 36px;")
                     div
-                      span(style="line-height: 36px;font-size: 16px;font-weight: 700;") 通讯录
-                  ul
-                    li
-                      img(src="/images/phone.png", style="vertical-align: middle;margin-right: 2%;")
-                      |                                         赵长山
-                      phone(style="margin-left: 10%") 13801381002
-                    li
-                      img(src="/images/phone.png", style="vertical-align: middle;margin-right: 2%;")
-                      |                                         宣鸿
-                      phone(style="margin-left: 10%") 13901150891
-                    li
-                      img(src="/images/phone.png", style="vertical-align: middle;margin-right: 2%;")
-                      |                                         王明兰
-                      phone(style="margin-left: 10%") 13601224838
-                    li
-                      img(src="/images/phone.png", style="vertical-align: middle;margin-right: 2%;")
-                      |                                         李妍
-                      phone(style="margin-left: 10%") 18811062986
-                    li
-                      img(src="/images/phone.png", style="vertical-align: middle;margin-right: 2%;")
-                      |                                         姚胜利
-                      phone(style="margin-left: 10%") 13901200821
-                    li
-                      img(src="/images/phone.png", style="vertical-align: middle;margin-right: 2%;")
-                      |                                         韩柏
-                      phone(style="margin-left: 10%") 13910768852
-                    li
-                      img(src="/images/phone.png", style="vertical-align: middle;margin-right: 2%;")
-                      |                                         周武光
-                      phone(style="margin-left: 10%") 13910074978
-                    li
-                      img(src="/images/phone.png", style="vertical-align: middle;margin-right: 2%;")
-                      |                                         杨彦茹
-                      phone(style="margin-left: 10%") 13121297187
-                    li
-                      img(src="/images/phone.png", style="vertical-align: middle;margin-right: 2%;")
-                      |                                         邵顺昌
-                      phone(style="margin-left: 10%") 13311151098
-                    li
-                      img(src="/images/phone.png", style="vertical-align: middle;margin-right: 2%;")
-                      |                                         贾一伟
-                      phone(style="margin-left: 10%") 13601258918
-                    li
-                      img(src="/images/phone.png", style="vertical-align: middle;margin-right: 2%;")
-                      |                                         龙宜彬
-                      phone(style="margin-left: 10%") 13701035903
-                    li
-                      img(src="/images/phone.png", style="vertical-align: middle;margin-right: 2%;")
-                      |                                         张哲
-                      phone(style="margin-left: 10%") 18618162211
-                  a.btn.btn-default(href="/index/details?type="+encodeURI('通讯录')+"&id="+JSON.parse(comm[0]).articleId style="padding: 5px 18px; margin: 6px 12px;") 更多
+                      span(style="line-height: 36px;font-size: 16px;font-weight: 700;") 集团通讯录
+                  each mm, index in comm
+                    p(style="margin-top: 10px;width: 240px; overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-size: 14px;")
+                      - let img = index == 0? 'phone2.png': 'phone.png';
+                      img(src="/images/"+img, style="vertical-align: text-top;margin-right: 2%;")
+                      a(href="/workBulletin/details?type=" + encodeURI('集团通讯录') + "&id=" + JSON.parse(mm).articleId)
+                        span(title="" + JSON.parse(mm).title) #{JSON.parse(mm).title}
+                    time(style="position: relative; top: 0px; left: 33px;") #{JSON.parse(mm).time}
+                  .clear
+                  a.btn.btn-default(href="/contactWay?page=1", style="padding: 5px 18px; margin: 6px 18px;") 更多
             .clear
 
 

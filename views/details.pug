@@ -22,33 +22,35 @@ block content
                     | !{JSON.parse(data).content}
 
         #pdf(style="text-align: center;")
-            input(type="hidden" id="url" value="" + JSON.parse(data).url)
-            .paging
-                //a#first 首页
-                a#prev(title="上一页") <
-                //i#list
-                a#next(title="下一页") >
-                //a#last 尾页
-            div(style="position: relative;top: 10px; font-size: 16px;")
-                span
-                    span#page_num
-                    | /
-                    span#page_count
-            canvas#the-canvas
+            //input(type="hidden" id="url" value="" + JSON.parse(data).url)
+            //.paging
+            //    //a#first 首页
+            //    a#prev(title="上一页") <
+            //    //i#list
+            //    a#next(title="下一页") >
+            //    //a#last 尾页
+            //div(style="position: relative;top: 10px; font-size: 16px;")
+            //    span
+            //        span#page_num
+            //        | /
+            //        span#page_count
+            #the-canvas
         script(src="/javascripts/pdf.js")
         script(src="/javascripts/pdf.worker.js")
-        script(src="/javascripts/fdf_paging.js")
+        //script(src="/javascripts/fdf_paging.js")
+        script(src="/javascripts/load_pdf_all.js")
         script.
-            if ("#{JSON.parse(data).url}") {
-                pdfjsLib.getDocument("#{JSON.parse(data).url}").then(function (pdfDoc_) {
-                    pdfDoc = pdfDoc_;
-                    // 初始/第一页渲染
-                    renderPage(pageNum);
-                    document.getElementById('page_count').textContent = pdfDoc.numPages;
-                });
-            } else {
-                $("#pdf").hide();
-            }
+            loadPDF("#{JSON.parse(data).url}");
+            // if ("#{JSON.parse(data).url}") {
+            //     pdfjsLib.getDocument("#{JSON.parse(data).url}").then(function (pdfDoc_) {
+            //         pdfDoc = pdfDoc_;
+            //         // 初始/第一页渲染
+            //         renderPage(pageNum);
+            //         document.getElementById('page_count').textContent = pdfDoc.numPages;
+            //     });
+            // } else {
+            //     $("#pdf").hide();
+            // }
 
 
     include foot

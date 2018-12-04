@@ -3,13 +3,26 @@ const redis = require("../redis/redis");
 // const FileUploadUtil = require('../tools/FileUploadUtil');
 const router = express.Router();
 
+/*添加企业门户统计接口*/
+router.post('/v1/portal/statistics', function(req, res) {
+    if(!req.body.totalAssets || !req.body.fundedProjects || !req.body.serviceFirm || !req.body.construction) {
+        res.send({error: 1, msg: '参数不完整'});
+        return;
+    }
+    redis.set(1, '门户统计', req.body).then(() => {
+        res.send({error: 0, msg: '添加成功'});
+    }).catch((err) => {
+        res.send({error: 1, msg: '系统错误', err});
+    });
+});
+
 /*添加新闻接口*/
 router.post('/v1/portal/article', function(req, res) {
     if(!req.body.title || !req.body.content || !req.body.id) {
         res.send({error: 1, msg: '参数不完整'});
         return;
     }
-    saveNews(JSON.parse(req.body)).then(function (result) {
+    saveNews(req.body).then(function (result) {
         res.send(result);
     });
 });

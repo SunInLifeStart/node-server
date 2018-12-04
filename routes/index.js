@@ -20,7 +20,7 @@ router.get('/index', function(req, res) {
             let rules = await redis.zrevrange(1, "规章制度", [0, 4]);
             let noticeBulletin = await redis.zrevrange(1, "通知公告", [0, 4]);
             let meetingTable = await redis.zrevrange(1, "集团会表", [0, 1]);
-            let comm = await redis.zrevrange(1, "通讯录", [0, 1]);
+            let comm = await redis.zrevrange(1, "通讯录", [0, 6]);
             leadershipSpeech.sort(function (a, b) {
                 return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
             });
@@ -36,7 +36,9 @@ router.get('/index', function(req, res) {
             noticeBulletin.sort(function (a, b) {
                 return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
             });
-            res.render('index', { docs: data.forms, leadershipSpeech, writing, workBulletin, rules, noticeBulletin, meetingTable, personalPortal: personalPortal, comm, thumb: config.url.thumb});
+            let uc = await redis.get(0, "usercount");
+
+            res.render('index', { docs: data.forms, uc, leadershipSpeech, writing, workBulletin, rules, noticeBulletin, meetingTable, personalPortal: personalPortal, comm, thumb: config.url.thumb});
         })()
     });
 });
@@ -141,6 +143,20 @@ router.get('/workBulletin', function(req, res) {
             return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
         });
         res.render('workBulletin', {workBulletin, page: req.query.page, count: Math.ceil(count / size), personalPortal: personalPortal});
+    })()
+});
+
+router.get('/contactWay', function(req, res) {
+    (async () => {
+        let size = 10;
+        let page = (req.query.page - 1) * size;
+        let pageSize = page + size - 1;
+        let count = await redis.zcard(1, '通讯录');
+        let contactWay = await redis.zrevrange(1, "通讯录", [page, pageSize]);
+        contactWay.sort(function (a, b) {
+            return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
+        });
+        res.render('contactWay', {contactWay, page: req.query.page, count: Math.ceil(count / size), personalPortal: personalPortal});
     })()
 });
 
