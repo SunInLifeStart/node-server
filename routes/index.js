@@ -37,7 +37,7 @@ router.get('/index', function(req, res) {
                 return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
             });
             let uc = await redis.get(0, "usercount");
-
+            console.log(uc,"=====================uc");
             res.render('index', { docs: data.forms || [], uc, leadershipSpeech, writing, workBulletin, rules, noticeBulletin, meetingTable, personalPortal: personalPortal, comm, thumb: config.url.thumb});
         })()
     });
