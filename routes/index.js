@@ -38,7 +38,7 @@ router.get('/index', function(req, res) {
             });
             let uc = await redis.get(0, "usercount");
 
-            res.render('index', { docs: data.forms, uc, leadershipSpeech, writing, workBulletin, rules, noticeBulletin, meetingTable, personalPortal: personalPortal, comm, thumb: config.url.thumb});
+            res.render('index', { docs: data.forms || [], uc, leadershipSpeech, writing, workBulletin, rules, noticeBulletin, meetingTable, personalPortal: personalPortal, comm, thumb: config.url.thumb});
         })()
     });
 });
