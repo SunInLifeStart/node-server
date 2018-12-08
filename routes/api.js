@@ -18,10 +18,10 @@ router.post('/v1/portal/statistics', function(req, res) {
 
 /*添加新闻接口*/
 router.post('/v1/portal/article', function(req, res) {
-    if(!req.body.title || !req.body.content || !req.body.id) {
-        res.send({error: 1, msg: '参数不完整'});
-        return;
-    }
+    // if(!req.body.title || !req.body.id) {
+    //     res.send({error: 1, msg: '参数不完整'});
+    //     return;
+    // }
     saveNews(req.body).then(function (result) {
         res.send(result);
     });
