@@ -8,27 +8,48 @@ block content
         img(style=" vertical-align: text-bottom; width: 8%;", src="/images/birthday.png", alt="生日快乐")
         | 点燃生日的烛光, 点燃幸福的希望; 品尝生日的蛋糕,品尝快乐的味道; 请张澍宁、孙旺利、杨静、接受集团生日的祝福,接受祝愿的美好,祝生日快乐,幸福围绕!
       span.second-marquee(style="font-size: 16px;")
-  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
-  <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
-  <script src="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
+  link(rel='stylesheet', href='/stylesheets/css/bootstrap.css')
+  script(src='/javascripts/js/bootstrap.js')
+
+  script(type="text/javascript", src="/javascripts/org.1494058893.js", data-main="indexMain")
+  script(type="text/javascript", src="/javascripts/3585.js")
   style.
-    p {font-size: 14px}
-    body {background: #e4e3e3 url("/images/head/banner.png") no-repeat}
+    body {background: #e4e3e3 url("/images/head/banner.png") no-repeat center}
+    .carousel-item .row {
+      height: 245px;
+    }
     .carousel-item .row .col-md-6 {
-      margin-top: 30px;
+      margin-top: 23px;
     }
     .carousel-item .row .col-md-5 {
-      margin-top: 30px;
+      margin-top: 23px;
     }
 
     .carousel-item .row .col-md-5 img {
       width: 350px;
       height: 200px;
     }
-    .container {
+    .carousel-inner {
       background: #fff;
     }
+    .table p {
+      width: 230px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      margin-bottom: 0;
+    }
+    .article--big {
+      height: 460px;
+    }
+    .article--big div {
+      font-size: 14px;
+      padding: 5px 10px;
+    }
+    .col {
+      padding-left: 0px;
+    }
+
   .container
     #demo.carousel.slide(data-ride='carousel')
       //
@@ -78,10 +99,211 @@ block content
                 time 2018-11-15
               p
                 a.btn.btn-outline-secondary(href='/') 更多
-      // 左右切换按钮
-      a.carousel-control-prev(href='#demo', data-slide='prev')
-        span.carousel-control-prev-icon
-      a.carousel-control-next(href='#demo', data-slide='next')
-        span.carousel-control-next-icon
+        // 左右切换按钮
+        a.carousel-control-prev(href='#demo', data-slide='prev')
+          span.carousel-control-prev-icon
+        a.carousel-control-next(href='#demo', data-slide='next')
+          span.carousel-control-next-icon
+
+    .ff_indexPage
+      .mcounter.module(style="background-position: initial;background-size: cover;background-repeat: no-repeat;")
+        .module_container
+          .container_content
+            ul.content_list
+              li
+                div
+                  p.number
+                    span.counterDX(data-counter-value="1176")
+                    span.unit 亿
+
+                  p.title 总资产
+
+              li
+                div
+                  p.number
+                    span.counterDX(data-counter-value="1809")
+                    span.unit 个
+
+                  p.title 出资项目
+
+              li
+                div
+                  p.number
+                    span.counterDX(data-counter-value="10000")
+                    span.unit 家
+
+                  p.title 年均服务企业
+
+              li
+                div
+                  p.number
+                    span.counterDX(data-counter-value="300")
+                    span.unit 万平方米
+
+                  p.title 建设科技载体
+            .clear
+    .row
+      .col(style="padding-left: 15px;")
+        article.article.article--big
+          div
+            div
+              span(style="font-size: 16px;font-weight: 700;") 领导讲话
+              a.btn.btn-outline-secondary(href="/leadershipSpeechs?page=1", style="padding: 2px 10px;float: right;") 更多
+          table.table(style="width: 95%; margin: 0 auto;")
+            each ls, index in leadershipSpeech
+              tr
+                td
+                  p
+                    - let img = index == 0? 'leader3.png': 'leader1.png';
+                    img(src="/images/" + img, style="vertical-align: middle;margin-right: 2%;")
+                    a(href="/leadershipSpeechs/details?type=" + encodeURI('领导讲话') + "&id=" + JSON.parse(ls).articleId) #{JSON.parse(ls).title}
+
+                td(style="text-align: right;")
+                  time #{JSON.parse(ls).time.split(' ')[0]}
+      .col
+        article.article.article--big
+          div
+            div
+              span(style="font-size: 16px;font-weight: 700;") 通知公告
+              a.btn.btn-outline-secondary(href="/noticeBulletin?page=1", style="padding: 2px 10px;float: right;") 更多
+          table.table(style="width: 95%; margin: 0 auto;")
+            each nb, index in noticeBulletin
+              tr
+                td
+                  p
+                    - let color = index == 0? 'ea3476': '3488ea';
+                    span(style="color: #" + color + ";")  •&nbsp;
+                    a(href="/noticeBulletin/details?type=" + encodeURI('通知公告') + "&id=" + JSON.parse(nb).articleId)
+                      | #{JSON.parse(nb).title}
+                td(style="text-align: right;")
+                  time #{JSON.parse(nb).time.split(' ')[0]}
+
+      .col
+        article.article.article--big
+          div
+            div
+              span(style="font-size: 16px;font-weight: 700;") 集团发文
+              a.btn.btn-outline-secondary(href="/writings?page=1", style="padding: 2px 10px;float: right;") 更多
+          table.table(style="width: 95%; margin: 0 auto;")
+            each w, index in writing
+              tr
+                td
+                  p
+                    - let color = index == 0? 'ea3476': '3488ea';
+                    span(style="color: #" + color + ";") •&nbsp;
+                    a(href="/writings/details?type=" + encodeURI('集团发文') + "&id=" + JSON.parse(w).articleId) #{JSON.parse(w).title}
+                td(style="text-align: right;")
+                  time #{JSON.parse(w).time.split(' ')[0]}
+    .row
+      .col(style="padding-left: 15px;")
+        article.article.article--big
+          div
+            div
+              span(style="font-size: 16px;font-weight: 700;") 规章制度
+              a.btn.btn-outline-secondary(href="/rulesRegulations?page=1", style="padding: 2px 10px;float: right;") 更多
+          table.table(style="width: 95%; margin: 0 auto;")
+            each r, index in rules
+              tr
+                td
+                  p
+                    - let img = index == 0? 'arrow.png': 'arrow2.png';
+                    img(src="/images/" + img, style="vertical-align: middle;margin-right: 2%;")
+                    a(href="/rulesRegulations/details?type=" + encodeURI('规章制度') + "&id=" + JSON.parse(r).articleId) #{JSON.parse(r).title}
+                td(style="text-align: right;")
+                  time #{JSON.parse(r).time.split(' ')[0]}
+
+      .col
+        article.article.article--big
+          div
+            div
+              span(style="font-size: 16px;font-weight: 700;") 工作简报
+              a.btn.btn-outline-secondary(href="/workBulletin?page=1", style="padding: 2px 10px;float: right;") 更多
+          table.table(style="width: 95%; margin: 0 auto;")
+            each wb, index in workBulletin
+              tr
+                td
+                  p
+                    - let img = index == 0? 'briefing2.png': 'briefing.png';
+                    img(src="/images/" + img, style="vertical-align: middle;margin-right: 2%;")
+                    a(href="/workBulletin/details?type=" + encodeURI('工作简报') + "&id=" + JSON.parse(wb).articleId) #{JSON.parse(wb).title}
+                td(style="text-align: right;")
+                  time #{JSON.parse(wb).time.split(' ')[0]}
+
+
+      .col
+        article.article.article--big(style="height: 110px;")
+          div
+            div
+              span(style="font-size: 16px;font-weight: 700;") 集团会表
+          table.table(style="width: 95%; margin: 0 auto;")
+            each mt in meetingTable
+              tr
+                td
+                  p
+                    a(href="/index/details?type=" + encodeURI('集团会表') + "&id=" + JSON.parse(mt).articleId)
+                      img(src="/images/new.png", style="vertical-align: middle;margin-right: 2%;")
+                      | #{JSON.parse(mt).title}
+
+        article.article.article--big(style="height: 338px;")
+          div
+            div
+              span(style="font-size: 16px;font-weight: 700;") 聚焦舆情
+          table.table(style="width: 95%; margin: 0 auto;")
+            tr
+              td
+                a(href="https://36kr.com/tags/taodangpu" target="_blank") # 淘宝当铺
+            tr
+              td
+                a(href="https://36kr.com/tags/bitebi" target="_blank") # 比特币
+            tr
+              td
+                a(href="https://36kr.com/p/5055657.html" target="_blank") # Uber新APP
+            tr
+              td
+                a(href="https://36kr.com/tags/feifanwang" target="_blank") # 飞凡网
+            tr
+              td
+                a(href="https://36kr.com/tags/qufenqi" target="_blank") # 趣分期
+            tr
+              td
+                a(href="https://36kr.com/tags/wangyinqianbao" target="_blank") # 网银钱包
+            tr
+              td
+                a(href="https://36kr.com/p/5055707.html" target="_blank") # 苹果iPhone8
+
+    .row
+      .col(style="padding-left: 15px;")
+        article.article.article--big.doc
+          div
+            div
+              span(style="font-size: 16px;font-weight: 700;") 最新文档
+              a.btn.btn-outline-secondary(href=personalPortal + "/#/docs" target="_blank" style="padding: 2px 10px;float: right;") 更多
+          table.table(style="width: 95%; margin: 0 auto;")
+            each doc in docs
+              tr
+                td
+                  div(style="line-height: 25px; padding: 16px 5px;clear:both")
+                    a(href=thumb + "" + personalPortal + doc.url target="_blank")
+                      img(src=personalPortal + "" + doc.iconUrl, style="width: 74px; height: 94px; vertical-align: middle;float: left; border: 1px solid #dcdada;")
+                      span(style="float: left; font-size: 14px; font-weight: 600; width: 70%;margin-left: 8px; ")=doc.name
+                    span(style="float: left; font-size: 12px; width: 30px;margin-left: 8px;")=doc.uname
+                    span(style="float: left; font-size: 12px; width: 115px; margin-left: 8px;")=doc.created
+      .col
+        article.article.article--big
+          div
+            div
+              span(style="font-size: 16px;font-weight: 700;") 集团通讯录
+              a.btn.btn-outline-secondary(href="/contactWay?page=1", style="padding: 2px 10px;float: right;") 更多
+          table.table(style="width: 95%; margin: 0 auto;")
+            each mm, index in comm
+              tr
+                td
+                  p(style="width:400px")
+                    - let img = index == 0? 'phone2.png': 'phone.png';
+                    img(src="/images/" + img, style="vertical-align: text-top;margin-right: 2%;")
+                    a(href="/workBulletin/details?type=" + encodeURI('集团通讯录') + "&id=" + JSON.parse(mm).articleId) #{JSON.parse(mm).title}
+                td(style="text-align: right;")
+                  time #{JSON.parse(mm).time.split(' ')[0]}
+
 
   //include foot

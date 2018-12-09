@@ -13,7 +13,7 @@ router.get('/v1/portal/details', function (req, res) {
     });
 });
 
-/* 通知公告 */
+/* 通知公告列表 */
 router.get('/v1/portal/noticeBulletin', function (req, res) {
     redis.zrevrange(1, "通知公告", [0, 4]).then(function (data) {
         for(let i = 0; i < data.length; i++) {
