@@ -10,36 +10,6 @@ const personalPortal = config.url.host;  // 外网地址
 router.get('/', function(req, res) {
     res.redirect("/index");
 });
-router.get('/1', function(req, res) {
-    getLatestDocuments(1, 4, function (data) {
-        (async () => {
-            let leadershipSpeech = await redis.zrevrange(1, "领导讲话", [0, 4]);
-            let writing = await redis.zrevrange(1, "集团发文", [0, 4]);
-            let workBulletin = await redis.zrevrange(1, "工作简报", [0, 5]);
-            let rules = await redis.zrevrange(1, "规章制度", [0, 4]);
-            let noticeBulletin = await redis.zrevrange(1, "通知公告", [0, 4]);
-            let meetingTable = await redis.zrevrange(1, "集团会表", [0, 1]);
-            let comm = await redis.zrevrange(1, "通讯录", [0, 6]);
-            leadershipSpeech.sort(function (a, b) {
-                return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
-            });
-            writing.sort(function (a, b) {
-                return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
-            });
-            workBulletin.sort(function (a, b) {
-                return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
-            });
-            rules.sort(function (a, b) {
-                return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
-            });
-            noticeBulletin.sort(function (a, b) {
-                return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
-            });
-            let uc = await redis.get(0, "usercount");
-            res.render('index_1', { docs: data.forms || [], uc, moment, leadershipSpeech, writing, workBulletin, rules, noticeBulletin, meetingTable, personalPortal: personalPortal, comm, thumb: config.url.thumb});
-        })()
-    });
-});
 
 /* GET home page. */
 router.get('/index', function(req, res) {
@@ -47,7 +17,7 @@ router.get('/index', function(req, res) {
         (async () => {
             let leadershipSpeech = await redis.zrevrange(1, "领导讲话", [0, 4]);
             let writing = await redis.zrevrange(1, "集团发文", [0, 4]);
-            let workBulletin = await redis.zrevrange(1, "工作简报", [0, 5]);
+            let workBulletin = await redis.zrevrange(1, "工作简报", [0, 4]);
             let rules = await redis.zrevrange(1, "规章制度", [0, 4]);
             let noticeBulletin = await redis.zrevrange(1, "通知公告", [0, 4]);
             let meetingTable = await redis.zrevrange(1, "集团会表", [0, 1]);
