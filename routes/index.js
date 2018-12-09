@@ -45,11 +45,11 @@ router.get('/1', function(req, res) {
 router.get('/index', function(req, res) {
     getLatestDocuments(1, 4, function (data) {
         (async () => {
-            let leadershipSpeech = await redis.zrevrange(1, "领导讲话", [0, 10]);
-            let writing = await redis.zrevrange(1, "集团发文", [0, 10]);
+            let leadershipSpeech = await redis.zrevrange(1, "领导讲话", [0, 4]);
+            let writing = await redis.zrevrange(1, "集团发文", [0, 4]);
             let workBulletin = await redis.zrevrange(1, "工作简报", [0, 5]);
             let rules = await redis.zrevrange(1, "规章制度", [0, 4]);
-            let noticeBulletin = await redis.zrevrange(1, "通知公告", [0, 10]);
+            let noticeBulletin = await redis.zrevrange(1, "通知公告", [0, 4]);
             let meetingTable = await redis.zrevrange(1, "集团会表", [0, 1]);
             let comm = await redis.zrevrange(1, "通讯录", [0, 6]);
             leadershipSpeech.sort(function (a, b) {

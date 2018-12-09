@@ -2872,7 +2872,7 @@ body #navWrapper .content .nav > .navitem .subnav li a:hover {
 .ff_indexPage .mcounter .container_content {
   position: absolute;
   width: 100%;
-  height: 190px;
+  height: 108px;
 }
 
 .ff_indexPage .mcounter .content_list {
@@ -2920,11 +2920,11 @@ body #navWrapper .content .nav > .navitem .subnav li a:hover {
 }
 
 .ff_indexPage .mcounter .content_list li p.number .counterDX {
-  font-size: 50px;
+  font-size: 40px;
   font-family: helveticaneuethn, Arial;
   text-align: center;
   margin-top: 15px;
-  line-height: 52px;
+  line-height: 42px;
   vertical-align: top;
 }
 
@@ -2943,7 +2943,7 @@ body #navWrapper .content .nav > .navitem .subnav li a:hover {
 
 .ff_indexPage .mcounter .module_container {
   position: relative;
-  height: 178px;
+  height: 96px;
 }
 
 .mcounter {
