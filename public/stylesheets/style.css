@@ -944,7 +944,7 @@ body #search-nav .search_wrap {
 }
 
 #mcontact {
-  background: #F0F0F0;
+  background: #fff;
 }
 
 #mcontact .container_header {
@@ -1112,15 +1112,15 @@ body #search-nav .search_wrap {
 }
 
 #footer {
-  height: 24px;
-  padding: 10px 56px;
+  /*height: 24px;*/
+  /*padding: 10px 56px;*/
 }
 
 #footer p {
   width: 1200px;
   line-height: 24px;
   height: 24px;
-  text-align: center;
+  /*text-align: center;*/
   margin: 0 auto;
 }
 
