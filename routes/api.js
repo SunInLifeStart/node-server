@@ -3,6 +3,16 @@ const redis = require("../redis/redis");
 // const FileUploadUtil = require('../tools/FileUploadUtil');
 const router = express.Router();
 
+/* 通知公告详情 */
+router.get('/v1/portal/details', function (req, res) {
+    redis.get(1, "article:" + req.query.id).then(function (data) {
+        data = JSON.parse(data);
+        res.send({error: 0, msg: '获取成功', data});
+    }).catch(function (error) {
+        res.send({error: 1, msg: '获取失败，',error});
+    });
+});
+
 /* 通知公告 */
 router.get('/v1/portal/noticeBulletin', function (req, res) {
     redis.zrevrange(1, "通知公告", [0, 4]).then(function (data) {
