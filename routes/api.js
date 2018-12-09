@@ -3,6 +3,15 @@ const redis = require("../redis/redis");
 // const FileUploadUtil = require('../tools/FileUploadUtil');
 const router = express.Router();
 
+/* 通知公告 */
+router.get('/v1/portal/noticeBulletin', function (req, res) {
+    redis.zrevrange(1, "通知公告", [0, 4]).then(function (data) {
+        res.send({error: 0, msg: '获取成功', data});
+    }).catch(function (error) {
+        res.send({error: 1, msg: '获取失败，',error});
+    });
+});
+
 /*添加企业门户统计接口*/
 router.post('/v1/portal/statistics', function(req, res) {
     if(!req.body.totalAssets || !req.body.fundedProjects || !req.body.serviceFirm || !req.body.construction) {
@@ -18,11 +27,13 @@ router.post('/v1/portal/statistics', function(req, res) {
 
 /*添加新闻接口*/
 router.post('/v1/portal/article', function(req, res) {
-    // if(!req.body.title || !req.body.id) {
-    //     res.send({error: 1, msg: '参数不完整'});
-    //     return;
-    // }
-    saveNews(req.body).then(function (result) {
+    console.log(req.body.obj,"============================article")
+    if(!req.body.obj) {
+        res.send({error: 1, msg: '参数不完整'});
+        return;
+    }
+
+    saveNews(req.body.obj).then(function (result) {
         res.send(result);
     });
 });
