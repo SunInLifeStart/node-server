@@ -91,6 +91,9 @@ router.get('/:classify/details', function(req, res) {
     redis.get(1, "article:" + req.query.id).then(function (data) {
         (async () => {
             let uc = await redis.get(0, "usercount");
+            if(req.params.classify == 'news') {
+                req.params.classify = "news/list";
+            }
             res.render('details', {data: data, uc, type: req.query.type, classify: req.params.classify, personalPortal: personalPortal});
         })();
 
