@@ -113,7 +113,7 @@ body .searchGroup .searchFormGroup .searchSub, #search-list .searchGroup .search
 body #search-header {
   display: block;
   float: right;
-  /*margin-right: 66px;*/
+  margin-right: 66px;
   transition: opacity 0.36s ease;
 }
 
@@ -2197,8 +2197,9 @@ body #navWrapper .content .nav > .navitem:hover .subnav {
 body #navWrapper .content .nav > .navitem > a {
   display: block;
   line-height: calc(60px - 2px);
-  padding: 0 30px;
+  padding: 0 25px;
   border-bottom: 2px solid transparent;
+  text-decoration: none
 }
 
 body #navWrapper .content .nav > .navitem > a.active {
@@ -3969,7 +3970,7 @@ a.close { width: 79px; height: 27px; display: inline-block; background-color: #0
   padding: 20px 0px;
 }
 .more-content ul li {
-  width: 65px;
+  width: 84px;
   text-align: center;
   float: left;
   background: #f0f0f0;
