@@ -3820,8 +3820,7 @@ body #navWrapper .content .nav>.navitem .subnav li a {
 }
 
 .marquee-inner-wrapper {
-
-  background: #3b3b3b;
+  background: url("../images/head/透明条.png") no-repeat;
   height: 40px;
   font-size: 14px;
   color: #fff;

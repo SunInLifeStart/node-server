@@ -49,7 +49,9 @@ block content
     .col {
       padding-left: 0px;
     }
-
+    .col-md-6 h4 {
+      font-weight: 600;
+    }
   .container
     #demo.carousel.slide(data-ride='carousel')
       //
@@ -285,7 +287,7 @@ block content
                   div(style="line-height: 25px; padding: 16px 5px;clear:both")
                     a(href=thumb + "" + personalPortal + doc.url target="_blank")
                       img(src=personalPortal + "" + doc.iconUrl, style="width: 74px; height: 94px; vertical-align: middle;float: left; border: 1px solid #dcdada;")
-                      span(style="float: left; font-size: 14px; font-weight: 600; width: 70%;margin-left: 8px; ")=doc.name
+                      span(style="float: left; font-size: 14px; width: 70%;margin-left: 8px; ")=doc.name
                     span(style="float: left; font-size: 12px; width: 30px;margin-left: 8px;")=doc.uname
                     span(style="float: left; font-size: 12px; width: 115px; margin-left: 8px;")=doc.created
       .col
