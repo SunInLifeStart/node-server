@@ -22,6 +22,7 @@ router.get('/index', function(req, res) {
             let noticeBulletin = await redis.zrevrange(1, "通知公告", [0, 4]);
             let meetingTable = await redis.zrevrange(1, "集团会表", [0, 1]);
             let comm = await redis.zrevrange(1, "通讯录", [0, 6]);
+            let news = await redis.zrevrange(1, "新闻中心", [0, 2]);
             leadershipSpeech.sort(function (a, b) {
                 return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
             });
@@ -38,8 +39,8 @@ router.get('/index', function(req, res) {
                 return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
             });
             let uc = await redis.get(0, "usercount");
-            // console.log(uc,"=====================uc");
-            res.render('index', { docs: data.forms || [], uc, leadershipSpeech, writing, workBulletin, rules, noticeBulletin, meetingTable, personalPortal: personalPortal, comm, thumb: config.url.thumb});
+            console.log(news,"=====================uc");
+            res.render('index', { docs: data.forms || [], news, uc, leadershipSpeech, writing, workBulletin, rules, noticeBulletin, meetingTable, personalPortal: personalPortal, comm, thumb: config.url.thumb});
         })()
     });
 });

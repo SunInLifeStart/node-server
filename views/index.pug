@@ -62,44 +62,23 @@ block content
         </ul>
       // 轮播图片
       .carousel-inner
-        .carousel-item.active
-          .row
-            .col-md-5
-              img.rounded.float-right(src='http://static.runoob.com/images/mix/img_fjords_wide.jpg')
-            .col-md-6
-              h4 中芬创新企业合作委员会成功召开第三次会议
-              hr
-              p
-                | &nbsp;&nbsp;&nbsp;&nbsp;11月8日，中芬创新企业合作委员会（以下简称“企委会”）第三次会议作为首届中国国际进口博览会配套活动之一，在国家会展中心（上海）举行。会议由中国商务部、芬兰经济事务与就业部主办，机电商会作为中方秘书处与芬方秘书处芬兰国家商务促进局、芬兰工业联合会共同承办。
-              p
-                time 2018-11-15
-              p
-                a.btn.btn-outline-secondary(href='/news/list') 更多
-        .carousel-item
-          .row
-            .col-md-5
-              img.rounded.float-right(src='http://static.runoob.com/images/mix/img_nature_wide.jpg')
-            .col-md-6
-              h4 集团总经理助理贾一伟到前沿技术调研党建及党风廉政建设工作
-              hr
-              p &nbsp;&nbsp;&nbsp;&nbsp;11月8日，集团总经理助理贾一伟带队到前沿技术公司调研党建及党风廉政建设工作。集团党群工作部、产业投资部有关同志及前沿技术公司班子参加活动。
-              p
-                time 2018-11-15
-              p
-                a.btn.btn-outline-secondary(href='/news/list') 更多
-        .carousel-item
-          .row
-            .col-md-5
-              img.rounded.float-right(src='http://static.runoob.com/images/mix/img_mountains_wide.jpg')
-            .col-md-6
-              h4 科技担保参加北京深化民营和小微企业金融服务推进会
-              hr
-              p
-                | &nbsp;&nbsp;&nbsp;&nbsp;11月2日，中国人民银行营业管理部联合北京银保监局筹备组、北京证监局、北京市发展改革委、北京市经信委、北京市财政局、北京市金融工作局等单位共同召开“北京深化民营和小微企业金融服务推进会”，人民银行副行长朱鹤新、北京市副市长殷勇出席会议并发表讲话。
-              p
-                time 2018-11-15
-              p
-                a.btn.btn-outline-secondary(href='/news/list') 更多
+        each obj, index in news
+          .carousel-item(class=index==0?"active":"")
+            .row
+              .col-md-5
+                a(href="/news/details?type=新闻中心&id="+JSON.parse(obj).articleId)
+                  img.rounded.float-right(src='' + JSON.parse(obj).img)
+              .col-md-6
+                h4
+                  a(href="/news/details?type=新闻中心&id="+JSON.parse(obj).articleId) #{JSON.parse(obj).title}
+                hr
+                p
+                  | &nbsp;&nbsp;&nbsp;&nbsp;#{JSON.parse(obj).about}
+                p
+                  time #{JSON.parse(obj).time}
+                p
+                  a.btn.btn-outline-secondary(href='/news/list') 更多
+
         // 左右切换按钮
         a.carousel-control-prev(href='#demo', data-slide='prev')
           span.carousel-control-prev-icon
