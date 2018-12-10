@@ -106,15 +106,15 @@
                         .search_wrap
                             .searchBox
                                 .searchFormGroup
-                                    -var timeText = new Date().getDate();;
-                                    span(style="position: absolute; top: 15px; left: 21px; color: #fff;") #{timeText}
+                                    -var timeText = new Date().getDate();
+                                    span(style="position: absolute; top: 15px; left: 16px; color: #fff;") #{timeText}
                                     img#time(style="float: left; vertical-align: text-bottom; margin: 1px 8px;", src="/images/head/time2.png", alt="")
                                     input(type="text", id="searchTxt", aria-label="搜索", placeholder="搜索", autocorrect="off", autocapitalize="off", autocomplete="off", spellcheck="false")
                                     .searchSub
                                         span(style="position: relative;top: 8px;")
                                             img(src="/images/head/search.png", alt="搜索")
                                         i.fa.fa-search(aria-hidden="true")
-                                    span(style="float: left; color: #fff; margin: 8px 0px 0px 8px;") 在线：#{uc} 人
+                                    span(style="float: left; color: #fff; margin: 8px 0px 0px 6px;") 在线：#{uc} 人
                                     img.personalCenter(style="float: left; margin: 0px 0px 0px 8px; position: relative;top: 20%; cursor: pointer;", src="/images/head/personalCenter.png", alt="")
                                     span(style="display: none")
                                         span(style="float: left; color: #fff; position: relative;top: 20%;")
