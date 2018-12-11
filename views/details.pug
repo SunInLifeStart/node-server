@@ -41,7 +41,7 @@ block content
         //script(src="/javascripts/fdf_paging.js")
         script(src="/javascripts/load_pdf_all.js")
         script.
-            loadPDF("#{JSON.parse(data).url}");
+            loadPDF("#{JSON.parse(data).url.length > 0 ? JSON.parse(data).url[0] : ''}");
             // if ("#{JSON.parse(data).url}") {
             //     pdfjsLib.getDocument("#{JSON.parse(data).url}").then(function (pdfDoc_) {
             //         pdfDoc = pdfDoc_;
