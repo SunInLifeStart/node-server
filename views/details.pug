@@ -23,7 +23,7 @@ block content
                     | !{JSON.parse(data).content}
                     each obj, index in JSON.parse(data).url
                         a(href=""+personalPortal+obj target="_blank")
-                            img(src=""+JSON.parse(data).img[index] alt="pdf")
+                            img(src=""+personalPortal+JSON.parse(data).img[index] alt="pdf")
         #pdf(style="text-align: center;")
             //input(type="hidden" id="url" value="" + JSON.parse(data).url)
             //.paging
