@@ -55,10 +55,10 @@ async function saveNews(news) {
     try {
         let id = await redis.set(1, "article", news);
         let tags = news.tags.split(",");
-        for(var i in tags) {
-            let obj = {title: news.title,time: news.time, img: news.img || '', about: news.about || '', publisher: news.publisher || '', articleId: id};
-            await redis.zadd(1, tags[i], obj);
-            await redis.zadd(1, "标签", tags[i]);
+        for(let t of tags) {
+            let obj = {title: news.title,time: news.time, img: news.img || [], about: news.about || '', publisher: news.publisher || '', articleId: id};
+            await redis.zadd(1, t, obj);
+            await redis.zadd(1, "标签", t);
         }
         return {error: 0, msg: "操作成功"};
     } catch (e) {
