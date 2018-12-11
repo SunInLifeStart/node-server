@@ -1,6 +1,7 @@
 // redis 链接
 var redis = require('redis');
 const config = require('../config');
+// const moment = require("moment");
 var client = redis.createClient(config.options.RDS_PORT, config.options.RDS_HOST);
 
 // client.auth("123456");
