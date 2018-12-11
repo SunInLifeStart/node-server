@@ -21,7 +21,7 @@ block content
                     a(style="color: #9A9A9A; padding-left: 15px;" href=""+JSON.parse(data).url target="_blank") 下载 | 打印
                 .conts
                     | !{JSON.parse(data).content}
-
+                    | #{JSON.parse(data).url}
         #pdf(style="text-align: center;")
             //input(type="hidden" id="url" value="" + JSON.parse(data).url)
             //.paging
@@ -41,7 +41,7 @@ block content
         //script(src="/javascripts/fdf_paging.js")
         script(src="/javascripts/load_pdf_all.js")
         script.
-            loadPDF("#{JSON.parse(data).url.length > 0 ? JSON.parse(data).url[0] : ''}");
+            loadPDF("#{JSON.parse(data).url[0]}");
             // if ("#{JSON.parse(data).url}") {
             //     pdfjsLib.getDocument("#{JSON.parse(data).url}").then(function (pdfDoc_) {
             //         pdfDoc = pdfDoc_;
