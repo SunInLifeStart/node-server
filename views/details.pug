@@ -23,7 +23,7 @@ block content
                     | !{JSON.parse(data).content}
                 div
                     each obj, index in JSON.parse(data).url
-                        a(href=""+personalPortal+obj target="_blank")
+                        a(href=""+personalPortal+obj target="_blank" style="margin: 15px;")
                             img(src=""+personalPortal+JSON.parse(data).img[index] alt="pdf" style="width: 74px; height: 94px; border: 1px solid #dcdada;")
         #pdf(style="text-align: center;")
             //input(type="hidden" id="url" value="" + JSON.parse(data).url)
