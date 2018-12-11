@@ -21,9 +21,10 @@ block content
                     //a(style="color: #9A9A9A; padding-left: 15px;" href=""+JSON.parse(data).url target="_blank") 下载 | 打印
                 .conts
                     | !{JSON.parse(data).content}
+                div
                     each obj, index in JSON.parse(data).url
                         a(href=""+personalPortal+obj target="_blank")
-                            img(src=""+personalPortal+JSON.parse(data).img[index] alt="pdf")
+                            img(src=""+personalPortal+JSON.parse(data).img[index] alt="pdf" style="width: 74px; height: 94px; border: 1px solid #dcdada;")
         #pdf(style="text-align: center;")
             //input(type="hidden" id="url" value="" + JSON.parse(data).url)
             //.paging
