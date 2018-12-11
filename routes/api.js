@@ -40,22 +40,42 @@ router.post('/v1/portal/statistics', function(req, res) {
 });
 
 /*添加文档接口*/
-router.post('/v1/portal/article', function(req, res) {
+router.post('/v1/portal/article1', function(req, res) {
     (async ()=>{
         try {
             let article = req.body.obj;
-            let news = {
-                title: article.title,
-                time: article.time,
-                img: article.img || [],
-                about: article.about || '',
-                publisher: article.publisher || '',
-                articleId: article.id,
-                url: article.url,
-                tags: article.tags,
-                content: article.content,
-                source: article.source
-            };
+            let news;
+            if(article.type == 'super') {
+                let obj = JSON.parse(article.content);
+                news = {
+                    title: obj.title,
+                    time: obj.created,
+                    img: obj.attachmentforSRs,
+                    about: '',
+                    publisher: obj.grassUser || '',
+                    articleId: obj.id,
+                    url: [],
+                    tags: '通知公告',
+                    content: obj.content,
+                    source: obj.grassUserUnit
+                };
+            }
+            if(article.type == 'news') {
+                let obj = JSON.parse(article.content);
+                news = {
+                    title: obj.title,
+                    time: obj.created,
+                    img: obj.attachmentforSRs,
+                    about: '',
+                    publisher: obj.grassUser || '',
+                    articleId: obj.id,
+                    url: [],
+                    tags: '新闻中心',
+                    content: obj.content,
+                    source: obj.grassUserUnit
+                };
+            }
+
             let id = await redis.set(1, "article", news);
             let tags = news.tags.split(",");
             for(let t of tags) {
@@ -72,11 +92,12 @@ router.post('/v1/portal/article', function(req, res) {
 
 /*添加新闻接口*/
 router.post('/v1/portal/article', function(req, res) {
-    // console.log(req.body.obj,"============================article")
+    console.log(req.body,"============================article")
     // if(!req.body.obj) {
     //     res.send({error: 1, msg: '参数不完整'});
     //     return;
     // }
+
     saveNews(req.body).then(function (result) {
         res.send(result);
     });
