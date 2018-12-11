@@ -41,6 +41,21 @@ router.post('/v1/portal/statistics', function(req, res) {
 
 /*添加新闻接口*/
 router.post('/v1/portal/article', function(req, res) {
+    (async ()=>{
+        let news = req.body.obj;
+        let id = await redis.set(1, "article", news);
+        let tags = news.tags.split(",");
+        for(let t of tags) {
+            let obj = {title: news.title,time: news.created, img: news.attachments || [], about: news.about || '', publisher: news.publisher || '', articleId: id};
+            await redis.zadd(1, t, obj);
+            await redis.zadd(1, "标签", t);
+        }
+        res.send({error: 0, msg: "操作成功"});
+    })();
+});
+
+/*添加新闻接口*/
+router.post('/v1/portal/article', function(req, res) {
     // console.log(req.body.obj,"============================article")
     // if(!req.body.obj) {
     //     res.send({error: 1, msg: '参数不完整'});

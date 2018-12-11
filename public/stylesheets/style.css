@@ -3822,6 +3822,7 @@ body #navWrapper .content .nav>.navitem .subnav li a {
 
 .marquee-inner-wrapper {
   background: url("../images/head/透明条.png") no-repeat;
+  background-size: 100%;
   height: 40px;
   font-size: 14px;
   color: #fff;
