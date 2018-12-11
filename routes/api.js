@@ -39,18 +39,34 @@ router.post('/v1/portal/statistics', function(req, res) {
     });
 });
 
-/*添加新闻接口*/
+/*添加文档接口*/
 router.post('/v1/portal/article', function(req, res) {
     (async ()=>{
-        let news = req.body.obj;
-        let id = await redis.set(1, "article", news);
-        let tags = news.tags.split(",");
-        for(let t of tags) {
-            let obj = {title: news.title,time: news.created, img: news.attachments || [], about: news.about || '', publisher: news.publisher || '', articleId: id};
-            await redis.zadd(1, t, obj);
-            await redis.zadd(1, "标签", t);
+        try {
+            let article = req.body.obj;
+            let news = {
+                title: article.title,
+                time: article.time,
+                img: article.img || [],
+                about: article.about || '',
+                publisher: article.publisher || '',
+                articleId: article.id,
+                url: article.url,
+                tags: article.tags,
+                content: article.content,
+                source: article.source
+            };
+            let id = await redis.set(1, "article", news);
+            let tags = news.tags.split(",");
+            for(let t of tags) {
+                let obj = {title: news.title,time: news.time, img: news.img, about: news.about, publisher: news.publisher, articleId: id};
+                await redis.zadd(1, t, obj);
+                await redis.zadd(1, "标签", t);
+            }
+            res.send({error: 0, msg: "操作成功"});
+        }catch (e) {
+            res.send({error: 1, msg: e.toString()});
         }
-        res.send({error: 0, msg: "操作成功"});
     })();
 });
 
