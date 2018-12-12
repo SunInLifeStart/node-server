@@ -5,7 +5,7 @@ const router = express.Router();
 
 /* 通知公告详情 */
 router.get('/v1/portal/details', function (req, res) {
-    redis.get(1, "article:" + req.query.id).then(function (data) {
+    redis.get(0, "article:" + req.query.id).then(function (data) {
         data = JSON.parse(data);
         res.send({error: 0, msg: '获取成功', data});
     }).catch(function (error) {
@@ -15,7 +15,7 @@ router.get('/v1/portal/details', function (req, res) {
 
 /* 通知公告列表 */
 router.get('/v1/portal/noticeBulletin', function (req, res) {
-    redis.zrevrange(1, "通知公告", [0, 4, 'withscores']).then(function (data) {
+    redis.zrevrange(0, "通知公告", [0, 4, 'withscores']).then(function (data) {
         for(let i = 0; i < data.length; i++) {
             data[i] = JSON.parse(data[i]);
         }
@@ -32,7 +32,7 @@ router.post('/v1/portal/statistics', function(req, res) {
         res.send({error: 1, msg: '参数不完整'});
         return;
     }
-    redis.set(1, '门户统计', req.body).then(() => {
+    redis.set(0, '门户统计', req.body).then(() => {
         res.send({error: 0, msg: '添加成功'});
     }).catch((err) => {
         res.send({error: 1, msg: '系统错误', err});
@@ -40,43 +40,84 @@ router.post('/v1/portal/statistics', function(req, res) {
 });
 
 /*添加文档接口*/
-router.post('/v1/portal/article1', function(req, res) {
+router.post('/v1/portal/article', function(req, res) {
     (async ()=>{
         try {
             let article = req.body.obj;
-            let news;
-            if(article.type == 'super') {
-                let obj = JSON.parse(article.content);
+            let obj = JSON.parse(article.content);
+            let img = [], url = [], news = {};
+            if(obj.attachments.length) {
+                for(let att of obj.attachments) {
+                    img.push(att.iconUrl);
+                    url.push(att.url);
+                }
+            }
+            if(article.type == 'super') {       // 纪检监察
+                img = [], url = [];
+                if(obj.attachmentforSRs.length) {
+                    for(let att of obj.attachmentforSRs) {
+                        img.push(att.iconUrl);
+                        url.push(att.url);
+                    }
+                }
                 news = {
                     title: obj.title,
                     time: obj.created,
-                    img: obj.attachmentforSRs,
-                    about: '',
+                    img: img,
+                    about: obj.brief || '',
                     publisher: obj.grassUser || '',
                     articleId: obj.id,
-                    url: [],
+                    url: url,
                     tags: '通知公告',
                     content: obj.content,
                     source: obj.grassUserUnit
-                };
+                }
             }
-            if(article.type == 'news') {
-                let obj = JSON.parse(article.content);
+            if(article.type == 'news') {       // 新闻中心
                 news = {
                     title: obj.title,
                     time: obj.created,
-                    img: obj.attachmentforSRs,
-                    about: '',
-                    publisher: obj.grassUser || '',
+                    img: img,
+                    about: obj.brief || '',
+                    publisher: obj.creatorName || '',
                     articleId: obj.id,
-                    url: [],
+                    url: url,
                     tags: '新闻中心',
                     content: obj.content,
-                    source: obj.grassUserUnit
-                };
+                    source: obj.reportingOrg
+                }
+            }
+            if(article.type == 'outgoing') {       // 集团发文
+                news = {
+                    title: obj.title,
+                    time: obj.created,
+                    img: img,
+                    about: obj.brief || '',
+                    publisher: obj.creatorName || '',
+                    articleId: obj.id,
+                    url: url,
+                    tags: '集团发文',
+                    content: obj.content,
+                    source: obj.mainTo,
+                    remark: obj.remark
+                }
+            }
+            if(article.type == 'publish') {       // 综合事务
+                news = {
+                    title: obj.title,
+                    time: obj.created,
+                    img: img,
+                    about: obj.brief || '',
+                    publisher: obj.creatorName || '',
+                    articleId: obj.id,
+                    url: url,
+                    tags: obj.columns,
+                    content: obj.content,
+                    source: obj.organName
+                }
             }
 
-            let id = await redis.set(1, "article", news);
+            let id = await redis.set(0, "article", news);
             let tags = news.tags.split(",");
             for(let t of tags) {
                 let obj = {title: news.title,time: news.time, img: news.img, about: news.about, publisher: news.publisher, articleId: id};
@@ -90,7 +131,7 @@ router.post('/v1/portal/article1', function(req, res) {
     })();
 });
 
-/*添加新闻接口*/
+/*添加新闻接口
 router.post('/v1/portal/article', function(req, res) {
     console.log(req.body,"============================article")
     // if(!req.body.obj) {
@@ -101,16 +142,16 @@ router.post('/v1/portal/article', function(req, res) {
     saveNews(req.body).then(function (result) {
         res.send(result);
     });
-});
+});*/
 
 async function saveNews(news) {
     try {
-        let id = await redis.set(1, "article", news);
+        let id = await redis.set(0, "article", news);
         let tags = news.tags.split(",");
         for(let t of tags) {
             let obj = {title: news.title,time: news.time, img: news.img || [], about: news.about || '', publisher: news.publisher || '', articleId: id};
-            await redis.zadd(1, t, obj);
-            await redis.zadd(1, "标签", t);
+            await redis.zadd(0, t, obj);
+            await redis.zadd(0, "标签", t);
         }
         return {error: 0, msg: "操作成功"};
     } catch (e) {

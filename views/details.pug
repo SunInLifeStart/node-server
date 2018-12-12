@@ -11,20 +11,17 @@ block content
       //h1 #{type}
       //img(src="/images/list_.png")
     article.article.article--big
-        #article(style="padding: 40px;")
-            .details
-                h2 #{JSON.parse(data).title}
-                h3
-                    span.time 发布时间：#{JSON.parse(data).time}
-                    span#hitid.click 发布人：#{JSON.parse(data).publisher}
-                    span.come 来源：#{JSON.parse(data).source}
-                    //a(style="color: #9A9A9A; padding-left: 15px;" href=""+JSON.parse(data).url target="_blank") 下载 | 打印
-                .conts
-                    | !{JSON.parse(data).content}
-                div
-                    each obj, index in JSON.parse(data).url
-                        a(href=""+personalPortal+obj target="_blank" style="margin: 12px;" title="下载")
-                            img(src=""+personalPortal+JSON.parse(data).img[index] alt="pdf" style="width: 74px; height: 94px; border: 1px solid #dcdada;")
+      #article(style="padding: 40px;")
+        .details
+          h2 #{JSON.parse(data).title}
+          h3
+            span.time 发布时间：#{JSON.parse(data).time}
+            span#hitid.click 发布人：#{JSON.parse(data).publisher}
+            span.come 来源：#{JSON.parse(data).source}
+            //a(style="color: #9A9A9A; padding-left: 15px;" href=""+JSON.parse(data).url target="_blank") 下载 | 打印
+          .conts
+            | !{JSON.parse(data).content}
+
         #pdf(style="text-align: center;")
             //input(type="hidden" id="url" value="" + JSON.parse(data).url)
             //.paging
@@ -39,12 +36,16 @@ block content
             //        | /
             //        span#page_count
             #the-canvas
+        div
+          each obj, index in JSON.parse(data).url
+            a(href=obj target="_blank" style="margin: 12px;" title="下载")
+             img(src=JSON.parse(data).img.length?JSON.parse(data).img[index]:"/images/PDF.png" alt="pdf" style="width: 72px; border: 1px solid #dcdada;")
         script(src="/javascripts/pdf.js")
         script(src="/javascripts/pdf.worker.js")
         //script(src="/javascripts/fdf_paging.js")
         script(src="/javascripts/load_pdf_all.js")
         script.
-            loadPDF("#{JSON.parse(data).url.length?personalPortal+JSON.parse(data).url[0]: ''}");
+            loadPDF("#{JSON.parse(data).url.length?JSON.parse(data).url[0]: ''}");
             // if ("#{JSON.parse(data).url}") {
             //     pdfjsLib.getDocument("#{JSON.parse(data).url}").then(function (pdfDoc_) {
             //         pdfDoc = pdfDoc_;

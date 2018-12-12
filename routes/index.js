@@ -15,14 +15,14 @@ router.get('/', function(req, res) {
 router.get('/index', function(req, res) {
     getLatestDocuments(1, 4, function (data) {
         (async () => {
-            let leadershipSpeech = await redis.zrevrange(1, "领导讲话", [0, 4]);
-            let writing = await redis.zrevrange(1, "集团发文", [0, 4]);
-            let workBulletin = await redis.zrevrange(1, "工作简报", [0, 4]);
-            let rules = await redis.zrevrange(1, "规章制度", [0, 4]);
-            let noticeBulletin = await redis.zrevrange(1, "通知公告", [0, 4]);
-            let meetingTable = await redis.zrevrange(1, "集团会表", [0, 1]);
-            let comm = await redis.zrevrange(1, "通讯录", [0, 6]);
-            let news = await redis.zrevrange(1, "新闻中心", [0, 2]);
+            let leadershipSpeech = await redis.zrevrange(0, "领导讲话", [0, 4]);
+            let writing = await redis.zrevrange(0, "集团发文", [0, 4]);
+            let workBulletin = await redis.zrevrange(0, "工作简报", [0, 4]);
+            let rules = await redis.zrevrange(0, "规章制度", [0, 4]);
+            let noticeBulletin = await redis.zrevrange(0, "通知公告", [0, 4]);
+            let meetingTable = await redis.zrevrange(0, "集团会表", [0, 0]);
+            let comm = await redis.zrevrange(0, "通讯录", [0, 6]);
+            let news = await redis.zrevrange(0, "新闻中心", [0, 2]);
             leadershipSpeech.sort(function (a, b) {
                 return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
             });
@@ -53,8 +53,8 @@ router.get('/latestDocuments', function(req, res) {
 
 router.get('/partyBuilding', function(req, res) {
     (async () => {
-        let partyBuilding = await redis.zrevrange(1, "partyBuilding", [0, 2]);
-        let tradeUnion = await redis.zrevrange(1, "工会活动", [0, 2]);
+        let partyBuilding = await redis.zrevrange(0, "partyBuilding", [0, 2]);
+        let tradeUnion = await redis.zrevrange(0, "工会活动", [0, 2]);
         let uc = await redis.get(0, "usercount");
         res.render('partyBuilding', {tradeUnion, uc, partyBuilding, personalPortal: personalPortal});
     })()
@@ -75,8 +75,8 @@ router.get('/:news/list', function(req, res) {
         let size = 9;
         let page = ((req.query.page || 1) - 1) * size;
         let pageSize = page + size - 1;
-        let count = await redis.zcard(1, key);
-        let news = await redis.zrevrange(1, key, [page, pageSize]);
+        let count = await redis.zcard(0, key);
+        let news = await redis.zrevrange(0, key, [page, pageSize]);
         if(key == 'partyBuilding') {
             key = '集团党建';
         }
@@ -89,7 +89,7 @@ router.get('/:news/list', function(req, res) {
 });
 
 router.get('/:classify/details', function(req, res) {
-    redis.get(1, "article:" + req.query.id).then(function (data) {
+    redis.get(0, "article:" + req.query.id).then(function (data) {
         (async () => {
             let uc = await redis.get(0, "usercount");
             if(req.params.classify == 'news') {
@@ -106,8 +106,8 @@ router.get('/leadershipSpeechs', function(req, res) {
         let size = 10;
         let page = ((req.query.page || 1) - 1) * size;
         let pageSize = page + size - 1;
-        let count = await redis.zcard(1, '领导讲话');
-        let leadershipSpeechs = await redis.zrevrange(1, "领导讲话", [page, pageSize]);
+        let count = await redis.zcard(0, '领导讲话');
+        let leadershipSpeechs = await redis.zrevrange(0, "领导讲话", [page, pageSize]);
         leadershipSpeechs.sort(function (a, b) {
             return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
         });
@@ -121,8 +121,8 @@ router.get('/rulesRegulations', function(req, res) {
         let size = 10;
         let page = ((req.query.page || 1) - 1) * size;
         let pageSize = page + size - 1;
-        let count = await redis.zcard(1, '规章制度');
-        let rulesRegulations = await redis.zrevrange(1, "规章制度", [page, pageSize]);
+        let count = await redis.zcard(0, '规章制度');
+        let rulesRegulations = await redis.zrevrange(0, "规章制度", [page, pageSize]);
         rulesRegulations.sort(function (a, b) {
             return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
         });
@@ -136,8 +136,8 @@ router.get('/writings', function(req, res) {
         let size = 10;
         let page = ((req.query.page || 1) - 1) * size;
         let pageSize = page + size - 1;
-        let count = await redis.zcard(1, '集团发文');
-        let writings = await redis.zrevrange(1, "集团发文", [page, pageSize]);
+        let count = await redis.zcard(0, '集团发文');
+        let writings = await redis.zrevrange(0, "集团发文", [page, pageSize]);
         writings.sort(function (a, b) {
             return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
         });
@@ -151,8 +151,8 @@ router.get('/workBulletin', function(req, res) {
         let size = 10;
         let page = ((req.query.page || 1) - 1) * size;
         let pageSize = page + size - 1;
-        let count = await redis.zcard(1, '工作简报');
-        let workBulletin = await redis.zrevrange(1, "工作简报", [page, pageSize]);
+        let count = await redis.zcard(0, '工作简报');
+        let workBulletin = await redis.zrevrange(0, "工作简报", [page, pageSize]);
         workBulletin.sort(function (a, b) {
             return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
         });
@@ -166,8 +166,8 @@ router.get('/contactWay', function(req, res) {
         let size = 10;
         let page = ((req.query.page || 1) - 1) * size;
         let pageSize = page + size - 1;
-        let count = await redis.zcard(1, '通讯录');
-        let contactWay = await redis.zrevrange(1, "通讯录", [page, pageSize]);
+        let count = await redis.zcard(0, '通讯录');
+        let contactWay = await redis.zrevrange(0, "通讯录", [page, pageSize]);
         contactWay.sort(function (a, b) {
             return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
         });
@@ -176,13 +176,28 @@ router.get('/contactWay', function(req, res) {
     })()
 });
 
+router.get('/groupTable', function(req, res) {
+    (async () => {
+        let size = 10;
+        let page = ((req.query.page || 1) - 1) * size;
+        let pageSize = page + size - 1;
+        let count = await redis.zcard(0, '集团会表');
+        let groupTable = await redis.zrevrange(0, "集团会表", [page, pageSize]);
+        groupTable.sort(function (a, b) {
+            return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
+        });
+        let uc = await redis.get(0, "usercount");
+        res.render('groupTable', {groupTable, uc, page: req.query.page, count: Math.ceil(count / size), personalPortal: personalPortal});
+    })()
+});
+
 router.get('/noticeBulletin', function(req, res) {
     (async () => {
         let size = 10;
         let page = ((req.query.page || 1) - 1) * size;
         let pageSize = page + size - 1;
-        let count = await redis.zcard(1, '通知公告');
-        let noticeBulletin = await redis.zrevrange(1, "通知公告", [page, pageSize]);
+        let count = await redis.zcard(0, '通知公告');
+        let noticeBulletin = await redis.zrevrange(0, "通知公告", [page, pageSize]);
         noticeBulletin.sort(function (a, b) {
             return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
         });
@@ -200,7 +215,7 @@ function getLatestDocuments(page, pageSize, cb) {
             "content-type": "application/json",
         },
         body: {
-            "page":page,
+            "page":page || 1,
             "pageSize": pageSize,
             "desc": true,
             "orderBy": "id",
