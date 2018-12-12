@@ -1,18 +1,8 @@
 // redis 链接
-var redis = require('redis');
 const config = require('../config');
+const Redis = require('ioredis');
+const redis = new Redis(config.options.RDS_PORT, config.options.RDS_HOST);
 // const moment = require("moment");
-var client = redis.createClient(config.options.RDS_PORT, config.options.RDS_HOST);
-
-// client.auth("123456");
-client.on('end',function(err){
-    console.log('end');
-});
-
-// redis 链接错误
-client.on("err", function(err) {
-    console.log(err);
-});
 
 /**
  * 添加有序集合
@@ -21,9 +11,9 @@ client.on("err", function(err) {
  * @param val
  * @returns {Promise<any>}
  */
-exports.zadd = function(db, key, val) {
+exports.zadd = function( key, val) {
     return new Promise(function (resolve, reject) {
-        client.select(db, function(err) {
+        client.select( function(err) {
             if (err) {
                 reject(err);
             } else {
@@ -45,9 +35,9 @@ exports.zadd = function(db, key, val) {
  * @param val
  * @returns {Promise<any>}
  */
-exports.set = function(db, key, val) {
+exports.set = function( key, val) {
     return new Promise(function (resolve, reject) {
-        client.select(db, function(err) {
+        client.select( function(err) {
             if (err) {
                 reject(err);
             } else {
@@ -72,9 +62,9 @@ exports.set = function(db, key, val) {
  * @param key
  * @param val
  */
-exports.incrby = function(db, key, val) {
+exports.incrby = function( key, val) {
     return new Promise(function (resolve, reject) {
-        client.select(db, function(err) {
+        client.select( function(err) {
             if (err) {
                 reject(err);
             } else {
@@ -93,9 +83,9 @@ exports.incrby = function(db, key, val) {
  * @param key
  * @param callback
  */
-exports.incr = function(db, key) {
+exports.incr = function( key) {
     return new Promise(function (resolve, reject) {
-        client.select(db, function(err) {
+        client.select( function(err) {
             if (err) {
                 reject(err);
             } else {
@@ -114,9 +104,9 @@ exports.incr = function(db, key) {
  * @param key
  * @param obj
  */
-exports.lpush = function(db, key, obj) {
+exports.lpush = function( key, obj) {
     return new Promise(function (resolve, reject) {
-        client.select(db, function(err) {
+        client.select( function(err) {
             if (err) {
                 reject(err);
             } else {
@@ -136,9 +126,9 @@ exports.lpush = function(db, key, obj) {
  * @param option
  * @param callback
  */
-exports.zrange = function(db, key, option) {
+exports.zrange = function( key, option) {
     return new Promise(function (resolve, reject) {
-        client.select(db, function(err) {
+        client.select( function(err) {
             if (err) {
                 reject(err);
             } else {
@@ -156,9 +146,9 @@ exports.zrange = function(db, key, option) {
  * @param key
  * @param option
  */
-exports.zrevrange = function(db, key, option) {
+exports.zrevrange = function( key, option) {
     return new Promise(function (resolve, reject) {
-        client.select(db, function(err) {
+        client.select( function(err) {
             if (err) {
                 reject(err);
             } else {
@@ -175,9 +165,9 @@ exports.zrevrange = function(db, key, option) {
  * @param db
  * @param key
  */
-exports.zcard = function(db, key) {
+exports.zcard = function( key) {
     return new Promise(function (resolve, reject) {
-        client.select(db, function(err) {
+        client.select( function(err) {
             if (err) {
                 reject(err);
             } else {
@@ -197,9 +187,9 @@ exports.zcard = function(db, key) {
  * @param option
  * @returns {Promise<any>}
  */
-exports.lrange = function(db, key, option) {
+exports.lrange = function( key, option) {
     return new Promise(function (resolve, reject) {
-        client.select(db, function(err) {
+        client.select( function(err) {
             if (err) {
                 reject(err);
             } else {
@@ -218,9 +208,9 @@ exports.lrange = function(db, key, option) {
  * @param key
  * @returns {Promise<any>}
  */
-exports.get = function(db, key) {
+exports.get = function( key) {
     return new Promise(function (resolve, reject) {
-        client.select(db, function(err) {
+        client.select( function(err) {
             if (err) {
                 reject(err);
             } else {
@@ -240,7 +230,7 @@ exports.get = function(db, key) {
  */
 exports.flushdb = function(db) {
     return new Promise(function (resolve, reject) {
-        client.select(db, function(err) {
+        client.select( function(err) {
             if (err) {
                 reject(err);
             } else {
