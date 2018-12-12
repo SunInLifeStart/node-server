@@ -44,7 +44,9 @@ router.post('/v1/portal/statistics', function(req, res) {
 /*添加文档接口*/
 router.post('/v1/portal/article/1', function(req, res) {
     try {
-        let obj = JSON.parse(req.body.body.content);
+        let article = JSON.parse(req.body.obj);
+        console.log(article,"======================================", typeof article);
+        let obj = JSON.parse(article.body.content);
         let img = [], url = [], news = {};
         if(obj.attachments && obj.attachments.length) {
             for(let att of obj.attachments) {
@@ -52,7 +54,7 @@ router.post('/v1/portal/article/1', function(req, res) {
                 url.push(att.url);
             }
         }
-        if(req.body.type == 'super') {       // 纪检监察
+        if(article.type == 'super') {       // 纪检监察
             img = [], url = [];
             if(obj.attachmentforSRs.length) {
                 for(let att of obj.attachmentforSRs) {
@@ -73,7 +75,7 @@ router.post('/v1/portal/article/1', function(req, res) {
                 source: obj.grassUserUnit
             }
         }
-        if(req.body.type == 'news') {       // 新闻中心
+        if(article.type == 'news') {       // 新闻中心
             news = {
                 title: obj.title,
                 time: obj.created,
@@ -87,7 +89,7 @@ router.post('/v1/portal/article/1', function(req, res) {
                 source: obj.reportingOrg
             }
         }
-        if(req.body.type == 'outgoing') {       // 集团发文
+        if(article.type == 'outgoing') {       // 集团发文
             news = {
                 title: obj.title,
                 time: obj.created,
@@ -102,7 +104,7 @@ router.post('/v1/portal/article/1', function(req, res) {
                 remark: obj.remark
             }
         }
-        if(req.body.type == 'publish') {       // 综合事务
+        if(article.type == 'publish') {       // 综合事务
             news = {
                 title: obj.title,
                 time: obj.created,

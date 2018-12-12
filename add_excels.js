@@ -2,7 +2,10 @@ const xlsx = require("node-xlsx");
 const mammoth = require("mammoth");
 const async = require("async");
 const path = require('path');
-const redis = require('./redis/redis');
+const config = require('./config');
+const Redis = require('ioredis');
+const redis = new Redis(config.options.RDS_PORT, config.options.RDS_HOST);
+
 const fs = require("fs");
 
 const options = {
@@ -13,14 +16,15 @@ const options = {
     includeDefaultStyleMap :false
 };
 
+
 async function saveNews(news) {
     try {
-        let id = await redis.set(0, "article", news);
+        redis.set("article:"+news.id, JSON.stringify(news));
         let tags = news.tags.split(",");
         for(let i of tags) {
-            let obj = {title: news.title,time: news.time, img: news.img, about: news.about, publisher: news.publisher, articleId: id};
-            await redis.zadd(0, i, obj);
-            await redis.zadd(0, "标签", i);
+            let obj = {title: news.title,time: news.time, img: news.img, about: news.about, publisher: news.publisher, articleId: news.id};
+            await redis.zadd(i, news.id, JSON.stringify(obj));
+            await redis.zadd("标签", news.id, i);
         }
         return "添加成功";
     } catch (e) {
@@ -28,7 +32,7 @@ async function saveNews(news) {
         return e.toString();
     }
 }
-redis.flushdb(1);
+
 let url = path.join(__dirname, 'public/files/Table/excel/');
 
 fs.readdir(url, function (err, files) {
@@ -44,14 +48,17 @@ function parse(file, callback) {
             for(let i = 1; i < obj.data.length; i++) {
                 let arr = obj.data[i];
                 if(arr[1]) {
-                    let article = {title: arr[1], time: arr[7], publisher: arr[6], source: arr[4], tags: arr[8], url: ['/files/'+arr[1]+'.pdf'], content: arr[9], img: arr[27]?[arr[27]]:[], about: arr[28]};
-                    if(arr[8] == "新闻中心" || arr[8] == "partyBuilding" || arr[8] == "工会活动")
-                        article.url = '';
-                    saveNews(article).then(function (article) {
-                        console.log("---------------"+article+"--------------");
-                    },function (err) {
-                        console.error(err,"=====================error");
+                    redis.incr('articleID').then((id)=>{
+                        let article = {id: id, title: arr[1], time: arr[7], publisher: arr[6], source: arr[4], tags: arr[8], url: ['/files/'+arr[1]+'.pdf'], content: arr[9], img: arr[27]?[arr[27]]:[], about: arr[28]};
+                        if(arr[8] == "新闻中心" || arr[8] == "partyBuilding" || arr[8] == "工会活动")
+                            article.url = '';
+                        saveNews(article).then(function (article) {
+                            console.log("---------------"+article+"--------------");
+                        },function (err) {
+                            console.error(err,"=====================error");
+                        });
                     });
+
                     // mammoth.convertToHtml({path: "E:/Table/"+arr[1]+".docx"}, options)
                     //     .then(function(result){
                     //         let html = result.value;
