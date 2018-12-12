@@ -135,7 +135,7 @@ router.post('/v1/portal/article/1', function(req, res) {
     }
 });
 
-/*添加新闻接口*/
+/*添加新闻接口
 router.post('/v1/portal/article', function(req, res) {
     try {
         redis.set("article:"+req.body.id, JSON.stringify(req.body));
@@ -149,7 +149,7 @@ router.post('/v1/portal/article', function(req, res) {
     }catch (e) {
         res.send({error: 1, msg: e.toString()});
     }
-});
+});*/
 
 
 /**
