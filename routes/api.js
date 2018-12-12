@@ -118,14 +118,18 @@ router.post('/v1/portal/article/1', function(req, res) {
                 source: obj.organName
             }
         }
-        redis.set("article:"+news.articleId, JSON.stringify(news));
-        let tags = news.tags.split(",");
-        for(let t of tags) {
-            let obj = {title: news.title,time: news.time, img: news.img, about: news.about, publisher: news.publisher, articleId: news.articleId};
-            redis.zadd(t, news.articleId, JSON.stringify(obj));
-            redis.zadd("标签", news.articleId, t);
-        }
-        res.send({error: 0, msg: "操作成功"});
+        redis.exists("article:"+news.articleId).then((result)=>{
+            if(!result) {
+                redis.set("article:"+news.articleId, JSON.stringify(news));
+                let tags = news.tags.split(",");
+                for(let t of tags) {
+                    let obj = {title: news.title,time: news.time, img: news.img, about: news.about, publisher: news.publisher, articleId: news.articleId};
+                    redis.zadd(t, news.articleId, JSON.stringify(obj));
+                    redis.zadd("标签", news.articleId, t);
+                }
+            }
+            res.send({error: 0, msg: "操作成功"});
+        });
     }catch (e) {
         res.send({error: 1, msg: e.toString()});
     }
