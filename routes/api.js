@@ -43,16 +43,15 @@ router.post('/v1/portal/statistics', function(req, res) {
 router.post('/v1/portal/article', function(req, res) {
     (async ()=>{
         try {
-            let article = req.body.obj;
-            let obj = JSON.parse(article.content);
+            let obj = JSON.parse(req.body.body.content);
             let img = [], url = [], news = {};
-            if(obj.attachments.length) {
+            if(obj.attachments && obj.attachments.length) {
                 for(let att of obj.attachments) {
                     img.push(att.iconUrl);
                     url.push(att.url);
                 }
             }
-            if(article.type == 'super') {       // 纪检监察
+            if(req.body.type == 'super') {       // 纪检监察
                 img = [], url = [];
                 if(obj.attachmentforSRs.length) {
                     for(let att of obj.attachmentforSRs) {
@@ -73,7 +72,7 @@ router.post('/v1/portal/article', function(req, res) {
                     source: obj.grassUserUnit
                 }
             }
-            if(article.type == 'news') {       // 新闻中心
+            if(req.body.type == 'news') {       // 新闻中心
                 news = {
                     title: obj.title,
                     time: obj.created,
@@ -87,7 +86,7 @@ router.post('/v1/portal/article', function(req, res) {
                     source: obj.reportingOrg
                 }
             }
-            if(article.type == 'outgoing') {       // 集团发文
+            if(req.body.type == 'outgoing') {       // 集团发文
                 news = {
                     title: obj.title,
                     time: obj.created,
@@ -102,7 +101,7 @@ router.post('/v1/portal/article', function(req, res) {
                     remark: obj.remark
                 }
             }
-            if(article.type == 'publish') {       // 综合事务
+            if(req.body.type == 'publish') {       // 综合事务
                 news = {
                     title: obj.title,
                     time: obj.created,
@@ -116,13 +115,12 @@ router.post('/v1/portal/article', function(req, res) {
                     source: obj.organName
                 }
             }
-            console.log(news,"==============================news");
             let id = await redis.set(0, "article", news);
             let tags = news.tags.split(",");
             for(let t of tags) {
                 let obj = {title: news.title,time: news.time, img: news.img, about: news.about, publisher: news.publisher, articleId: id};
-                await redis.zadd(1, t, obj);
-                await redis.zadd(1, "标签", t);
+                await redis.zadd(0, t, obj);
+                await redis.zadd(0, "标签", t);
             }
             res.send({error: 0, msg: "操作成功"});
         }catch (e) {
