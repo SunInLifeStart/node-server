@@ -116,7 +116,7 @@ router.post('/v1/portal/article', function(req, res) {
                     source: obj.organName
                 }
             }
-
+            console.log(news,"==============================news");
             let id = await redis.set(0, "article", news);
             let tags = news.tags.split(",");
             for(let t of tags) {
