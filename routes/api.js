@@ -1,5 +1,5 @@
 const express = require('express');
-// const moment = require("moment");
+const moment = require("moment");
 const config = require('../config');
 const Redis = require('ioredis');
 const redis = new Redis(config.options.RDS_PORT, config.options.RDS_HOST);
@@ -27,7 +27,131 @@ router.get('/v1/portal/noticeBulletin', function (req, res) {
     });
 });
 
-/*添加企业门户统计接口*/
+/* 集团门户文章修改 */
+router.post('/v1/portal/article/upd', function (req, res) {
+    if(!req.body.id || !req.body.title || !req.body.content) {
+        res.send({error: 1, msg: '参数不完整'});
+        return;
+    }
+    try {
+        redis.get("article:" + req.body.id).then((result)=>{
+            if(result) {
+                let obj = JSON.parse(result);
+                redis.del(obj.tags + ":" + obj.title);
+                let art = {
+                    title: req.body.title,
+                    time: moment(),
+                    img: req.body.img || [],
+                    about: req.body.about || '',
+                    articleId: req.body.id
+                };
+                redis.zadd(obj.tags + ":" + req.body.title, req.body.id, JSON.stringify(art));
+                redis.zremrangebyscore(obj.tags, [req.body.id, req.body.id]);
+                redis.zadd(obj.tags, req.body.id, JSON.stringify(art));
+                art.id = req.body.id;
+                art.url = req.body.url || '';
+                art.tags = req.body.tags || obj.tags;
+                art.content = req.body.content;
+                redis.set('article:' + req.body.id, JSON.stringify(art));
+                res.send({error: 0, msg: '修改成功'});
+            }else{
+                res.send({error: 1, msg: '没有找到相关信息'});
+            }
+        });
+    }catch (e) {
+        res.send({error: 1, msg: e.toString()});
+    }
+});
+
+/* 删除文章 */
+router.post('/v1/portal/article/del', function (req, res) {
+    if(!req.body.id) {
+        res.send({error: 1, msg: '参数不完整'});
+        return;
+    }
+    try {
+        redis.get("article:" + req.body.id).then((result)=>{
+            if(result) {
+                let obj = JSON.parse(result);
+                redis.del(obj.tags + ":" + obj.title);
+                redis.zremrangebyscore(obj.tags, [req.body.id, req.body.id]);
+                redis.del('article:' + req.body.id);
+                res.send({error: 0, msg: '删除成功'});
+            }else{
+                res.send({error: 1, msg: '没有找到相关信息'});
+            }
+        });
+    }catch (e) {
+        res.send({error: 1, msg: e.toString()});
+    }
+});
+
+/* 集团门户列表信息 */
+router.get('/v1/portal/article', function (req, res) {
+    let size = req.query.size || 20;
+    let page = ((req.query.page || 1) - 1) * size;
+    let pageSize = parseInt(page) + parseInt(size - 1);
+    console.log(size,"===============================",pageSize);
+    (async ()=>{
+        try {
+            let key = req.query.type;
+            let arr = [];
+            if(req.query.title) {
+                key += ":" + req.query.title;
+            }
+            if(req.query.startTime && !req.query.endTime) {
+                arr.push(moment(req.query.startTime).valueOf());
+                arr.push(moment().valueOf());
+            }
+            if(!req.query.startTime && req.query.endTime) {
+                arr.push(-1);
+                arr.push(moment(req.query.endTime).valueOf());
+            }
+            if(req.query.startTime && req.query.endTime) {
+                arr.push(moment(req.query.startTime).valueOf());
+                arr.push(moment(req.query.endTime).valueOf());
+            }
+            if(!req.query.title && arr.length) {
+                redis.zrangebyscore(key, arr).then(function (data) {
+                    for(let i = 0; i < data.length; i++) {
+                        data[i] = JSON.parse(data[i]);
+                    }
+                    res.send({error: 0, msg: '获取成功', data, page: 1, count: 1});
+                });
+            }else{
+                let count = await redis.zcard(key);
+                redis.zrevrange(key, [page, pageSize]).then(function (data) {
+                    console.log(data,"================================");
+                    for(let i = 0; i < data.length; i++) {
+                        data[i] = JSON.parse(data[i]);
+                    }
+                    res.send({error: 0, msg: '获取成功', data, page: (req.query.page || 1), count: Math.ceil(count / size), totalNumber: count});
+                }).catch(function (e) {
+                    res.send({error: 1, msg: e.toString()});
+                });
+            }
+
+        }catch (e) {
+            res.send({error: 1, msg: e.toString()});
+        }
+    })();
+});
+
+/* 集团门户首页背景图片 */
+router.post("/v1/portal/backdrop", function (req, res) {
+    if(!req.body.url) {
+        res.send({error: 1, msg: '参数不完整'});
+        return;
+    }
+    try {
+        redis.set('集团门户首页背景图片', JSON.stringify(req.body));
+        res.send({error: 0, msg: '添加成功'});
+    }catch (e) {
+        res.send({error: 1, msg: e.toString()});
+    }
+});
+
+/* 添加企业门户统计接口 */
 router.post('/v1/portal/statistics', function(req, res) {
     if(!req.body.totalAssets || !req.body.fundedProjects || !req.body.serviceFirm || !req.body.construction) {
         res.send({error: 1, msg: '参数不完整'});
@@ -45,9 +169,9 @@ router.post('/v1/portal/statistics', function(req, res) {
 router.post('/v1/portal/article/1', function(req, res) {
     try {
         let article = JSON.parse(req.body.obj);
-        console.log(article,"======================================", typeof article);
         let obj = JSON.parse(article.body.content);
         let img = [], url = [], news = {};
+        obj.id = moment().valueOf();
         if(obj.attachments && obj.attachments.length) {
             for(let att of obj.attachments) {
                 img.push(att.iconUrl);
@@ -124,6 +248,7 @@ router.post('/v1/portal/article/1', function(req, res) {
                 let tags = news.tags.split(",");
                 for(let t of tags) {
                     let obj = {title: news.title,time: news.time, img: news.img, about: news.about, publisher: news.publisher, articleId: news.articleId};
+                    redis.zadd(t + ":" + news.title, news.articleId, JSON.stringify(obj));
                     redis.zadd(t, news.articleId, JSON.stringify(obj));
                     redis.zadd("标签", news.articleId, t);
                 }

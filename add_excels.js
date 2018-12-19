@@ -1,6 +1,7 @@
 const xlsx = require("node-xlsx");
 const mammoth = require("mammoth");
 const async = require("async");
+const moment = require("moment");
 const path = require('path');
 const config = require('./config');
 const Redis = require('ioredis');
@@ -23,6 +24,7 @@ async function saveNews(news) {
         let tags = news.tags.split(",");
         for(let i of tags) {
             let obj = {title: news.title,time: news.time, img: news.img, about: news.about, publisher: news.publisher, articleId: news.id};
+            await redis.zadd(i + ":" + news.title, news.id, JSON.stringify(obj));
             await redis.zadd(i, news.id, JSON.stringify(obj));
             await redis.zadd("标签", news.id, i);
         }
@@ -49,6 +51,7 @@ function parse(file, callback) {
                 let arr = obj.data[i];
                 if(arr[1]) {
                     redis.incr('articleID').then((id)=>{
+                        id = (moment().valueOf() + id * 1000);
                         let article = {id: id, title: arr[1], time: arr[7], publisher: arr[6], source: arr[4], tags: arr[8], url: ['/files/'+arr[1]+'.pdf'], content: arr[9], img: arr[27]?[arr[27]]:[], about: arr[28]};
                         if(arr[8] == "新闻中心" || arr[8] == "partyBuilding" || arr[8] == "工会活动")
                             article.url = '';

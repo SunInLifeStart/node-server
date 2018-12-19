@@ -40,8 +40,10 @@ router.get('/index', function(req, res) {
                 return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
             });
             let uc = await redis.get("usercount");
-            // console.log(news,"=====================uc");
-            res.render('index', { docs: data.forms || [], news, uc, leadershipSpeech, writing, workBulletin, rules, noticeBulletin, meetingTable, personalPortal: personalPortal, comm, thumb: config.url.thumb});
+            let statistics = await redis.get("门户统计");
+            let backdrop = await redis.get("集团门户首页背景图片");
+            // console.log(backdrop,"=====================statistics");
+            res.render('index', { docs: data.forms || [], news, uc, statistics, backdrop, leadershipSpeech, writing, workBulletin, rules, noticeBulletin, meetingTable, personalPortal: personalPortal, comm, thumb: config.url.thumb});
         })()
     });
 });
