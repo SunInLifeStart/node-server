@@ -19,10 +19,10 @@ router.get('/index', function(req, res) {
             let leadershipSpeech = await redis.zrevrange("领导讲话", [0, 4]);
             let writing = await redis.zrevrange("集团发文", [0, 4]);
             let workBulletin = await redis.zrevrange("工作简报", [0, 4]);
-            let rules = await redis.zrevrange("规章制度", [0, 4]);
+            let rules = await redis.zrevrange("规章制度", [0, 10]);
             let noticeBulletin = await redis.zrevrange("通知公告", [0, 4]);
             let meetingTable = await redis.zrevrange("集团会表", [0, 0]);
-            let comm = await redis.zrevrange("通讯录", [0, 6]);
+            let comm = await redis.zrevrange("通讯录", [0, 10]);
             let news = await redis.zrevrange("新闻中心", [0, 2]);
             leadershipSpeech.sort(function (a, b) {
                 return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
