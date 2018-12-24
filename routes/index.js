@@ -32,8 +32,8 @@ router.get('/index', function(req, res) {
                 backdrop = JSON.parse(backdrop);
                 backdrop.url = personalPortal + backdrop.url;
             }
-            // console.log(focusing,"=====================statistics");
-            res.render('index', { docs: data.forms || [], news, uc, statistics, focusing, backdrop, leadershipSpeech, writing, workBulletin, rules, noticeBulletin, meetingTable, personalPortal: personalPortal, comm, thumb: config.url.thumb});
+            // console.log(backdrop,"=====================statistics");
+            res.render('index', { docs: data.forms || [], news, uc, statistics, focusing, backdrop: backdrop || {}, leadershipSpeech, writing, workBulletin, rules, noticeBulletin, meetingTable, personalPortal: personalPortal, comm, thumb: config.url.thumb});
         })()
     });
 });
