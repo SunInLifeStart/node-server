@@ -1,0 +1,33 @@
+extends layout
+
+block content
+  include head
+  div(class="content")
+    div(style="text-align: center; margin: 7% 0 3% 0px;")
+      h1 聚焦舆情
+      img(src="/images/list_.png")
+
+    article.article.article--big
+      //<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+      table(style="font-size: 14px; width: 100%;")
+        each obj in focusing
+          tr
+            td(style="padding: 1%; font-weight: 700; border-bottom: 1px solid #dbdbdb;")
+              span #{JSON.parse(obj).title}
+            td(style="padding: 1%; border-bottom: 1px solid #dbdbdb;")
+              a.btn.btn-default(href=JSON.parse(fs).url, style="padding: 5px 12px; margin-top: 12px;") 详情
+
+      .pagination
+        a(href="/focusing?page=1" title="首页") 首页
+        a(href="/focusing?page=" + ((page - 1) > 0 ? (page - 1) : 1) title="上一页") 上一页
+        - for(var i = 1; i <= count; i++)
+            if(i==page)
+              a(href="/focusing?page="+i).current=i
+            else
+              a(href="/focusing?page="+i)=i
+        a(href="/focusing?page="+((page+1) <= count?(page+1):count)) 下一页
+        a(href="/focusing?page="+count) 尾页
+
+
+
+  include foot

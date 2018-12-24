@@ -14,7 +14,7 @@ block content
   script(type="text/javascript", src="/javascripts/org.1494058893.js", data-main="indexMain")
   style.
     body {
-        background: #e4e3e3 url("/images/head/banner850.jpg") no-repeat center;
+        background: #f6f6f6 url("#{backdrop.url}") no-repeat center;
         background-position-y: 0px;
         background-size: 100%;
     }
@@ -51,8 +51,11 @@ block content
     .col {
       padding-left: 0px;
     }
-    .col-md-6 h4 {
+    .col-md-6 h3 {
       font-weight: 600;
+    }
+    .newsAbout {
+      font-size: 16px;
     }
   .container
     #demo.carousel.slide(data-ride='carousel')
@@ -72,15 +75,17 @@ block content
                 a(href="/news/details?type=新闻中心&id="+JSON.parse(obj).articleId)
                   img.rounded.float-right(src='' + JSON.parse(obj).img)
               .col-md-6
-                h4
+                h3
                   a(href="/news/details?type=新闻中心&id="+JSON.parse(obj).articleId) #{JSON.parse(obj).title}
                 hr
-                p
-                  | &nbsp;&nbsp;&nbsp;&nbsp;#{JSON.parse(obj).about}
-                p
-                  time #{JSON.parse(obj).time}
-                p
-                  a.btn.btn-outline-secondary(href='/news/list') 更多
+                .newsAbout
+                  p
+                    | &nbsp;&nbsp;&nbsp;&nbsp;#{JSON.parse(obj).about}
+                  p
+                    time #{JSON.parse(obj).time}
+                  p(style="position: absolute; bottom: 10%;")
+                    a.btn.btn-outline-secondary(href='/news/list') 更多
+
 
         // 左右切换按钮
         a.carousel-control-prev(href='#demo', data-slide='prev')
@@ -233,29 +238,18 @@ block content
         article.article.article--big(style="height: 338px;")
           div
             div
-              span(style="font-size: 16px;font-weight: 700;") 聚焦舆情
+              span(style="font-size: 16px;font-weight: 700;") 集团通讯录
+              a.btn.btn-outline-secondary(href="/contactWay?page=1", style="padding: 2px 10px;float: right;") 更多
           table.table(style="width: 95%; margin: 0 auto;")
-            tr
-              td
-                a(href="https://36kr.com/tags/taodangpu" target="_blank") # 淘宝当铺
-            tr
-              td
-                a(href="https://36kr.com/tags/bitebi" target="_blank") # 比特币
-            tr
-              td
-                a(href="https://36kr.com/p/5055657.html" target="_blank") # Uber新APP
-            tr
-              td
-                a(href="https://36kr.com/tags/feifanwang" target="_blank") # 飞凡网
-            tr
-              td
-                a(href="https://36kr.com/tags/qufenqi" target="_blank") # 趣分期
-            tr
-              td
-                a(href="https://36kr.com/tags/wangyinqianbao" target="_blank") # 网银钱包
-            tr
-              td
-                a(href="https://36kr.com/p/5055707.html" target="_blank") # 苹果iPhone8
+            each mm, index in comm
+              tr
+                td
+                  p(style="width:240px")
+                    - let img = index == 0? 'phone2.png': 'phone.png';
+                    img(src="/images/" + img, style="vertical-align: text-top;margin-right: 2%;")
+                    a(href="/workBulletin/details?type=" + encodeURI('集团通讯录') + "&id=" + JSON.parse(mm).articleId) #{JSON.parse(mm).title}
+                td(style="text-align: right;")
+                  time #{JSON.parse(mm).time.split(' ')[0]}
 
     .row
       .col(style="padding-left: 15px;")
@@ -278,18 +272,17 @@ block content
         article.article.article--big(style="height: 580px;")
           div
             div
-              span(style="font-size: 16px;font-weight: 700;") 集团通讯录
-              a.btn.btn-outline-secondary(href="/contactWay?page=1", style="padding: 2px 10px;float: right;") 更多
+              span(style="font-size: 16px;font-weight: 700;") 聚焦舆情
+              a.btn.btn-outline-secondary(href="/focusing?page=1", style="padding: 2px 10px;float: right;") 更多
           table.table(style="width: 95%; margin: 0 auto;")
-            each mm, index in comm
+            each fs in focusing
               tr
                 td
-                  p(style="width:400px")
-                    - let img = index == 0? 'phone2.png': 'phone.png';
-                    img(src="/images/" + img, style="vertical-align: text-top;margin-right: 2%;")
-                    a(href="/workBulletin/details?type=" + encodeURI('集团通讯录') + "&id=" + JSON.parse(mm).articleId) #{JSON.parse(mm).title}
+                  p(style="width:240px")
+                    a(href=JSON.parse(fs).url) #  #{JSON.parse(fs).title}
                 td(style="text-align: right;")
-                  time #{JSON.parse(mm).time.split(' ')[0]}
+                  time #{JSON.parse(fs).time.split(' ')[0]}
+
 
 
   include foot

@@ -22,28 +22,16 @@ router.get('/index', function(req, res) {
             let rules = await redis.zrevrange("规章制度", [0, 10]);
             let noticeBulletin = await redis.zrevrange("通知公告", [0, 4]);
             let meetingTable = await redis.zrevrange("集团会表", [0, 0]);
-            let comm = await redis.zrevrange("通讯录", [0, 10]);
+            let comm = await redis.zrevrange("通讯录", [0, 7]);
             let news = await redis.zrevrange("新闻中心", [0, 2]);
-            leadershipSpeech.sort(function (a, b) {
-                return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
-            });
-            writing.sort(function (a, b) {
-                return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
-            });
-            workBulletin.sort(function (a, b) {
-                return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
-            });
-            rules.sort(function (a, b) {
-                return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
-            });
-            noticeBulletin.sort(function (a, b) {
-                return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
-            });
+            let focusing = await redis.zrevrange("聚焦舆情", [0, 7]);
             let uc = await redis.get("usercount");
             let statistics = await redis.get("门户统计");
             let backdrop = await redis.get("集团门户首页背景图片");
-            // console.log(backdrop,"=====================statistics");
-            res.render('index', { docs: data.forms || [], news, uc, statistics, backdrop, leadershipSpeech, writing, workBulletin, rules, noticeBulletin, meetingTable, personalPortal: personalPortal, comm, thumb: config.url.thumb});
+            backdrop = JSON.parse(backdrop);
+            backdrop.url = personalPortal + backdrop.url;
+            console.log(focusing,"=====================statistics");
+            res.render('index', { docs: data.forms || [], news, uc, statistics, focusing, backdrop, leadershipSpeech, writing, workBulletin, rules, noticeBulletin, meetingTable, personalPortal: personalPortal, comm, thumb: config.url.thumb});
         })()
     });
 });
@@ -175,6 +163,18 @@ router.get('/contactWay', function(req, res) {
         });
         let uc = await redis.get("usercount");
         res.render('contactWay', {contactWay, uc, page: req.query.page, count: Math.ceil(count / size), personalPortal: personalPortal});
+    })()
+});
+
+router.get('/focusing', function(req, res) {
+    (async () => {
+        let size = 10;
+        let page = ((req.query.page || 1) - 1) * size;
+        let pageSize = page + size - 1;
+        let count = await redis.zcard('聚焦舆情');
+        let focusing = await redis.zrevrange("聚焦舆情", [page, pageSize]);
+        let uc = await redis.get("usercount");
+        res.render('focusing', {focusing, uc, page: req.query.page, count: Math.ceil(count / size), personalPortal: personalPortal});
     })()
 });
 
