@@ -29,34 +29,35 @@ router.get('/v1/portal/noticeBulletin', function (req, res) {
 
 /* 集团门户文章修改 */
 router.post('/v1/portal/article/upd', function (req, res) {
-    if(!req.body.id || !req.body.title || !req.body.content) {
+    if(!req.body.title) {
         res.send({error: 1, msg: '参数不完整'});
         return;
     }
     try {
+        let id = req.body.id || moment().valueOf();
         redis.get("article:" + req.body.id).then((result)=>{
+            let tags = req.body.tags;
             if(result) {
                 let obj = JSON.parse(result);
+                tags = obj.tags;
                 redis.del(obj.tags + ":" + obj.title);
-                let art = {
-                    title: req.body.title,
-                    time: moment(),
-                    img: req.body.img || [],
-                    about: req.body.about || '',
-                    articleId: req.body.id
-                };
-                redis.zadd(obj.tags + ":" + req.body.title, req.body.id, JSON.stringify(art));
-                redis.zremrangebyscore(obj.tags, [req.body.id, req.body.id]);
-                redis.zadd(obj.tags, req.body.id, JSON.stringify(art));
-                art.id = req.body.id;
-                art.url = req.body.url || '';
-                art.tags = req.body.tags || obj.tags;
-                art.content = req.body.content;
-                redis.set('article:' + req.body.id, JSON.stringify(art));
-                res.send({error: 0, msg: '修改成功'});
-            }else{
-                res.send({error: 1, msg: '没有找到相关信息'});
             }
+            let art = {
+                title: req.body.title,
+                time: moment(),
+                img: req.body.img || [],
+                about: req.body.about || '',
+                articleId: id
+            };
+            redis.zadd(tags + ":" + req.body.title, id, JSON.stringify(art));
+            redis.zremrangebyscore(tags, [id, id]);
+            redis.zadd(tags, id, JSON.stringify(art));
+            art.id = id;
+            art.url = req.body.url || '';
+            art.tags = tags;
+            art.content = req.body.content || '';
+            redis.set('article:' + id, JSON.stringify(art));
+            res.send({error: 0, msg: '修改成功'});
         });
     }catch (e) {
         res.send({error: 1, msg: e.toString()});
@@ -164,6 +165,17 @@ router.post('/v1/portal/statistics', function(req, res) {
         res.send({error: 1, msg: e.toString()});
     }
 });
+
+/* 添加集团门户聚焦舆情接口 */
+router.post('/v1/portal/focusing', function(req, res) {
+    try {
+        redis.zadd("聚焦舆情", moment().valueOf(), JSON.stringify(req.body));
+        res.send({error: 0, msg: '添加成功'});
+    }catch (e) {
+        res.send({error: 1, msg: e.toString()});
+    }
+});
+
 
 /*添加文档接口*/
 router.post('/v1/portal/article/1', function(req, res) {
