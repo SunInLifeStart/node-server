@@ -28,9 +28,11 @@ router.get('/index', function(req, res) {
             let uc = await redis.get("usercount");
             let statistics = await redis.get("门户统计");
             let backdrop = await redis.get("集团门户首页背景图片");
-            backdrop = JSON.parse(backdrop);
-            backdrop.url = personalPortal + backdrop.url;
-            console.log(focusing,"=====================statistics");
+            if(backdrop) {
+                backdrop = JSON.parse(backdrop);
+                backdrop.url = personalPortal + backdrop.url;
+            }
+            // console.log(focusing,"=====================statistics");
             res.render('index', { docs: data.forms || [], news, uc, statistics, focusing, backdrop, leadershipSpeech, writing, workBulletin, rules, noticeBulletin, meetingTable, personalPortal: personalPortal, comm, thumb: config.url.thumb});
         })()
     });
