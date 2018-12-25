@@ -24,7 +24,7 @@ router.get('/index', function(req, res) {
             let meetingTable = await redis.zrevrange("集团会表", [0, 0]);
             let comm = await redis.zrevrange("通讯录", [0, 7]);
             let news = await redis.zrevrange("新闻中心", [0, 2]);
-            let focusing = await redis.zrevrange("聚焦舆情", [0, 15]);
+            let focusing = await redis.zrevrange("聚焦舆情", [0, 13]);
             let uc = await redis.get("usercount");
             let statistics = await redis.get("门户统计");
             let backdrop = await redis.get("集团门户首页背景图片");
