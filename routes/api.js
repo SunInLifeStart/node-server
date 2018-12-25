@@ -44,7 +44,7 @@ router.post('/v1/portal/article/upd', function (req, res) {
             }
             let art = {
                 title: req.body.title,
-                time: moment().format(l),
+                time: moment().format('YYYY-MM-DD HH:mm:ss'),
                 img: req.body.img || [],
                 about: req.body.about || '',
                 articleId: id
