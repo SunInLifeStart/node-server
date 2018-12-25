@@ -244,7 +244,7 @@ block content
             each mm, index in comm
               tr
                 td
-                  p(style="width:240px")
+                  p(style="width:230px")
                     - let img = index == 0? 'phone2.png': 'phone.png';
                     img(src="/images/" + img, style="vertical-align: text-top;margin-right: 2%;")
                     a(href="/workBulletin/details?type=" + encodeURI('集团通讯录') + "&id=" + JSON.parse(mm).articleId) #{JSON.parse(mm).title}
@@ -279,7 +279,7 @@ block content
               tr
                 td
                   p
-                    a(href=JSON.parse(fs).url) #  #{JSON.parse(fs).title}
+                    a(href=JSON.parse(fs).url) #{JSON.parse(fs).title}
 
 
 
