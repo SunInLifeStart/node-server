@@ -555,8 +555,8 @@ pre code {
 
 .container {
   width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
+  /*padding-right: 15px;*/
+  /*padding-left: 15px;*/
   margin-right: auto;
   margin-left: auto;
 }
@@ -581,7 +581,7 @@ pre code {
 
 @media (min-width: 1200px) {
   .container {
-    max-width: 1140px;
+    max-width: 1200px;
   }
 }
 
@@ -5943,7 +5943,7 @@ button.close {
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
-  width: 10%;
+  width: 7%;
   color: #fff;
   text-align: center;
   opacity: 0.5;
