@@ -32,6 +32,9 @@ router.get('/index', function(req, res) {
                 backdrop = JSON.parse(backdrop);
                 backdrop.url = personalPortal + backdrop.url;
             }
+            rules.sort(function (a, b) {
+                return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
+            });
             // console.log(backdrop,"=====================statistics");
             res.render('index', { docs: data.forms || [], news, uc, statistics, focusing, backdrop: backdrop || {}, leadershipSpeech, writing, workBulletin, rules, noticeBulletin, meetingTable, personalPortal: personalPortal, comm, thumb: config.url.thumb});
         })()
