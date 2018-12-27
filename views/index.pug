@@ -117,7 +117,7 @@ block content
               li
                 div
                   p.number
-                    span.counterDX(data-counter-value=JSON.parse(statistics).totalAssets)
+                    span.counterDX(data-counter-value= statistics ? JSON.parse(statistics).totalAssets: 0)
                     span.unit 亿
 
                   p.title 总资产
@@ -125,7 +125,7 @@ block content
               li
                 div
                   p.number
-                    span.counterDX(data-counter-value=JSON.parse(statistics).fundedProjects)
+                    span.counterDX(data-counter-value=statistics ? JSON.parse(statistics).fundedProjects: 0)
                     span.unit 个
 
                   p.title 出资项目
@@ -133,7 +133,7 @@ block content
               li
                 div
                   p.number
-                    span.counterDX(data-counter-value=JSON.parse(statistics).serviceFirm)
+                    span.counterDX(data-counter-value=statistics ? JSON.parse(statistics).serviceFirm: 0)
                     span.unit 家
 
                   p.title 年均服务企业
@@ -141,7 +141,7 @@ block content
               li
                 div
                   p.number
-                    span.counterDX(data-counter-value=JSON.parse(statistics).construction)
+                    span.counterDX(data-counter-value=statistics ? JSON.parse(statistics).construction: 0)
                     span.unit 万平方米
 
                   p.title 建设科技载体
