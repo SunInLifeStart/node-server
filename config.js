@@ -19,6 +19,7 @@ let url = {
 };
 process.env.PORT = 10013;
 
+console.log(process.env.NODE_ENV,"================================NODE_ENV");
 
 if(process.env.NODE_ENV == 'production') {  // vpn环境
     process.env.PORT = 3002;
