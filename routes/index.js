@@ -36,7 +36,7 @@ router.get('/index', function(req, res) {
                 return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
             });
             // console.log(backdrop,"=====================statistics");
-            res.render('index', { docs: data.forms || [], news, uc, statistics, focusing, backdrop: backdrop || {}, leadershipSpeech, writing, workBulletin, rules, noticeBulletin, meetingTable, personalPortal: personalPortal, comm, thumb: config.url.thumb});
+            res.render('index', { docs: data.forms || [], news, uc, statistics, focusing, backdrop: backdrop || {}, leadershipSpeech, writing, workBulletin, rules, noticeBulletin, meetingTable, personalPortal: personalPortal, menuClass: 1, comm, thumb: config.url.thumb});
         })()
     });
 });
@@ -80,7 +80,7 @@ router.get('/:news/list', function(req, res) {
             return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
         });
         let uc = await redis.get("usercount");
-        res.render('news', {news, uc, page: (req.query.page || 1), count: Math.ceil(count / size), key: req.params.news, title: key, personalPortal: personalPortal});
+        res.render('news', {news, uc, page: (req.query.page || 1), count: Math.ceil(count / size), key: req.params.news, title: key, menuClass: 2, personalPortal: personalPortal});
     })()
 });
 

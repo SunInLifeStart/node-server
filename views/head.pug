@@ -50,10 +50,10 @@
                     .content
                         ul.nav.movedx(data-movedx-mid="1", style="margin-left: 4%;")
                             li.navitem
-                                a.active(href="/index", target="_self")
+                                a(href="/index", target="_self" class=menuClass==1?'active':'')
                                     span(data-title="首页") 首页
                             li.navitem
-                                a(href="/news/list", target="_self")
+                                a(href="/news/list", target="_self" class=menuClass==2?'active':'')
                                     span(data-title="新闻中心")
                                     | 新闻中心
                             li.navitem
