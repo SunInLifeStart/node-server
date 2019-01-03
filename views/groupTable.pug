@@ -33,6 +33,25 @@ block content
         a(href="/groupTable?page="+((page+1) <= count?(page+1):count)) 下一页
         a(href="/groupTable?page="+count) 尾页
 
-
+      link(rel='stylesheet', href='/stylesheets/myPagination.css')
+      script(src='/javascripts/myPagination.js')
+      .pagination
+        #pagination.pagination
+      script.
+          window.onload = function () {
+              new Page({
+                  id: 'pagination',
+                  pageTotal: '#{count || 1}', //必填,总页数
+                  pageAmount: 10,  //每页多少条
+                  dataTotal: '#{dataTotal}', //总共多少条数据
+                  curPage: '#{page}', //初始页码,不填默认为1
+                  pageSize: 10, //分页个数,不填默认为5
+                  showPageTotalFlag: true, //是否显示数据统计,不填默认不显示
+                  showSkipInputFlag: true, //是否支持跳转,不填默认不显示
+                  getPage: function (page) {
+                      location.href = "/groupTable/list?page=" + page;
+                  }
+              })
+          }
 
   include foot

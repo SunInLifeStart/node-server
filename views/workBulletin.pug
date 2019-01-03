@@ -22,17 +22,27 @@ block content
             td(style="padding: 1%; border-bottom: 1px solid #dbdbdb;")
               a.btn.btn-default(href="/workBulletin/details?type=工作简报&id=" + JSON.parse(obj).articleId, style="padding: 5px 12px; margin-top: 12px;") 详情
 
-      .pagination
-        a(href="/workBulletin?page=1" title="首页") 首页
-        a(href="/workBulletin?page=" + ((page - 1) > 0 ? (page - 1) : 1) title="上一页") 上一页
-        - for(var i = 1; i <= count; i++)
-            if(i==page)
-              a(href="/workBulletin?page="+i).current=i
-            else
-              a(href="/workBulletin?page="+i)=i
-        a(href="/workBulletin?page="+((page+1) <= count?(page+1):count)) 下一页
-        a(href="/workBulletin?page="+count) 尾页
 
+      link(rel='stylesheet', href='/stylesheets/myPagination.css')
+      script(src='/javascripts/myPagination.js')
+      .pagination
+        #pagination.pagination
+      script.
+          window.onload = function () {
+              new Page({
+                  id: 'pagination',
+                  pageTotal: '#{count || 1}', //必填,总页数
+                  pageAmount: 10,  //每页多少条
+                  dataTotal: '#{dataTotal}', //总共多少条数据
+                  curPage: '#{page}', //初始页码,不填默认为1
+                  pageSize: 10, //分页个数,不填默认为5
+                  showPageTotalFlag: true, //是否显示数据统计,不填默认不显示
+                  showSkipInputFlag: true, //是否支持跳转,不填默认不显示
+                  getPage: function (page) {
+                      location.href = "/workBulletin/list?page=" + page;
+                  }
+              })
+          }
 
 
   include foot

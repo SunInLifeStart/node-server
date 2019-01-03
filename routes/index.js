@@ -32,6 +32,21 @@ router.get('/index', function(req, res) {
                 backdrop = JSON.parse(backdrop);
                 backdrop.url = personalPortal + backdrop.url;
             }
+            meetingTable.sort(function (a, b) {
+                return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
+            });
+            noticeBulletin.sort(function (a, b) {
+                return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
+            });
+            workBulletin.sort(function (a, b) {
+                return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
+            });
+            writing.sort(function (a, b) {
+                return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
+            });
+            leadershipSpeech.sort(function (a, b) {
+                return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
+            });
             rules.sort(function (a, b) {
                 return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
             });
@@ -80,7 +95,7 @@ router.get('/:news/list', function(req, res) {
             return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
         });
         let uc = await redis.get("usercount");
-        res.render('news', {news, uc, page: (req.query.page || 1), count: Math.ceil(count / size), key: req.params.news, title: key, menuClass: 2, personalPortal: personalPortal});
+        res.render('news', {news, uc, page: (req.query.page || 1), count: Math.ceil(count / size), dataTotal: count || 0, key: req.params.news, title: key, menuClass: 2, personalPortal: personalPortal});
     })()
 });
 
@@ -107,7 +122,7 @@ router.get('/leadershipSpeechs', function(req, res) {
             return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
         });
         let uc = await redis.get("usercount");
-        res.render('leadershipSpeechs', {leadershipSpeechs, uc, page: req.query.page, count: Math.ceil(count / size), personalPortal: personalPortal});
+        res.render('leadershipSpeechs', {leadershipSpeechs, uc, page: req.query.page, count: Math.ceil(count / size), dataTotal: count || 0, personalPortal: personalPortal});
     })()
 });
 
@@ -122,7 +137,7 @@ router.get('/rulesRegulations', function(req, res) {
             return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
         });
         let uc = await redis.get("usercount");
-        res.render('rulesRegulations', {rulesRegulations, uc, page: req.query.page, count: Math.ceil(count / size), personalPortal: personalPortal});
+        res.render('rulesRegulations', {rulesRegulations, uc, page: req.query.page, count: Math.ceil(count / size), dataTotal: count || 0, personalPortal: personalPortal});
     })()
 });
 
@@ -137,7 +152,7 @@ router.get('/writings', function(req, res) {
             return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
         });
         let uc = await redis.get("usercount");
-        res.render('writings', {writings, uc, page: req.query.page, count: Math.ceil(count / size), personalPortal: personalPortal});
+        res.render('writings', {writings, uc, page: req.query.page, count: Math.ceil(count / size), dataTotal: count || 0, personalPortal: personalPortal});
     })()
 });
 
@@ -152,7 +167,7 @@ router.get('/workBulletin', function(req, res) {
             return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
         });
         let uc = await redis.get("usercount");
-        res.render('workBulletin', {workBulletin, uc, page: req.query.page, count: Math.ceil(count / size), personalPortal: personalPortal});
+        res.render('workBulletin', {workBulletin, uc, page: req.query.page, count: Math.ceil(count / size), dataTotal: count || 0, personalPortal: personalPortal});
     })()
 });
 
@@ -167,7 +182,7 @@ router.get('/contactWay', function(req, res) {
             return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
         });
         let uc = await redis.get("usercount");
-        res.render('contactWay', {contactWay, uc, page: req.query.page, count: Math.ceil(count / size), personalPortal: personalPortal});
+        res.render('contactWay', {contactWay, uc, page: req.query.page, count: Math.ceil(count / size), dataTotal: count || 0, personalPortal: personalPortal});
     })()
 });
 
@@ -179,7 +194,7 @@ router.get('/focusing', function(req, res) {
         let count = await redis.zcard('聚焦舆情');
         let focusing = await redis.zrevrange("聚焦舆情", [page, pageSize]);
         let uc = await redis.get("usercount");
-        res.render('focusing', {focusing, uc, page: req.query.page, count: Math.ceil(count / size), personalPortal: personalPortal});
+        res.render('focusing', {focusing, uc, page: req.query.page, count: Math.ceil(count / size), dataTotal: count || 0, personalPortal: personalPortal});
     })()
 });
 
@@ -194,7 +209,7 @@ router.get('/groupTable', function(req, res) {
             return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
         });
         let uc = await redis.get("usercount");
-        res.render('groupTable', {groupTable, uc, page: req.query.page, count: Math.ceil(count / size), personalPortal: personalPortal});
+        res.render('groupTable', {groupTable, uc, page: req.query.page, count: Math.ceil(count / size), dataTotal: count || 0, personalPortal: personalPortal});
     })()
 });
 
@@ -209,7 +224,7 @@ router.get('/noticeBulletin', function(req, res) {
             return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
         });
         let uc = await redis.get("usercount");
-        res.render('noticeBulletin', {noticeBulletin, uc, page: req.query.page, count: Math.ceil(count / size), personalPortal: personalPortal});
+        res.render('noticeBulletin', {noticeBulletin, uc, page: req.query.page, count: Math.ceil(count / size), dataTotal: count || 0, personalPortal: personalPortal});
     })()
 });
 
