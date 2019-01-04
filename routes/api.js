@@ -275,12 +275,13 @@ router.post('/v1/portal/article/1', function(req, res) {
 /*添加新闻接口*/
 router.post('/v1/portal/article', function(req, res) {
     try {
-        redis.set("article:"+req.body.id, JSON.stringify(req.body));
+        let id = moment().valueOf();
+        redis.set("article:"+id, JSON.stringify(req.body));
         let tags = req.body.tags.split(",");
         for(let t of tags) {
-            let obj = {title: req.body.title,time: req.body.time, img: req.body.img || [], about: req.body.about || '', publisher: req.body.publisher || '', articleId: req.body.id};
-            redis.zadd(t, req.body.id, JSON.stringify(obj));
-            redis.zadd("标签", req.body.id, t);
+            let obj = {title: req.body.title,time: req.body.time, img: req.body.img || [], about: req.body.about || '', publisher: req.body.publisher || '', articleId: id};
+            redis.zadd(t, id, JSON.stringify(obj));
+            redis.zadd("标签", id, t);
         }
         res.send({error: 0, msg: "操作成功"});
     }catch (e) {

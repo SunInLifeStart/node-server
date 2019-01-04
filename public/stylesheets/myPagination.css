@@ -1,6 +1,7 @@
 .pagination ul {
     list-style: none;
     padding-left: 0;
+    width: 1050px;
 }
 
 .pagination ul li {
