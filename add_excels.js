@@ -63,7 +63,7 @@ function parse(file, callback) {
                             url.push('/files/'+arr[2]+'.pdf');
                         }
                         // console.log(urlList,"===============================",url);
-                        let article = {id: id, title: arr[1], time: arr[7], publisher: arr[6], source: arr[4], tags: arr[8], url: url, content: arr[9], img: arr[27]?[arr[27]]:[], about: arr[28]};
+                        let article = {id: id, title: arr[1], time: arr[7], publisher: arr[6], source: arr[4], tags: arr[8], url: url, content: arr[9], img: arr[11]?[arr[11]]:[], about: arr[10]};
                         if(arr[8] == "新闻中心" || arr[8] == "partyBuilding" || arr[8] == "工会活动")
                             article.url = '';
 
