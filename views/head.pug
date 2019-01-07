@@ -159,6 +159,7 @@
                                 img(style="position: absolute; top: 133px;left: 45px;", src="/images/账号密码登录/密码.png", alt="")
                                 input.password(type="text")
                             button(onclick="login()") 登录#{user}
+                            script(type="text/javascript", src="/javascripts/jquery.cookie.js")
                             script.
                                 function login() {
                                     $.ajax({
