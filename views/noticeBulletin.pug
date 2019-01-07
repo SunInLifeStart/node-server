@@ -31,8 +31,8 @@ block content
                   id: 'pagination',
                   pageTotal: '#{count || 1}', //必填,总页数
                   pageAmount: 10,  //每页多少条
-                  dataTotal: '#{dataTotal}', //总共多少条数据
-                  curPage: '#{page}', //初始页码,不填默认为1
+                  dataTotal: parseInt('#{dataTotal}'), //总共多少条数据
+                  curPage: parseInt('#{page}'), //初始页码,不填默认为1
                   pageSize: 10, //分页个数,不填默认为5
                   showPageTotalFlag: true, //是否显示数据统计,不填默认不显示
                   showSkipInputFlag: true, //是否支持跳转,不填默认不显示
