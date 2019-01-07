@@ -165,7 +165,11 @@
             $('.userinfo').html(html);
         }
         function signOut() {
-            alert('退出登录');
+            if(confirm('确定要退出吗？')) {
+                $.cookie('uid', '', { expires: -1 }); // 删除 cookie
+                $.cookie('uname', '', {expires: -1}); // 删除 cookie
+                $.cookie('oname', '', {expires: -1}); // 删除 cookie
+            }
         }
         function login() {
             $.ajax({
