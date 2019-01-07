@@ -2088,7 +2088,7 @@ body #logo {
   position: relative;
   float: left;
   height: 100%;
-  left: 60px;
+  left: 0px;
 }
 
 body #logo > img {

@@ -2,12 +2,10 @@
     .wrapper
         .content
             #headTop
-                a.more(href="javascript:;")
-                    img.more-img(style="position: relative;top: 22px;left: 16px;", src="/images/head/more.png", alt="")
+                //a.more(href="javascript:;")
+                //    img.more-img(style="position: relative;top: 22px;left: 16px;", src="/images/head/more.png", alt="")
 
                 .more-content(style="width: 280px; position: absolute;top: 60px;background: #fff; display: none")
-                    style.
-
                     ul
                         li
                             a(href="http://188f73t741.51mypc.cn:33665/FIS/sso.action?ipHash=7221e78520bd32faa404518ed72c7024&username=5a94796700c1f74eec39577e0f1fe621" target="_blank")
@@ -48,7 +46,7 @@
 
                 #navWrapper(style="margin-left: 15%")
                     .content
-                        ul.nav.movedx(data-movedx-mid="1", style="margin-left: 4%;")
+                        ul.nav.movedx(data-movedx-mid="1")
                             li.navitem
                                 a(href="/index", target="_self" class=menuClass==1?'active':'')
                                     span(data-title="首页") 首页
@@ -116,9 +114,9 @@
                                         i.fa.fa-search(aria-hidden="true")
                                     span(style="float: left; color: #fff; margin: 8px 0px 0px 6px;") 在线：#{uc} 人
                                     img.personalCenter(style="float: left; margin: 0px 0px 0px 8px; position: relative;top: 20%; cursor: pointer;", src="/images/head/personalCenter.png", alt="")
-                                    span(style="float: left; margin: 0px 0px 0px 8px; position: relative;top: 20%; cursor: pointer; display: none")
-                                        span(style="float: left; color: #fff; position: relative;top: 20%;")
-                                        img(style="float: left; margin: 1px 8px; position: relative;top: 20%; cursor: pointer;", src="/images/head/signOut.png", alt="")
+                                    span.signOutInfo(style="float: left; margin: 0px 0px 0px 8px; position: relative;top: 20%; cursor: pointer; ")
+                                        span.username(style="float: left; color: #fff; position: relative;top: 20%;")
+                                        img(style="float: left; margin: 1px 8px; position: relative;top: 20%; cursor: pointer;", src="/images/head/signOut.png", alt="" onclick="signOut()")
 
                                 .searchClose
                                     i.fa.fa-times(aria-hidden="true")
@@ -161,6 +159,16 @@
                             button(onclick="login()") 登录#{user}
                             script(type="text/javascript", src="/javascripts/jquery.cookie.js")
                             script.
+                                var uid = $.cookie('uid'); // 读取 cookie
+                                if(uid) {
+                                    var uname = $.cookie('uname'); // 读取 cookie
+                                    $(".personalCenter").hide();
+                                    $(".signOutInfo").show();
+                                    $(".username").html('欢迎您，'+ uname);
+                                }
+                                function signOut() {
+                                    alert('退出登录');
+                                }
                                 function login() {
                                     $.ajax({
                                         type: "POST",
@@ -177,8 +185,7 @@
                                             //         + '</p></div>';
                                             // });
                                             // $('#resText').html(html);
-                                            var uid = $.cookie('uid'); // 读取 cookie
-                                            alert(uid);
+
                                         }
                                     });
                                      // $.post('', {username:"yangjing",password:"123456"}, function (res) {
