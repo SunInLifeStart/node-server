@@ -155,3 +155,28 @@
                             button(onclick="login()") 登录#{user}
 
             .clear
+    script(type="text/javascript", src="/javascripts/jquery.cookie.js")
+    script.
+        var uid = $.cookie('uid'); // 读取 cookie
+        if (uid) {
+            var uname = $.cookie('uname'); // 读取 cookie 姓名
+            var oname = $.cookie('oname'); // 读取 cookie 部门名称
+            var Role = $.cookie('Role'); // 读取 cookie 职位
+            var html = '<p>用户信息</p><div><p>姓名: ' + uname + '</p><p>部门: ' + oname + '</p><p>职位: ' + Role + '</p><button onclick="signOut">退出登录</button></div>';
+            $('.userinfo').html(html);
+        }
+        function signOut() {
+            alert('退出登录');
+        }
+        function login() {
+            $.ajax({
+                type: "POST",
+                url: "/api/auth/jwt/token",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({username: "lilu", password: "123456"}),
+                dataType: "json",
+                success: function (data) {
+                    // $('#resText').empty();   //清空resText里面的所有内容
+                }
+            });
+        }
