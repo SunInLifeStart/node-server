@@ -50,7 +50,7 @@ router.get('/index', function(req, res) {
             rules.sort(function (a, b) {
                 return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
             });
-            // console.log(backdrop,"=====================statistics");
+            console.log(req.session.user,"=====================statistics");
             res.render('index', { docs: data.forms || [], news, uc, statistics, focusing, backdrop: backdrop || {}, leadershipSpeech, writing, workBulletin, rules, noticeBulletin, meetingTable, personalPortal: personalPortal, menuClass: 1, comm, thumb: config.url.thumb});
         })()
     });

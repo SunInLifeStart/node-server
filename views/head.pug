@@ -158,16 +158,12 @@
                             p
                                 img(style="position: absolute; top: 133px;left: 45px;", src="/images/账号密码登录/密码.png", alt="")
                                 input.password(type="text")
-                            button(onclick="login()") 登录
+                            button(onclick="login()") 登录#{user}
                             script.
                                 function login() {
-                                    $.post('#{personalPortal}/api/auth/jwt/token', {username:"yangjing",password:"123456"}, function () {
-
-                                    });
-                                    // $.post('#{personalPortal}/api/auth/jwt/token', {username:"yangjing",password:"123456"}, function () {
-                                    //     $.get('http://59.110.172.228/api/admin/user/userInfo', {}, function (res) {
-                                    //         $()
-                                    //     })
-                                    // });
+                                     $.post('#{personalPortal}/api/auth/jwt/token', {username:"yangjing",password:"123456"}, function (res) {
+                                         var uid = $.cookie('uid'); // 读取 cookie
+                                         alert(uid);
+                                     });
                                 }
             .clear
