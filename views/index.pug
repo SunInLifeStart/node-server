@@ -94,9 +94,7 @@ block content
                 .newsAbout
                   p
                     | &nbsp;&nbsp;&nbsp;&nbsp;#{JSON.parse(obj).about}
-                  p.time
-                    time 发布：#{JSON.parse(obj).time}
-                    span 作者：#{JSON.parse(obj).publisher}
+
                   p(style="position: absolute; bottom: 10%;")
                     a.btn.btn-outline-secondary(href='/news/list') 更多
 

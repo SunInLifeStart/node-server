@@ -114,9 +114,6 @@
                                         i.fa.fa-search(aria-hidden="true")
                                     span(style="float: left; color: #fff; margin: 8px 0px 0px 6px;") 在线：#{uc} 人
                                     img.personalCenter(style="float: left; margin: 0px 0px 0px 8px; position: relative;top: 20%; cursor: pointer;", src="/images/head/personalCenter.png", alt="")
-                                    span.signOutInfo(style="float: left; margin: 0px 0px 0px 8px; position: relative;top: 20%; cursor: pointer; ")
-                                        span.username(style="float: left; color: #fff; position: relative;top: 20%;")
-                                        img(style="float: left; margin: 1px 8px; position: relative;top: 20%; cursor: pointer;", src="/images/head/signOut.png", alt="" onclick="signOut()")
 
                                 .searchClose
                                     i.fa.fa-times(aria-hidden="true")
@@ -146,10 +143,9 @@
                 .login2(style="")
                     img#QR-code1(src="/images/账号登录.png", alt="")
 
-                    div
+                    div.userinfo
                         p 账号密码登录
-
-                        div.userinfo
+                        div
                             p
                                 img(style="position: absolute; top: 77px;left: 45px;", src="/images/账号密码登录/用户名.png", alt="")
                                 input.account(type="text")
@@ -157,40 +153,5 @@
                                 img(style="position: absolute; top: 133px;left: 45px;", src="/images/账号密码登录/密码.png", alt="")
                                 input.password(type="text")
                             button(onclick="login()") 登录#{user}
-                            script(type="text/javascript", src="/javascripts/jquery.cookie.js")
-                            script.
-                                var uid = $.cookie('uid'); // 读取 cookie
-                                if(uid) {
-                                    var uname = $.cookie('uname'); // 读取 cookie
-                                    $(".personalCenter").hide();
-                                    $(".signOutInfo").show();
-                                    $(".username").html('欢迎您，'+ uname);
-                                }
-                                function signOut() {
-                                    alert('退出登录');
-                                }
-                                function login() {
-                                    $.ajax({
-                                        type: "POST",
-                                        url: "/api/auth/jwt/token",
-                                        contentType: "application/json; charset=utf-8",
-                                        data: JSON.stringify({username: "lilu", password: "123456"}),
-                                        dataType: "json",
-                                        success: function (data) {
-                                            // $('#resText').empty();   //清空resText里面的所有内容
-                                            // var html = '';
-                                            // $.each(data, function (commentIndex, comment) {
-                                            //     html += '<div class="comment"><h6>' + comment['username']
-                                            //         + ':</h6><p class="para"' + comment['content']
-                                            //         + '</p></div>';
-                                            // });
-                                            // $('#resText').html(html);
 
-                                        }
-                                    });
-                                     // $.post('', {username:"yangjing",password:"123456"}, function (res) {
-                                     //     var uid = $.cookie('uid'); // 读取 cookie
-                                     //     alert(uid);
-                                     // });
-                                }
             .clear
