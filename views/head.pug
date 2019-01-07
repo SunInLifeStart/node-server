@@ -164,7 +164,8 @@
                                     $.ajax({
                                         type: "POST",
                                         url: "/api/auth/jwt/token",
-                                        data: {username: "yangjing", content: "123456"},
+                                        contentType: "application/json; charset=utf-8",
+                                        data: JSON.stringify({username: "yangjing", content: "123456"}),
                                         dataType: "json",
                                         success: function (data) {
                                             // $('#resText').empty();   //清空resText里面的所有内容
