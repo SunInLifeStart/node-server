@@ -1,0 +1,48 @@
+extends layout
+
+block content
+  include head
+  div(class="content")
+    div(style="text-align: center; margin: 7% 0 3% 0px;")
+      h1 新闻 列表
+      img(src="/images/list_.png")
+      p(style="float: right;")
+          a.btn.btn-default(href="/news/list") 图表
+    article.article.article--big
+      //<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+      table(style="font-size: 14px; width: 100%;")
+        each obj in newsList
+          tr
+            td(style="padding: 1%; font-weight: 700; border-bottom: 1px solid #dbdbdb;")
+              img(src="/images/leader1.png", style="vertical-align: middle;margin-right: 2%;")
+              span #{JSON.parse(obj).title}
+            td(style="padding: 1%; border-bottom: 1px solid #dbdbdb; width: 150px;")
+              span(style="margin-left: 10%;") #{JSON.parse(obj).publisher}
+            td(style="padding: 1%; border-bottom: 1px solid #dbdbdb;")
+              time(style="margin-left: 10%;") #{JSON.parse(obj).time}
+            td(style="padding: 1%; border-bottom: 1px solid #dbdbdb;")
+              a.btn.btn-default(href="/news/details?type=新闻列表&id=" + JSON.parse(obj).articleId, style="padding: 5px 12px; margin-top: 12px;") 详情
+
+
+      link(rel='stylesheet', href='/stylesheets/myPagination.css')
+      script(src='/javascripts/myPagination.js')
+      .pagination
+        #pagination.pagination
+      script.
+          window.onload = function () {
+              new Page({
+                  id: 'pagination',
+                  pageTotal: '#{count || 1}', //必填,总页数
+                  pageAmount: 10,  //每页多少条
+                  dataTotal: parseInt('#{dataTotal}'), //总共多少条数据
+                  curPage: parseInt('#{page}'), //初始页码,不填默认为1
+                  pageSize: 10, //分页个数,不填默认为5
+                  showPageTotalFlag: true, //是否显示数据统计,不填默认不显示
+                  showSkipInputFlag: true, //是否支持跳转,不填默认不显示
+                  getPage: function (page) {
+                      location.href = "/newsList?page=" + page;
+                  }
+              })
+          }
+
+  include foot

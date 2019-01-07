@@ -21,7 +21,7 @@ router.get('/index', function(req, res) {
             let workBulletin = await redis.zrevrange("工作简报", [0, 4]);
             let rules = await redis.zrevrange("规章制度", [0, 10]);
             let noticeBulletin = await redis.zrevrange("通知公告", [0, 4]);
-            let meetingTable = await redis.zrevrange("集团会表", [0, 0]);
+            let meetingTable = await redis.zrevrange("集团会表", [0, 10]);
             let comm = await redis.zrevrange("通讯录", [0, 7]);
             let news = await redis.zrevrange("新闻中心", [0, 2]);
             let focusing = await redis.zrevrange("聚焦舆情", [0, 13]);
@@ -51,7 +51,7 @@ router.get('/index', function(req, res) {
                 return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
             });
             console.log(req.session.user,"=====================statistics");
-            res.render('index', { docs: data.forms || [], news, uc, statistics, focusing, backdrop: backdrop || {}, leadershipSpeech, writing, workBulletin, rules, noticeBulletin, meetingTable, personalPortal: personalPortal, menuClass: 1, comm, thumb: config.url.thumb});
+            res.render('index', { docs: data.forms || [], news, uc, statistics, focusing, backdrop: backdrop || {}, leadershipSpeech, writing, workBulletin, rules, noticeBulletin, meetingTable: [meetingTable ? meetingTable[0]: {}], personalPortal: personalPortal, menuClass: 1, comm, thumb: config.url.thumb});
         })()
     });
 });
@@ -123,6 +123,21 @@ router.get('/leadershipSpeechs', function(req, res) {
         });
         let uc = await redis.get("usercount");
         res.render('leadershipSpeechs', {leadershipSpeechs, uc, page: req.query.page, count: Math.ceil(count / size), dataTotal: count || 0, personalPortal: personalPortal});
+    })()
+});
+
+router.get('/newsList', function(req, res) {
+    (async () => {
+        let size = 10;
+        let page = ((req.query.page || 1) - 1) * size;
+        let pageSize = page + size - 1;
+        let count = await redis.zcard('新闻中心');
+        let newsList = await redis.zrevrange("新闻中心", [page, pageSize]);
+        newsList.sort(function (a, b) {
+            return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
+        });
+        let uc = await redis.get("usercount");
+        res.render('newsList', {newsList, uc, page: req.query.page, count: Math.ceil(count / size), dataTotal: count || 0, personalPortal: personalPortal});
     })()
 });
 
