@@ -53,15 +53,20 @@ function parse(file, callback) {
                 if(arr[1]) {
                     redis.incr('articleID').then((id)=>{
                         id = (moment(new Date(arr[7])).valueOf() + id * 1000);
-                        let urlList = arr[2].split('、');
                         let url = [];
-                        if(urlList.length) {
-                            for(let obj of urlList) {
-                                url.push('/files/'+obj+'.pdf');
+                        if(arr[2]) {
+                            let urlList = arr[2].split('、');
+                            if(urlList.length) {
+                                for(let obj of urlList) {
+                                    url.push('/files/'+obj+'.pdf');
+                                }
+                            }else{
+                                url.push('/files/'+arr[2]+'.pdf');
                             }
                         }else{
-                            url.push('/files/'+arr[2]+'.pdf');
+                            url.push('/files/'+arr[1]+'.pdf')
                         }
+
                         // console.log(urlList,"===============================",url);
                         let article = {id: id, title: arr[1], time: arr[7], publisher: arr[6], source: arr[4], tags: arr[8], url: url, content: arr[9], img: arr[11]?[arr[11]]:[], about: arr[10]};
                         if(arr[8] == "新闻中心" || arr[8] == "partyBuilding" || arr[8] == "工会活动")
