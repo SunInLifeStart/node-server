@@ -161,7 +161,7 @@
                             button(onclick="login()") 登录#{user}
                             script.
                                 function login() {
-                                     $.post('#{personalPortal}/api/auth/jwt/token', {username:"yangjing",password:"123456"}, function (res) {
+                                     $.post('/api/auth/jwt/token', {username:"yangjing",password:"123456"}, function (res) {
                                          var uid = $.cookie('uid'); // 读取 cookie
                                          alert(uid);
                                      });
