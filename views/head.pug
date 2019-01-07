@@ -161,7 +161,7 @@
         if (uid) {
             var uname = $.cookie('uname'); // 读取 cookie 姓名
             var oname = $.cookie('oname'); // 读取 cookie 部门名称
-            var html = '<p>用户信息</p><div style="line-height: 36px; color: #fff; font-size: 14px;"><p>' + uname + '</p><p>' + oname + '</p><button onclick="signOut">退出登录</button></div>';
+            var html = '<p>用户信息</p><div style="line-height: 36px; color: #fff; font-size: 14px;"><p>' + uname + '</p><p>' + oname + '</p><button onclick="signOut()">退出登录</button></div>';
             $('.userinfo').html(html);
         }
         function signOut() {
