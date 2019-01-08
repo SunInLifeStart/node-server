@@ -3772,7 +3772,7 @@ body #navWrapper .content .nav > .navitem .subnav li a:hover {
 .account {
   width: 160px;
   height: 40px;
-  padding-left: 35px;
+  /*padding-left: 35px;*/
   background: url(/images/账号密码登录/矩形1.png) no-repeat;
   margin: 0px auto 15px;
 }
@@ -3780,7 +3780,7 @@ body #navWrapper .content .nav > .navitem .subnav li a:hover {
 .password {
   width: 160px;
   height: 40px;
-  padding-left: 35px;
+  /*padding-left: 35px;*/
   background: url(/images/账号密码登录/矩形1.png) no-repeat;
   margin: 0px auto 15px;
 }
