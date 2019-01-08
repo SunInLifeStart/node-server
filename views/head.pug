@@ -188,7 +188,7 @@
             event.stopPropagation();
         });
         function signOut() {
-            if(confirm('确定要退出吗？')) {
+            //if(confirm('确定要退出吗？')) {
                 $.cookie('uid', '', { expires: -1,domain: 'zgcgroup.vpn' }); 
                 $.cookie('uname', '', { expires: -1,domain: 'zgcgroup.vpn' }); 
                 $.cookie('oid', '', { expires: -1,domain: 'zgcgroup.vpn' }); 
@@ -196,7 +196,7 @@
                 $.cookie('token', '', {expires: -1,domain: 'zgcgroup.vpn'}); 
                 $.cookie('Role', '', {expires: -1,domain: 'zgcgroup.vpn'}); 
                 isLogin();
-            }
+            //}
         }
         function login() {
             var username = $.trim($('#username').val());
