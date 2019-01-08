@@ -156,7 +156,7 @@ block content
                   p
                     - let img = index == 0? 'leader3.png': 'leader1.png';
                     img(src="/images/" + img, style="vertical-align: middle;margin-right: 2%;")
-                    a(href="/leadershipSpeechs/details?type=" + encodeURI('领导讲话') + "&id=" + JSON.parse(ls).articleId) #{JSON.parse(ls).title}
+                    a(href="/leadershipSpeechs/details?type=" + encodeURI('领导讲话') + "&id=" + JSON.parse(ls).articleId, title=JSON.parse(ls).title) #{JSON.parse(ls).title}
 
                 td(style="text-align: right;")
                   time #{JSON.parse(ls).time.split(' ')[0]}
@@ -173,7 +173,7 @@ block content
                   p
                     - let color = index == 0? 'ea3476': '3488ea';
                     span(style="color: #" + color + ";")  •&nbsp;
-                    a(href="/noticeBulletin/details?type=" + encodeURI('通知公告') + "&id=" + JSON.parse(nb).articleId)
+                    a(href="/noticeBulletin/details?type=" + encodeURI('通知公告') + "&id=" + JSON.parse(nb).articleId, title=JSON.parse(nb).title)
                       | #{JSON.parse(nb).title}
                 td(style="text-align: right;")
                   time #{JSON.parse(nb).time.split(' ')[0]}
@@ -191,7 +191,7 @@ block content
                   p
                     - let color = index == 0? 'ea3476': '3488ea';
                     span(style="color: #" + color + ";") •&nbsp;
-                    a(href="/writings/details?type=" + encodeURI('集团发文') + "&id=" + JSON.parse(w).articleId) #{JSON.parse(w).title}
+                    a(href="/writings/details?type=" + encodeURI('集团发文') + "&id=" + JSON.parse(w).articleId, title=JSON.parse(w).title) #{JSON.parse(w).title}
                 td(style="text-align: right;")
                   time #{JSON.parse(w).time.split(' ')[0]}
     .row
@@ -208,7 +208,7 @@ block content
                   p
                     - let img = index == 0? 'arrow.png': 'arrow2.png';
                     img(src="/images/" + img, style="vertical-align: middle;margin-right: 2%;")
-                    a(href="/rulesRegulations/details?type=" + encodeURI('规章制度') + "&id=" + JSON.parse(r).articleId) #{JSON.parse(r).title}
+                    a(href="/rulesRegulations/details?type=" + encodeURI('规章制度') + "&id=" + JSON.parse(r).articleId, title=JSON.parse(r).title) #{JSON.parse(r).title}
                 td(style="text-align: right;")
                   time #{JSON.parse(r).time.split(' ')[0]}
 
@@ -227,7 +227,7 @@ block content
                   p
                     - let img = index == 0? 'briefing2.png': 'briefing.png';
                     img(src="/images/" + img, style="vertical-align: middle;margin-right: 2%;")
-                    a(href="/workBulletin/details?type=" + encodeURI('工作简报') + "&id=" + JSON.parse(wb).articleId) #{JSON.parse(wb).title}
+                    a(href="/workBulletin/details?type=" + encodeURI('工作简报') + "&id=" + JSON.parse(wb).articleId, title=JSON.parse(wb).title) #{JSON.parse(wb).title}
                 td(style="text-align: right;")
                   time #{JSON.parse(wb).time.split(' ')[0]}
 
@@ -243,7 +243,7 @@ block content
               tr
                 td
                   p
-                    a(href="/index/details?type=" + encodeURI('集团会表') + "&id=" + JSON.parse(mt).articleId)
+                    a(href="/index/details?type=" + encodeURI('集团会表') + "&id=" + JSON.parse(mt).articleId, title=JSON.parse(mt).title)
                       img(src="/images/new.png", style="vertical-align: middle;margin-right: 2%;")
                       | #{JSON.parse(mt).title}
 
@@ -259,7 +259,7 @@ block content
                   p(style="width:230px")
                     - let img = index == 0? 'phone2.png': 'phone.png';
                     img(src="/images/" + img, style="vertical-align: text-top;margin-right: 2%;")
-                    a(href="/workBulletin/details?type=" + encodeURI('集团通讯录') + "&id=" + JSON.parse(mm).articleId) #{JSON.parse(mm).title}
+                    a(href="/workBulletin/details?type=" + encodeURI('集团通讯录') + "&id=" + JSON.parse(mm).articleId, title=JSON.parse(mm).title) #{JSON.parse(mm).title}
                 td(style="text-align: right;")
                   time #{JSON.parse(mm).time.split(' ')[0]}
 
@@ -275,7 +275,7 @@ block content
               tr
                 td
                   div(style="line-height: 25px; padding: 16px 5px;clear:both")
-                    a(href=thumb + "" + personalPortal + doc.url target="_blank")
+                    a(href=thumb + "" + personalPortal + doc.url target="_blank", title=doc.name)
                       img(src=personalPortal + "" + doc.iconUrl, style="width: 74px; height: 94px; vertical-align: middle;float: left; border: 1px solid #dcdada;")
                       span(style="float: left; font-size: 14px; width: 70%;margin-left: 8px; ")=doc.name
                     span(style="float: left; font-size: 12px; width: 30px;margin-left: 8px;")=doc.uname
@@ -290,9 +290,6 @@ block content
             each fs in focusing
               tr
                 td
-                  a(href=JSON.parse(fs).url) #{JSON.parse(fs).title}
-
-
-
+                  a(href=JSON.parse(fs).url, title=JSON.parse(fs).title) #{JSON.parse(fs).title}
 
   include foot
