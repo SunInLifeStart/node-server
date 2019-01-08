@@ -291,6 +291,9 @@ router.post('/v1/portal/article', function(req, res) {
     }
 });
 
+/**
+ * app_upd  app版本管理编辑
+ */
 router.post('/v1/portal/app_upd/edit', function (req, res) {
     try {
         redis.set('app_upd', JSON.stringify(req.body));
@@ -300,10 +303,13 @@ router.post('/v1/portal/app_upd/edit', function (req, res) {
     }
 });
 
+/**
+ * app版本管理信息
+ */
 router.get('/v1/portal/app_upd', function (req, res) {
     try {
         redis.get('app_upd').then(function (data) {
-            res.send({error: 0, msg: "success", data});
+            res.send({error: 0, msg: "success", data:JSON.parse(data)});
         });
     }catch (e) {
         res.send({error: 1, msg: e.toString()});
