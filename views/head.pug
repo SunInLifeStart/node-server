@@ -105,10 +105,10 @@
                             .searchBox
                                 .searchFormGroup
                                     -var timeText = new Date().getDate();
-                                    span(style="position: absolute; top: 15px; left: 16px; color: #fff;") #{timeText}
-                                    img#time(style="float: left; vertical-align: text-bottom; margin: 1px 8px;", src="/images/head/time2.png", alt="")
-                                    input(type="text", id="searchTxt", aria-label="搜索", placeholder="搜索", autocorrect="off", autocapitalize="off", autocomplete="off", spellcheck="false")
-                                    .searchSub
+                                    span(style="position: absolute; top: 15px; left: 16px; color: #fff;visibility:hidden") #{timeText}
+                                    img#time(style="float: left; vertical-align: text-bottom; margin: 1px 8px;visibility:hidden", src="/images/head/time2.png", alt="")
+                                    input(style="visibility:hidden",type="text", id="searchTxt", aria-label="搜索", placeholder="搜索", autocorrect="off", autocapitalize="off", autocomplete="off", spellcheck="false")
+                                    .searchSub(style="visibility:hidden")
                                         span(style="position: relative;top: 8px;")
                                             img(src="/images/head/search.png", alt="搜索")
                                         i.fa.fa-search(aria-hidden="true")
