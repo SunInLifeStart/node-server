@@ -291,6 +291,24 @@ router.post('/v1/portal/article', function(req, res) {
     }
 });
 
+router.post('/v1/portal/app_upd/edit', function (req, res) {
+    try {
+        redis.set('app_upd', JSON.stringify(req.body));
+        res.send({error: 0, msg: "操作成功"});
+    }catch (e) {
+        res.send({error: 1, msg: e.toString()});
+    }
+});
+
+router.get('/v1/portal/app_upd', function (req, res) {
+    try {
+        redis.get('app_upd').then(function (data) {
+            res.send({error: 0, msg: "success", data});
+        });
+    }catch (e) {
+        res.send({error: 1, msg: e.toString()});
+    }
+});
 
 /**
  * plupload图片上传
