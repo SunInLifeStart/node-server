@@ -50,8 +50,8 @@ router.get('/index', function(req, res) {
             rules.sort(function (a, b) {
                 return (new Date(JSON.parse(b).time) - new Date(JSON.parse(a).time));
             });
-            console.log(req.session.user,"=====================statistics");
-            res.render('index', { docs: data.forms || [], news, uc, statistics, focusing, backdrop: backdrop || {}, leadershipSpeech, writing, workBulletin, rules, noticeBulletin, meetingTable: [meetingTable ? meetingTable[0]: {}], personalPortal: personalPortal, menuClass: 1, comm, thumb: config.url.thumb});
+            console.log(meetingTable,"=====================statistics");
+            res.render('index', { docs: data.forms || [], news, uc, statistics, focusing, backdrop: backdrop || {}, leadershipSpeech, writing, workBulletin, rules, noticeBulletin, meetingTable: meetingTable.length ? [meetingTable[0]]: [], personalPortal: personalPortal, menuClass: 1, comm, thumb: config.url.thumb});
         })()
     });
 });
