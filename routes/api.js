@@ -214,6 +214,16 @@ router.post('/v1/portal/article/1', function(req, res) {
             }
         }
         if(article.type == 'news') {       // 新闻中心
+            img = [], url = [];
+            if(obj.attachments && obj.attachments.length) {
+                for(let att of obj.attachments) {
+                    if(att.attType == 'group')
+                    {
+                        img.push(att.iconUrl);
+                    }
+                    
+                }
+            }
             news = {
                 title: obj.title,
                 time: obj.created,
@@ -221,7 +231,7 @@ router.post('/v1/portal/article/1', function(req, res) {
                 about: obj.brief || '',
                 publisher: obj.creatorName || '',
                 articleId: obj.id,
-                url: [],
+                url: url,
                 tags: '新闻中心',
                 content: obj.content,
                 source: obj.reportingOrg
