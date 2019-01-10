@@ -86,7 +86,7 @@ block content
             .row
               .col-md-5
                 a(href="/news/details?type=新闻中心&id="+JSON.parse(obj).articleId)
-                  img.rounded.float-right(src='' + JSON.parse(obj).img)
+                  img.rounded.float-right(src='' + JSON.parse(obj).img.img.split(',')[0])
               .col-md-7
                 h3
                   a(href="/news/details?type=新闻中心&id="+JSON.parse(obj).articleId) #{JSON.parse(obj).title}
