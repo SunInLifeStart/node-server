@@ -221,7 +221,7 @@ router.post('/v1/portal/article/1', function(req, res) {
                 about: obj.brief || '',
                 publisher: obj.creatorName || '',
                 articleId: obj.id,
-                url: url,
+                url: [],
                 tags: '新闻中心',
                 content: obj.content,
                 source: obj.reportingOrg
