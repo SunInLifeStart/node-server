@@ -11,7 +11,7 @@ function createPdfContainer(id,className) {
 //建议给定pdf宽度
 function renderPDF(pdf,i,id) {
     pdf.getPage(i).then(function(page) {
-        var scale = 1.0;
+        var scale = window.devicePixelRatio || 1;
         var viewport = page.getViewport(scale);
         //  准备用于渲染的 canvas 元素
         var canvas = document.getElementById(id);
