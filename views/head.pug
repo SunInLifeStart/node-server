@@ -178,6 +178,12 @@
                 $('.unameTip').html('');
                 $('#infoForm').hide();
                 $('#loginForm').show();
+                if(window.location.host == 'zgcgroup.vpn' || window.location.host == 'www.zgcgroup.vpn'){
+                    window.location.href = 'http://work.zgcgroup.vpn/login.html';
+                }else{
+                    window.location.href = 'http://59.110.172.228/login.html';
+                }
+                
             }
         }
         isLogin();
