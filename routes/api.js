@@ -327,6 +327,13 @@ router.get('/v1/portal/app_upd', function (req, res) {
 });
 
 /**
+ *   app用户组册
+ */
+router.post('/v1/portal/register', function (req, res) {
+    res.send({error: 0, msg: "注册成功"});
+});
+
+/**
  * plupload图片上传
 
 router.post("/v1/portal/attachment", function (req, res) {
