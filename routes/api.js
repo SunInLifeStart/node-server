@@ -49,7 +49,8 @@ router.post('/v1/portal/article/upd', function (req, res) {
                 about: req.body.about || '',
                 articleId: id,
                 source: req.body.source,
-                publisher: req.body.publisher
+                publisher: req.body.publisher,
+                time:req.body.time
             };
             redis.zadd(tags + ":" + req.body.title, id, JSON.stringify(art));
             redis.zremrangebyscore(tags, [id, id]);
