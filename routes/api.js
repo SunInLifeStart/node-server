@@ -202,7 +202,7 @@ router.get('/v1/portal/focusing', function(req, res) {
         let page = ((req.query.page || 1) - 1) * size;
         let pageSize = page + size - 1;
         // let count = await redis.zcard('聚焦舆情');
-        let focusing = await redis.zrevrange("聚焦舆情", [page, pageSize]);
+       // let focusing = await redis.zrevrange("聚焦舆情", [page, pageSize]);
        // let uc = await redis.get("usercount");
         // res.send({error: 1, msg:focusing});
 
