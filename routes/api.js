@@ -156,12 +156,13 @@ router.post("/v1/portal/backdrop", function (req, res) {
     }
 });
 
+
 /* 添加企业门户统计接口 */
 router.post('/v1/portal/statistics', function(req, res) {
-    if(!req.body.totalAssets || !req.body.fundedProjects || !req.body.serviceFirm || !req.body.construction) {
-        res.send({error: 1, msg: '参数不完整'});
-        return;
-    }
+    // if(!req.body.totalAssets || !req.body.fundedProjects || !req.body.serviceFirm || !req.body.construction) {
+    //     res.send({error: 1, msg: '参数不完整'});
+    //     return;
+    // }
     try {
         redis.set('门户统计', JSON.stringify(req.body));
         res.send({error: 0, msg: '添加成功'});
@@ -169,6 +170,21 @@ router.post('/v1/portal/statistics', function(req, res) {
         res.send({error: 1, msg: e.toString()});
     }
 });
+router.get('/v1/portal/statistics', function(req, res) {
+//    console.log(redis.get('门户统计', JSON.stringify(req.body)));
+     redis.get('门户统计').then(function (data) {
+         res.send({error: 0, msg: "success", data:JSON.parse(data)});
+    });
+});
+
+// router.get('/v1/portal/focusing', function(req, res) {
+//         //  redis.get('聚焦舆情').then(function (data) {
+//         //      res.send({error: 0, msg: "success", data:JSON.parse(data)});
+//         // });
+//         res.send({error: 0, msg: "success"});
+//        // zrevrange
+        
+// });
 
 /* 添加集团门户聚焦舆情接口 */
 router.post('/v1/portal/focusing', function(req, res) {
@@ -178,6 +194,30 @@ router.post('/v1/portal/focusing', function(req, res) {
     }catch (e) {
         res.send({error: 1, msg: e.toString()});
     }
+});
+
+router.get('/v1/portal/focusing', function(req, res) {
+    (async () => {
+        let size = 10;
+        let page = ((req.query.page || 1) - 1) * size;
+        let pageSize = page + size - 1;
+        // let count = await redis.zcard('聚焦舆情');
+        let focusing = await redis.zrevrange("聚焦舆情", [page, pageSize]);
+       // let uc = await redis.get("usercount");
+        // res.send({error: 1, msg:focusing});
+
+        let count = await redis.zcard('聚焦舆情');
+        redis.zrevrange('聚焦舆情', [page, pageSize]).then(function (data) {
+            console.log(data);
+            for(let i = 0; i < data.length; i++) {
+                data[i] = JSON.parse(data[i]);
+            }
+            res.send({error: 0, msg: '获取成功', data, page: (req.query.page || 1), count: Math.ceil(count / size), totalNumber: count});
+        }).catch(function (e) {
+            res.send({error: 1, msg: e.toString()});
+        });
+       // res.send('focusing', {focusing, uc, page: req.query.page, count: Math.ceil(count / size), dataTotal: count || 0, personalPortal: personalPortal});
+    })()
 });
 
 
