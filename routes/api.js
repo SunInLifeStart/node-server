@@ -387,5 +387,35 @@ router.post("/v1/portal/attachment", function (req, res) {
         res.send({error: 0, msg: "上传成功", result: images[0]});
     });
 });*/
-
+/*中发展邮箱跳转*/
+router.get('/v1/portal/zfzmail', function (req, res) {
+    const md5 = require('md5');
+    const request = require('request');
+    var userid = "";
+    var key = "4Jy6iO";
+    var loginPlatform = "windows";
+    var type = "READMAIL";
+    var partnerid = "100053";
+    var authcorpid = "zgcgroup.com.cn";
+    var timestamp = new Date().getTime() + '';
+    if (req.cookies.uid) {
+        request(config.url.IP + '/api/v1/profile/findProfile/' + req.cookies.uid, function (error, response, body) {
+            userid = JSON.parse(body).email;
+            var sign = md5(key + loginPlatform + type + partnerid + authcorpid + userid + timestamp);
+            var url = "http://weixin.263.net/partner/web/third/mail/loginMail.do"
+                + "?loginPlatform=" + loginPlatform
+                + "&type=" + type
+                + "&partnerid=" + partnerid
+                + "&authcorpid=" + authcorpid
+                + "&userid=" + userid
+                + "&timestamp=" + timestamp
+                + "&sign=" + sign;
+  
+            res.redirect(url)
+        });
+    } else {
+        res.send({ error: 1, msg: "跳转失败" });
+    }
+  });
+  
 module.exports = router;
