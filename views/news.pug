@@ -11,10 +11,10 @@ block content
         a.btn.btn-default(href="/newsList") 列表
     div
       each obj in news
-        article.article.article--big(style='width: 32%;float: left;margin-left: 1%;height: 380px;')
+        article.article.article--big(style='width: 32%;float: left;margin-left: 1%;height: 340px;')
           .aticle__image
             a(href="/"+key+"/details?type="+title+"&id=" + JSON.parse(obj).articleId)
-              img(style='border-radius: 3px 3px 0 0; height: 256px; width: 100%;', src=''+JSON.parse(obj).img)
+              img(style='border-radius: 3px 3px 0 0; height: 220px; width: 100%;', src=''+JSON.parse(obj).img)
           .aticle__content
             a(href="/"+key+"/details?type="+title+"&id=" + JSON.parse(obj).articleId)
               p(style='font-size: 1.2em;font-weight: 700;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;') #{JSON.parse(obj).title}

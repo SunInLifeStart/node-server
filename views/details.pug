@@ -39,7 +39,7 @@ block content
         div
           each obj, index in JSON.parse(data).url
             a(href=obj target="_blank" style="margin: 12px;" title="下载")
-             img(src=JSON.parse(data).img.length?JSON.parse(data).img[index]:"/images/PDF.png" alt="pdf" style="width: 72px; border: 1px solid #dcdada;")
+             img(src="/images/PDF.png" alt="pdf" style="width: 72px; border: 1px solid #dcdada;")
         script(src="/javascripts/pdf.js")
         script(src="/javascripts/pdf.worker.js")
         //script(src="/javascripts/fdf_paging.js")
@@ -48,6 +48,7 @@ block content
             if ("#{JSON.parse(data).url}") {
                 loadPDF("#{JSON.parse(data).url.length?JSON.parse(data).url[0]: ''}");
             }
+            //JSON.parse(data).img.length?JSON.parse(data).img[index]:
             // if ("#{JSON.parse(data).url}") {
             //     pdfjsLib.getDocument("#{JSON.parse(data).url}").then(function (pdfDoc_) {
             //         pdfDoc = pdfDoc_;
