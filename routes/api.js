@@ -389,6 +389,9 @@ router.post("/v1/portal/attachment", function (req, res) {
 });*/
 /*中发展邮箱跳转*/
 router.get('/v1/portal/zfzmail', function (req, res) {
+    if(process.env.NODE_ENV != 'production') { 
+        res.send({ error: 1, msg: "您使用的不是正式环境" });
+    }
     const md5 = require('md5');
     const request = require('request');
     var userid = "";
@@ -417,5 +420,5 @@ router.get('/v1/portal/zfzmail', function (req, res) {
         res.send({ error: 1, msg: "跳转失败" });
     }
   });
-  
+
 module.exports = router;
