@@ -299,6 +299,7 @@ router.post('/v1/portal/article/1', function(req, res) {
                 title: obj.title,
                 time: obj.created,
                 img: img,
+                text: obj.text || '',
                 about: obj.brief || '',
                 publisher: obj.creatorName || '',
                 articleId: obj.id,
