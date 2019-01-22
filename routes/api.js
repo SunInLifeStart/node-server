@@ -231,7 +231,7 @@ router.post('/v1/portal/article/1', function(req, res) {
         if(obj.attachments && obj.attachments.length) {
             for(let att of obj.attachments) {
                 img.push(att.iconUrl);
-                url.push(att.url);
+                url.push(att);
             }
         }
         if(article.type == 'super') {       // 纪检监察
@@ -239,7 +239,7 @@ router.post('/v1/portal/article/1', function(req, res) {
             if(obj.attachmentforSRs.length) {
                 for(let att of obj.attachmentforSRs) {
                     img.push(att.iconUrl);
-                    url.push(att.url);
+                    url.push(att);
                 }
             }
             news = {
