@@ -29,39 +29,44 @@ router.get('/v1/portal/noticeBulletin', function (req, res) {
 
 /* 集团门户文章修改 */
 router.post('/v1/portal/article/upd', function (req, res) {
-    if(!req.body.title) {
+    if(!req.body.title || !req.body.id) {
         res.send({error: 1, msg: '参数不完整'});
         return;
     }
     try {
-        let id = req.body.id || moment().valueOf();
-        redis.get("article:" + req.body.id).then((result)=>{
+       // let id = req.body.id || moment().valueOf();
+        let id = req.body.id;
+        redis.get("article:" + id).then((result)=>{
             let tags = req.body.tags;
             if(result) {
                 let obj = JSON.parse(result);
                 tags = obj.tags;
                 redis.del(obj.tags + ":" + obj.title);
+
+                let art = {
+                    title: req.body.title,
+                    time: moment().format('YYYY-MM-DD HH:mm:ss'),
+                    img: req.body.img || [],
+                    about: req.body.about || '',
+                    articleId: id,
+                    source: req.body.source,
+                    publisher: req.body.publisher,
+                    time:req.body.time
+                };
+                redis.zadd(tags + ":" + req.body.title, id, JSON.stringify(art));
+                redis.zremrangebyscore(tags, [id, id]);
+                redis.zadd(tags, id, JSON.stringify(art));
+                art.id = id;
+                art.url = req.body.url || '';
+                art.tags = tags;
+                art.content = req.body.content || '';
+                if(req.body.text){
+                    art.text = req.body.text;
+                }
+                redis.set('article:' + id, JSON.stringify(art),function(data){
+                    res.send({error: 0, msg: '修改成功'});
+                });
             }
-            let art = {
-                title: req.body.title,
-                time: moment().format('YYYY-MM-DD HH:mm:ss'),
-                img: req.body.img || [],
-                about: req.body.about || '',
-                articleId: id,
-                source: req.body.source,
-                publisher: req.body.publisher,
-                time:req.body.time
-            };
-            
-            redis.zadd(tags + ":" + req.body.title, id, JSON.stringify(art));
-            redis.zremrangebyscore(tags, [id, id]);
-            redis.zadd(tags, id, JSON.stringify(art));
-            art.id = id;
-            art.url = req.body.url || '';
-            art.tags = tags;
-            art.content = req.body.content || '';
-            redis.set('article:' + id, JSON.stringify(art));
-            res.send({error: 0, msg: '修改成功'});
         });
     }catch (e) {
         res.send({error: 1, msg: e.toString()});
