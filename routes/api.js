@@ -53,7 +53,7 @@ router.post('/v1/portal/article/upd', function (req, res) {
                     publisher: req.body.publisher,
                     time:req.body.time
                 };
-                redis.zadd(tags + ":" + req.body.title, id, JSON.stringify(art));
+                redis.set(tags + ":" + req.body.title,JSON.stringify(art));
                 redis.zremrangebyscore(tags, [id, id]);
                 redis.zadd(tags, id, JSON.stringify(art));
                 art.id = id;
