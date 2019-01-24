@@ -19,7 +19,7 @@ block content
             span#hitid.click 发布人：#{JSON.parse(data).publisher}
             span.come 来源：#{JSON.parse(data).source}
             //a(style="color: #9A9A9A; padding-left: 15px;" href=""+JSON.parse(data).url target="_blank") 下载 | 打印
-          .conts
+          .conts(style="font-size:16px;line-height:2em")
             | !{JSON.parse(data).content}
 
         #pdf(style="text-align: center;")

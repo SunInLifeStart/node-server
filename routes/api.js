@@ -236,7 +236,7 @@ router.post('/v1/portal/article/1', function(req, res) {
         if(obj.attachments && obj.attachments.length) {
             for(let att of obj.attachments) {
                 img.push(att.iconUrl);
-                url.push(att.url);
+                url.push(att);
             }
         }
         if(article.type == 'super') {       // 纪检监察
@@ -244,7 +244,7 @@ router.post('/v1/portal/article/1', function(req, res) {
             if(obj.attachmentforSRs.length) {
                 for(let att of obj.attachmentforSRs) {
                     img.push(att.iconUrl);
-                    url.push(att.url);
+                    url.push(att);
                 }
             }
             news = {
@@ -267,8 +267,7 @@ router.post('/v1/portal/article/1', function(req, res) {
                     if(att.attType == 'group')
                     {
                         img.push(att.iconUrl);
-                    }
-                    
+                    }                   
                 }
             }
             news = {
@@ -289,6 +288,7 @@ router.post('/v1/portal/article/1', function(req, res) {
                 title: obj.title,
                 time: obj.created,
                 img: img,
+                text: obj.text || '',
                 about: obj.brief || '',
                 publisher: obj.creatorName || '',
                 articleId: obj.id,
@@ -304,6 +304,7 @@ router.post('/v1/portal/article/1', function(req, res) {
                 title: obj.title,
                 time: obj.created,
                 img: img,
+                text: obj.text || '',
                 about: obj.brief || '',
                 publisher: obj.creatorName || '',
                 articleId: obj.id,
@@ -334,7 +335,7 @@ router.post('/v1/portal/article/1', function(req, res) {
 /*添加新闻接口*/
 router.post('/v1/portal/article', function(req, res) {
     try {
-        req.body.id = moment().valueOf();
+        req.body.id = moment(req.body.time).valueOf();
         redis.set("article:"+req.body.id , JSON.stringify(req.body));
         let tags = req.body.tags.split(",");
         for(let t of tags) {
@@ -392,5 +393,40 @@ router.post("/v1/portal/attachment", function (req, res) {
         res.send({error: 0, msg: "上传成功", result: images[0]});
     });
 });*/
+/*中发展邮箱跳转*/
+router.get('/v1/portal/zfzmail', function (req, res) {
+    const request = require('request');
+    if(process.env.NODE_ENV != 'production') { 
+        res.send("当前环境不是正式环境");
+    }else{
+        const md5 = require('md5');    
+        var userid = "";
+        var key = "4Jy6iO";
+        var loginPlatform = "windows";
+        var type = "READMAIL";
+        var partnerid = "100053";
+        var authcorpid = "zgcgroup.com.cn";
+        var timestamp = new Date().getTime() + '';
+        if (req.cookies.token) {
+            request(config.url.IP + '/api/admin/user/userInfo1?token='+req.cookies.token, function (error, response, body) {
+                userid = JSON.parse(body).username+"@"+authcorpid;
+                var sign = md5(key + loginPlatform + type + partnerid + authcorpid + userid + timestamp);
+                var url = "http://weixin.263.net/partner/web/third/mail/loginMail.do"
+                    + "?loginPlatform=" + loginPlatform
+                    + "&type=" + type
+                    + "&partnerid=" + partnerid
+                    + "&authcorpid=" + authcorpid
+                    + "&userid=" + userid
+                    + "&timestamp=" + timestamp
+                    + "&sign=" + sign;
+      
+                res.redirect(url)
+            });
+        } else {
+            res.send({ error: 1, msg: "跳转失败" });
+        }
+    }
+
+  });
 
 module.exports = router;
