@@ -262,8 +262,7 @@ router.post('/v1/portal/article/1', function(req, res) {
                     if(att.attType == 'group')
                     {
                         img.push(att.iconUrl);
-                    }
-                    
+                    }                   
                 }
             }
             news = {
@@ -284,6 +283,7 @@ router.post('/v1/portal/article/1', function(req, res) {
                 title: obj.title,
                 time: obj.created,
                 img: img,
+                text: obj.text || '',
                 about: obj.brief || '',
                 publisher: obj.creatorName || '',
                 articleId: obj.id,
@@ -330,7 +330,7 @@ router.post('/v1/portal/article/1', function(req, res) {
 /*添加新闻接口*/
 router.post('/v1/portal/article', function(req, res) {
     try {
-        req.body.id = moment().valueOf();
+        req.body.id = moment(req.body.time).valueOf();
         redis.set("article:"+req.body.id , JSON.stringify(req.body));
         let tags = req.body.tags.split(",");
         for(let t of tags) {
