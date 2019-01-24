@@ -428,5 +428,14 @@ router.get('/v1/portal/zfzmail', function (req, res) {
     }
 
   });
-
+router.get('/v1/portal/deploy', function (req, res) {
+    var process = require('child_process');
+    process.exec('/Users/seebox/workapp/deploy.sh',function (error, stdout, stderr) {
+        if (error !== null) {
+          console.log('exec error: ' + error);
+        }
+        res.send(stderr);
+    });
+    
+});
 module.exports = router;
