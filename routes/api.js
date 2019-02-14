@@ -438,4 +438,10 @@ router.get('/v1/portal/deploy', function (req, res) {
     });
     
 });
+router.get('/v1/portal/uc', function (req, res) {
+    (async () => {
+        let uc = await redis.get("usercount");
+        res.send(uc);
+    })()
+});
 module.exports = router;
