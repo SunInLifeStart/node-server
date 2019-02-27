@@ -2,6 +2,7 @@ const express = require('express');
 const moment = require("moment");
 const config = require('../config');
 const Redis = require('ioredis');
+const Excel = require('exceljs');
 const redis = new Redis(config.options.RDS_PORT, config.options.RDS_HOST);
 // const FileUploadUtil = require('../tools/FileUploadUtil');
 const router = express.Router();
@@ -442,6 +443,28 @@ router.get('/v1/portal/uc', function (req, res) {
     (async () => {
         let uc = await redis.get("usercount");
         res.send(uc);
+    })()
+});
+router.get('/v1/portal/huibiao', function (req, res) {
+    (async () => {
+        const workbook = new Excel.Workbook(); // 创建一个文件
+        workbook.creator = 'test';
+        workbook.lastModifiedBy = 'test';
+        workbook.created = new Date();
+        workbook.modified = new Date();
+    
+        const sheet = workbook.addWorksheet('集团会表'); // 创建一个工作组
+        // 创建列
+        sheet.columns = [
+          { header: '用户名', key: 'userName', width: 25 },
+          { header: '方法名', key: 'methodName', width: 25 },
+          { header: '到期时间', key: 'expiredDate', width: 25 },
+        ];
+        sheet.addRows([{ userName: 'Api用户接口到期名单', methodName: 'Api用户接口到期名单', expiredDate: 'Api用户接口到期名单' }]);// 创建行
+        const filename = 'Api用户接口到期名单.xlsx';
+        res.setHeader('Content-Type', 'application/vnd.openxmlformats');
+        res.setHeader('Content-Disposition', "attachment;filename*=UTF-8' '" + encodeURIComponent(filename));
+        res.send(await workbook.xlsx.writeBuffer());
     })()
 });
 module.exports = router;
