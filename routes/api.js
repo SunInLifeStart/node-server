@@ -465,7 +465,7 @@ router.post('/v1/portal/huibiao', function (req, res) {
           { header: '召集部门', key: 'hostDepartmentCode', width: 15 },
         ];
         sheet.addRows(req.body);// 创建行
-        const filename = 'Api用户接口到期名单.xlsx';
+        const filename = '集团会表.xlsx';
         res.setHeader('Content-Type', 'application/vnd.openxmlformats');
         res.setHeader('Content-Disposition', "attachment;filename*=UTF-8' '" + encodeURIComponent(filename));
         res.send(await workbook.xlsx.writeBuffer());
