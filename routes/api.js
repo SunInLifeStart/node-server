@@ -456,7 +456,7 @@ router.post('/v1/portal/huibiao', function (req, res) {
         const sheet = workbook.addWorksheet('集团会表'); // 创建一个工作组
         // 创建列
         sheet.columns = [
-          { header: '日期/星期', key: 'beginTime', width: 20 },
+          { header: '日期/星期', key: 'startTime', width: 20 },
           { header: '上/午', key: 'timeJuder', width: 15 },
           { header: '时间', key: 'shortTime', width: 15 },
           { header: '内容', key: 'meetingName', width: 55 },
