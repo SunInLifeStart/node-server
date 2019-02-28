@@ -445,7 +445,7 @@ router.get('/v1/portal/uc', function (req, res) {
         res.send(uc);
     })()
 });
-router.get('/v1/portal/huibiao', function (req, res) {
+router.post('/v1/portal/huibiao', function (req, res) {
     (async () => {
         const workbook = new Excel.Workbook(); // 创建一个文件
         workbook.creator = 'test';
@@ -456,11 +456,15 @@ router.get('/v1/portal/huibiao', function (req, res) {
         const sheet = workbook.addWorksheet('集团会表'); // 创建一个工作组
         // 创建列
         sheet.columns = [
-          { header: '用户名', key: 'userName', width: 25 },
-          { header: '方法名', key: 'methodName', width: 25 },
-          { header: '到期时间', key: 'expiredDate', width: 25 },
+          { header: '日期/星期', key: 'beginTime', width: 20 },
+          { header: '上/午', key: 'timeJuder', width: 15 },
+          { header: '时间', key: 'shortTime', width: 15 },
+          { header: '内容', key: 'meetingName', width: 55 },
+          { header: '地点', key: 'meetingRoom', width: 15 },
+          { header: '参会人员', key: 'attendees', width: 55 },
+          { header: '召集部门', key: 'hostDepartmentCode', width: 15 },
         ];
-        sheet.addRows([{ userName: 'Api用户接口到期名单', methodName: 'Api用户接口到期名单', expiredDate: 'Api用户接口到期名单' }]);// 创建行
+        sheet.addRows(req.body);// 创建行
         const filename = 'Api用户接口到期名单.xlsx';
         res.setHeader('Content-Type', 'application/vnd.openxmlformats');
         res.setHeader('Content-Disposition', "attachment;filename*=UTF-8' '" + encodeURIComponent(filename));
