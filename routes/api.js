@@ -73,7 +73,48 @@ router.post('/v1/portal/article/upd', function (req, res) {
         res.send({error: 1, msg: e.toString()});
     }
 });
+/* 上架文章 */
+router.post('/v1/portal/article/putaway', function (req, res) {
+    if(!req.body.id) {
+        res.send({error: 1, msg: '参数不完整或其他错误'});
+        return;
+    }
+    try {
+        let id = req.body.id;
+        redis.get("article:" + id).then((result)=>{
+            let tags = req.body.tags;
+            if(result) {
+                let obj = JSON.parse(result);
+                tags = obj.tags;
+                redis.del(obj.tags + ":" + obj.title);
 
+                let art = {
+                    title: obj.title,
+                    // time: moment().format('YYYY-MM-DD HH:mm:ss'),
+                    img: obj.img || [],
+                    about: obj.about || '',
+                    articleId: id,
+                    publisher: obj.publisher,
+                    putaway: obj.putaway,
+                    source: obj.source,
+                    time:obj.time,
+                    url:obj.url || [],
+                    content:obj.content,
+                    tags:obj.tags
+                };
+                art.putaway = !obj.putaway
+                // redis.set(tags + ":" + result.title,JSON.stringify(art));
+                redis.zremrangebyscore(tags, [id, id])
+                redis.zadd(tags, id, JSON.stringify(art));
+                redis.set('article:' + id, JSON.stringify(art),function(data){
+                    res.send({error: 0, msg: '修改成功'});
+                });
+            }
+        });
+    }catch (e) {
+        res.send({error: 1, msg: e.toString()});
+    }
+});
 /* 删除文章 */
 router.post('/v1/portal/article/del', function (req, res) {
     if(!req.body.id) {
@@ -102,7 +143,6 @@ router.get('/v1/portal/article', function (req, res) {
     let size = req.query.size || 20;
     let page = ((req.query.page || 1) - 1) * size;
     let pageSize = parseInt(page) + parseInt(size - 1);
-    console.log(size,"===============================",pageSize);
     (async ()=>{
         try {
             let key = req.query.type;
@@ -131,10 +171,15 @@ router.get('/v1/portal/article', function (req, res) {
                 });
             }else{
                 let count = await redis.zcard(key);
-                redis.zrevrange(key, [page, pageSize]).then(function (data) {
-                    console.log(data,"================================");
+                redis.zrevrange(key, [page, pageSize]).then((data) => {
                     for(let i = 0; i < data.length; i++) {
                         data[i] = JSON.parse(data[i]);
+                    }
+                    if (req.query.putaway) {
+                        data = data.filter(item => {
+                            return item.putaway === undefined || item.putaway === false
+                        });
+                        count = data.length
                     }
                     res.send({error: 0, msg: '获取成功', data, page: (req.query.page || 1), count: Math.ceil(count / size), totalNumber: count});
                 }).catch(function (e) {
