@@ -169,12 +169,32 @@ router.get('/v1/portal/article', function (req, res) {
                     }
                     res.send({error: 0, msg: '获取成功', data, page: 1, count: 1});
                 });
+            }else if(req.query.title) {
+                redis.zrevrange(key, [0, -1],'WITHSCORES').then((data) => {
+                    for(let i = 0; i < data.length; i++) {
+                        data[i] = JSON.parse(data[i]);
+                    }
+                    // data = data.filter(item => {
+                    //     return item.title.indexOf(req.query.title) > -1
+                    // });
+                    console.log(data.length + '*****')
+                    if (req.query.putaway) {
+                        data = data.filter(item => {
+                            return item.putaway === undefined || item.putaway === false
+                        });
+                        count = data.length
+                    }
+                    res.send({error: 0, msg: '获取成功', data, page: (req.query.page || 1), count: Math.ceil(count / size), totalNumber: count});
+                }).catch(function (e) {
+                    res.send({error: 1, msg: e.toString()});
+                });
             }else{
                 let count = await redis.zcard(key);
                 redis.zrevrange(key, [page, pageSize]).then((data) => {
                     for(let i = 0; i < data.length; i++) {
                         data[i] = JSON.parse(data[i]);
                     }
+                    console.log(data.length + '*****1111')
                     if (req.query.putaway) {
                         data = data.filter(item => {
                             return item.putaway === undefined || item.putaway === false
