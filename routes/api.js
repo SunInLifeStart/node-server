@@ -147,9 +147,6 @@ router.get('/v1/portal/article', function (req, res) {
         try {
             let key = req.query.type;
             let arr = [];
-            if(req.query.title) {
-                key += ":" + req.query.title;
-            }
             if(req.query.startTime && !req.query.endTime) {
                 arr.push(moment(req.query.startTime).valueOf());
                 arr.push(moment().valueOf());
@@ -162,49 +159,89 @@ router.get('/v1/portal/article', function (req, res) {
                 arr.push(moment(req.query.startTime).valueOf());
                 arr.push(moment(req.query.endTime).valueOf());
             }
-            if(!req.query.title && arr.length) {
+            // 时间和标题
+            if(req.query.title && arr.length) {
+                let count = await redis.zcard(key);
                 redis.zrangebyscore(key, arr).then(function (data) {
                     for(let i = 0; i < data.length; i++) {
                         data[i] = JSON.parse(data[i]);
                     }
-                    res.send({error: 0, msg: '获取成功', data, page: 1, count: 1});
+                    let pageData
+                    pageData = data.filter(item => {
+                        return item.title.indexOf(req.query.title) > -1
+                    });
+                    if (req.query.putaway) {
+                        pageData = pageData.filter(item => {
+                            return item.putaway === undefined || item.putaway === false
+                        });
+                    }
+                    count = pageData.length
+                    data = pageData.slice((req.query.page - 1) * size, req.query.page * size)
+                    res.send({error: 0, msg: '获取成功', data, page: (req.query.page || 1), count: Math.ceil(pageData.length / size), totalNumber: pageData.length});
                 });
-            }else if(req.query.title) {
-                redis.zrevrange(key, [0, -1],'WITHSCORES').then((data) => {
+                // 标题查询
+            } else if(req.query.title) {
+                let count = await redis.zcard(key);
+                redis.zrevrange(key, [0, -1]).then((data) => {
                     for(let i = 0; i < data.length; i++) {
                         data[i] = JSON.parse(data[i]);
                     }
-                    // data = data.filter(item => {
-                    //     return item.title.indexOf(req.query.title) > -1
-                    // });
-                    console.log(data.length + '*****')
                     if (req.query.putaway) {
                         data = data.filter(item => {
                             return item.putaway === undefined || item.putaway === false
                         });
-                        count = data.length
                     }
-                    res.send({error: 0, msg: '获取成功', data, page: (req.query.page || 1), count: Math.ceil(count / size), totalNumber: count});
+                    let pageData = data.filter(item => {
+                        return item.title.indexOf(req.query.title) > -1
+                    });
+                    count = pageData.length
+                    data = pageData.slice((req.query.page - 1) * size, req.query.page * size)
+                    res.send({error: 0, msg: '获取成功', data, page: (req.query.page || 1), count: Math.ceil(pageData.length / size), totalNumber: pageData.length});
                 }).catch(function (e) {
                     res.send({error: 1, msg: e.toString()});
+                });
+                // 时间查询
+            } else if(arr.length) {
+                let count = await redis.zcard(key);
+                redis.zrangebyscore(key, arr).then(function (data) {
+                    for(let i = 0; i < data.length; i++) {
+                        data[i] = JSON.parse(data[i]);
+                    }
+                    let pageData = data
+                    if (req.query.putaway) {
+                        pageData = data.filter(item => {
+                            return item.putaway === undefined || item.putaway === false
+                        });
+                    }
+                    data = pageData.slice((req.query.page - 1) * size, req.query.page * size)
+                    res.send({error: 0, msg: '获取成功', data, page: (req.query.page || 1), count: Math.ceil(pageData.length / size), totalNumber: pageData.length});
                 });
             }else{
+                if(req.query.title) {
+                    key += ":" + req.query.title;
+                }
                 let count = await redis.zcard(key);
-                redis.zrevrange(key, [page, pageSize]).then((data) => {
-                    for(let i = 0; i < data.length; i++) {
-                        data[i] = JSON.parse(data[i]);
-                    }
-                    console.log(data.length + '*****1111')
-                    if (req.query.putaway) {
-                        data = data.filter(item => {
+                // 上架下架查询
+                if (req.query.putaway) {
+                    redis.zrevrange(key, [0, -1]).then((data) => {
+                        for(let i = 0; i < data.length; i++) {
+                            data[i] = JSON.parse(data[i]);
+                        }
+                        let pageData = data.filter(item => {
                             return item.putaway === undefined || item.putaway === false
                         });
-                        count = data.length
-                    }
-                    res.send({error: 0, msg: '获取成功', data, page: (req.query.page || 1), count: Math.ceil(count / size), totalNumber: count});
-                }).catch(function (e) {
-                    res.send({error: 1, msg: e.toString()});
-                });
+                        data = pageData.slice((req.query.page - 1) * size, req.query.page * size)
+                        res.send({error: 0, msg: '获取成功', data, page: (req.query.page || 1), count: Math.ceil(pageData.length / size), totalNumber: pageData.length});
+                    })
+                } else {
+                    // 全部查询
+                    redis.zrevrange(key, [page, pageSize]).then((data) => {
+                        for(let i = 0; i < data.length; i++) {
+                            data[i] = JSON.parse(data[i]);
+                        }
+                        res.send({error: 0, msg: '获取成功', data, page: (req.query.page || 1), count: Math.ceil(count / size), totalNumber: count});
+                    })
+                }
             }
 
         }catch (e) {
