@@ -103,6 +103,7 @@ router.post('/v1/portal/article/putaway', function (req, res) {
                     tags:obj.tags
                 };
                 art.putaway = !obj.putaway
+                art.id = id;
                 // redis.set(tags + ":" + result.title,JSON.stringify(art));
                 redis.zremrangebyscore(tags, [id, id])
                 redis.zadd(tags, id, JSON.stringify(art));
