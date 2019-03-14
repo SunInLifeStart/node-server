@@ -51,6 +51,7 @@ router.post('/v1/portal/article/upd', function (req, res) {
                     about: req.body.about || '',
                     articleId: id,
                     source: req.body.source,
+                    putaway: req.body.putaway,
                     publisher: req.body.publisher,
                     time:req.body.time
                 };
