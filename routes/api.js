@@ -575,4 +575,23 @@ router.post('/v1/portal/huibiao', function (req, res) {
         res.send(await workbook.xlsx.writeBuffer());
     })()
 });
+router.get('/v1/portal/logout', function (req, res) {
+    const domains = ['zgcgroup.vpn','work.zgcgroup.vpn','work.yxpe.com.cn',
+                     'yxpe.com.cn']
+    res.clearCookie('uid');
+    res.clearCookie('oid');
+    res.clearCookie('uname');
+    res.clearCookie('oname');
+    res.clearCookie('token');
+    res.clearCookie('Role');
+    for(let i=0 ;i<domains.length;i++){
+        res.clearCookie('uid',{domain:domains[i]});
+        res.clearCookie('oid',{domain:domains[i]});
+        res.clearCookie('uname',{domain:domains[i]});
+        res.clearCookie('oname',{domain:domains[i]});
+        res.clearCookie('token',{domain:domains[i]});
+        res.clearCookie('Role',{domain:domains[i]});
+    }
+    res.send('ok');
+});
 module.exports = router;
