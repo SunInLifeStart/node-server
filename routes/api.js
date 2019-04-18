@@ -535,7 +535,7 @@ router.get('/v1/portal/zfzmail', function (req, res) {
   });
 router.get('/v1/portal/deploy', function (req, res) {
     var process = require('child_process');
-    process.exec('/home/workapp/pub.sh',function (error, stdout, stderr) {
+    process.exec('/home/workapp/deploy/pub.sh',function (error, stdout, stderr) {
         if (error !== null) {
           console.log('exec error: ' + error);
         }
