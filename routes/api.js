@@ -539,7 +539,7 @@ router.get('/v1/portal/deploy', function (req, res) {
         if (error !== null) {
           console.log('exec error: ' + error);
         }
-        res.send(stderr);
+        res.send(stdout);
     });
     
 });
