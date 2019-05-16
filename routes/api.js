@@ -597,8 +597,8 @@ router.get('/v1/portal/logout', function (req, res) {
 router.get('/v1/portal/im/signature', function (req, res) {
     const md5 = require('md5');
     const appkey = '17ebed675b60615c1c448004';
-    const timestamp = new Date().getTime();
-    const random_str = Math.random();
+    const timestamp = new Date().getTime().toString();
+    const random_str = Math.random().toString();
     const key = '2ffac682b34c94e4c5ed4bf4';
     const signature = md5('appkey='+appkey+'&timestamp='+timestamp+'&random_str='+random_str+'&key='+key);
     res.send({
