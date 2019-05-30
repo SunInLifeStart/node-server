@@ -615,7 +615,7 @@ router.get('/v1/portal/im/users', function (req, res) {
     const Authorization = Buffer.from(config.options.IM_APPKEY+':'+config.options.IM_SECRET).toString('base64');
     console.log(Authorization);
     request({
-        url: 'https://api.im.jpush.cn/v1/users/?start=1&count=500',
+        url: 'https://api.im.jpush.cn/v1/users/?start=0&count=500',
         method: "GET",
         json: true,
         headers: {
