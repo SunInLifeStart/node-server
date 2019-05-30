@@ -3,6 +3,7 @@ const moment = require("moment");
 const config = require('../config');
 const Redis = require('ioredis');
 const Excel = require('exceljs');
+const request = require('request');
 const redis = new Redis(config.options.RDS_PORT, config.options.RDS_HOST);
 // const FileUploadUtil = require('../tools/FileUploadUtil');
 const router = express.Router();
@@ -596,10 +597,10 @@ router.get('/v1/portal/logout', function (req, res) {
 });
 router.get('/v1/portal/im/signature', function (req, res) {
     const md5 = require('md5');
-    const appkey = '17ebed675b60615c1c448004';
+    const appkey = config.options.IM_APPKEY;
     const timestamp = new Date().getTime().toString();
     const random_str = Math.random().toString();
-    const key = '2ffac682b34c94e4c5ed4bf4';
+    const key = config.options.IM_SECRET;
     const signature = md5('appkey='+appkey+'&timestamp='+timestamp+'&random_str='+random_str+'&key='+key);
     res.send({
         appkey,
@@ -607,5 +608,22 @@ router.get('/v1/portal/im/signature', function (req, res) {
         random_str,
         signature
     });
+});
+router.get('/v1/portal/im/users', function (req, res) {
+    console.log(config.options.IM_APPKEY);
+    console.log(config.options.IM_SECRET);
+    const Authorization = Buffer.from(config.options.IM_APPKEY+':'+config.options.IM_SECRET).toString('base64');
+    console.log(Authorization);
+    request({
+        url: 'https://api.im.jpush.cn/v1/users/?start=1&count=500',
+        method: "GET",
+        json: true,
+        headers: {
+            "Authorization":"Basic "+Authorization,
+            "content-type": "application/json",
+        }
+    }, function(error, response, body) {
+        res.send(body);
+    }); 
 });
 module.exports = router;

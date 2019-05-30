@@ -6,7 +6,9 @@ let options = {
     RDS_HOST : '127.0.0.1',         // 服务器IP  要连接的A服务器redis
     // RDS_HOST : '172.16.3.21',           //服务器IP  要连接的A服务器redis
     RDS_PWD  : '',                    // 密码
-    RDS_OPTS : {}                     // 设置项
+    RDS_OPTS : {},                    // 设置项
+    IM_APPKEY : '17ebed675b60615c1c448004',
+    IM_SECRET : '2ffac682b34c94e4c5ed4bf4'
 };
 let url = {
     host : 'http://59.110.172.228',
