@@ -26,6 +26,8 @@ console.log(process.env.NODE_ENV,"================================NODE_ENV");
 if(process.env.NODE_ENV == 'production') {  // vpn环境
     process.env.PORT = 3002;
     options.RDS_HOST = '172.16.3.21';
+    options.IM_APPKEY = 'f115b2f223b374d8769e7c07';
+    options.IM_SECRET = '7483c4c369f1863574aeb7c8';
     url.host = 'http://work.zgcgroup.vpn';
     url.IP = 'http://172.16.3.18';
 }

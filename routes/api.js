@@ -610,10 +610,7 @@ router.get('/v1/portal/im/signature', function (req, res) {
     });
 });
 router.get('/v1/portal/im/users', function (req, res) {
-    console.log(config.options.IM_APPKEY);
-    console.log(config.options.IM_SECRET);
     const Authorization = Buffer.from(config.options.IM_APPKEY+':'+config.options.IM_SECRET).toString('base64');
-    console.log(Authorization);
     request({
         url: 'https://api.im.jpush.cn/v1/users/?start=0&count=500',
         method: "GET",
