@@ -578,7 +578,7 @@ router.post('/v1/portal/huibiao', function (req, res) {
 });
 router.get('/v1/portal/logout', function (req, res) {
     const domains = ['zgcgroup.vpn','work.zgcgroup.vpn','work.yxpe.com.cn',
-                     'yxpe.com.cn']
+                     'yxpe.com.cn','zgcgroup.com.cn','ep.zgcgroup.com.cn']
     res.clearCookie('uid');
     res.clearCookie('oid');
     res.clearCookie('uname');
