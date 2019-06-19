@@ -623,4 +623,119 @@ router.get('/v1/portal/im/users', function (req, res) {
         res.send(body);
     }); 
 });
+
+
+//获取在线人数
+router.post('/v1/portal/im/userstat', function (req, res) {
+    const Authorization = Buffer.from(config.options.IM_APPKEY+':'+config.options.IM_SECRET).toString('base64');
+    request({
+        url: 'https://api.im.jpush.cn/v1/users/userstat',
+        method: "post",
+        json: true,
+        body:req.body.users,
+        headers: {
+            "Authorization":"Basic "+Authorization,
+            "content-type": "application/json",
+        }
+    }, function(error, response, body) {
+        res.send(body);
+    }); 
+});
+
+// //定时获取所有历史记录
+// router.get('/v1/portal/im/getuser/history', function (req, res) {
+//     //config.options.IM_APPKEY    17ebed675b60615c1c448004
+//     //config.options.IM_SECRET    2ffac682b34c94e4c5ed4bf4
+   
+//     const Authorization = Buffer.from(config.options.IM_APPKEY+':'+config.options.IM_SECRET).toString('base64');
+//     let data = moment().format("YYYY-MM-DD HH:mm:ss");
+//     let lastWeek = moment().subtract(1, "days").format("YYYY-MM-DD HH:mm:ss");
+//     let users = "";
+//     request({
+//         url: 'https://api.im.jpush.cn/v1/users/?start=0&count=500',
+//         method: "GET",
+//         json: true,
+//         headers: {
+//             "Authorization":"Basic "+Authorization,
+//             "content-type": "application/json",
+//         }
+//     }, function(error, response, usersBody) {
+//         let i = 0;
+//         let a = function setUserValue(i){
+//             request({
+//                 url: 'https://report.im.jpush.cn/v2/users/'+ usersBody.users[i].username +'/messages?count=1000&begin_time='+ lastWeek +'&end_time=' + data + "&timetap=" + new Date().getTime(),
+//                 method: "get",
+//                 headers: {
+//                     "Authorization":"Basic "+Authorization
+//                 }
+//             }, function(error, response, body) {
+//                 if(error){
+//                 }else{
+//                     if(body){
+//                         let userData = JSON.parse(body);
+//                         if(userData && userData.count > 0){
+//                             cursor = userData.cursor;
+//                            // redis.set(usersBody.users[i].username,body)
+//                             redis.zadd(usersBody.users[i].username,new Date().getTime(),body);
+//                             console.log("有内容"); 
+//                             console.log(usersBody.users[i].username); 
+//                         }
+//                         i++;
+//                         console.log(i);
+//                         if(i < usersBody.users.length -1){
+//                             console.log("无内容"); 
+//                             console.log(usersBody.users[i].username); 
+//                             a(i);  
+//                         }else{
+//                             res.send("备份完成");
+//                         }
+//                     }
+//                 }
+//             }); 
+//         }
+//         a(0);
+//     });
+// });
+
+router.get('/v1/portal/im/userOnlineNumber', function (req, res) {
+    const Authorization = Buffer.from(config.options.IM_APPKEY+':'+config.options.IM_SECRET).toString('base64');
+    let data = moment().format("YYYY-MM-DD HH:mm:ss");
+    let lastWeek = moment().subtract(1, "days").format("YYYY-MM-DD HH:mm:ss");
+    let username = [];
+    request({
+        url: 'https://api.im.jpush.cn/v1/users/?start=0&count=500',
+        method: "GET",
+        json: true,
+        headers: {
+            "Authorization":"Basic "+Authorization,
+            "content-type": "application/json",
+        }
+    }, function(error, response, usersBody) {
+            usersBody.users.forEach(function(data){
+                username.push(data.username);
+            });
+          
+            request({
+                url: 'https://api.im.jpush.cn/v1/users/userstat',
+                method: "post",
+                json: true,
+                body:username,
+                headers: {
+                    "Authorization":"Basic "+Authorization,
+                    "content-type": "application/json",
+                }
+            }, function(error, response, body) {
+                  let  arr = body.filter(item => item.devices && item.devices.length > 0 && item.devices[0].online);
+                  res.send(arr);
+            }); 
+    
+    });
+    
+});
+
+// router.get('/v1/portal/im/123', function (req, res) {
+//     res.send('123');
+// });
+
+
 module.exports = router;
