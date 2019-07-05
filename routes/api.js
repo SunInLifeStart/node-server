@@ -445,7 +445,7 @@ router.post('/v1/portal/article', function(req, res) {
         redis.set("article:"+req.body.id , JSON.stringify(req.body));
         let tags = req.body.tags.split(",");
         for(let t of tags) {
-            let obj = {title: req.body.title,time: req.body.time, img: req.body.img || [], about: req.body.about || '', publisher: req.body.publisher || '', articleId: req.body.id };
+            let obj = {title: req.body.title,time: req.body.time, img: req.body.img || [], about: req.body.about || '', publisher: req.body.publisher || '', articleId: req.body.id,source: req.body.source };
             redis.zadd(t, req.body.id , JSON.stringify(obj));
             redis.zadd("标签", req.body.id , t);
         }
